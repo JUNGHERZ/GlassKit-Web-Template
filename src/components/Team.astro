@@ -1,0 +1,28 @@
+---
+/** Team-Sektion: Initialen-Avatare (keine Fotos im Template – pro Projekt
+ *  ersetzen oder Sektion entfernen). */
+const team = [
+  { initials: 'MJ', name: 'Mara Jung', role: 'Gründung & Produkt', variant: '' },
+  { initials: 'TK', name: 'Tim Krüger', role: 'Engineering', variant: 'glw-avatar--teal' },
+  { initials: 'SB', name: 'Sofia Berger', role: 'Design', variant: '' },
+  { initials: 'DR', name: 'David Roth', role: 'Kundenerfolg', variant: 'glw-avatar--teal' },
+];
+---
+<section class="glw-section--tight" id="team">
+  <div class="glw-container">
+    <div class="glw-center reveal">
+      <span class="glw-eyebrow">Das Team</span>
+      <h2 class="glw-h2">Die Menschen hinter LUMEN.</h2>
+    </div>
+
+    <div class="glw-team reveal">
+      {team.map((m) => (
+        <div class="glw-team__member">
+          <span class={`glw-avatar glw-avatar--lg ${m.variant}`}>{m.initials}</span>
+          <strong>{m.name}</strong>
+          <span class="glw-team__role">{m.role}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

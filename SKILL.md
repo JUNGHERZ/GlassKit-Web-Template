@@ -36,6 +36,10 @@ src/components/*.astro  One file per section. Copy lives HERE, next to its marku
                         const arrays rendered with .map().
 src/pages/*.astro       File routing. index.astro composes the one-pager.
                         404.astro → dist/404.html (served by GitHub Pages).
+src/content.config.ts   Blog collection schema (title, description, pubDate, author).
+src/content/blog/*.md   Blog posts (Markdown). OPT-IN feature — see removal note below.
+src/pages/blog/         index.astro (overview) + [slug].astro (article via glw-prose).
+src/pages/rss.xml.ts    RSS feed from the blog collection (base-safe links).
 src/pages/robots.txt.ts Generates robots.txt from site+base (fork-safe).
                         Note: ignored by crawlers on github.io/<repo>/ project
                         pages (not at domain root); effective with custom domain.
@@ -50,8 +54,11 @@ public/og.png           Social preview image (1200×630) — replace per project
 | `Hero` | Audience switch + headline pair + CTAs + decorative device panel | The device panel is a mini component showcase (aria-hidden); swap its content to match the product |
 | `LogoStrip` | Social proof wordmarks | Text-only, styled via `glw-wordmark--*` variants |
 | `Features` | 3-column glass card grid | Edit the `features[]` array (icon = inline outline SVG string, 24 viewBox) |
+| `Process` | Numbered how-it-works steps | `steps[]` array; numbering is honest here (real sequence) — don't add numbers to non-sequential sections |
 | `Showcase` | 3D-tilted "spatial" glass window (visionOS look) | Decorative; tilt via `#tiltWindow` in site.js |
 | `Stats` | 4 KPI figures, typographic | `stats[]` array; keep `tabular-nums` styling |
+| `Cases` | Success stories / references | `cases[]` array: metric (gradient number) + label + text + client name |
+| `Team` | People grid with initials avatars | `team[]` array; no photos in the template — replace avatars per project or drop the section |
 | `Pricing` | Two plan grids, one per audience | `plansB2C[]` / `plansB2B[]`; `hot: true` highlights one plan |
 | `Quote` | Serif testimonial, one per audience | Paired `.only-b2c` / `.only-b2b` blocks |
 | `Faq` | GlassKit accordion + FAQPage JSON-LD | Edit the `faqs[]` array; `audience: 'b2c'\|'b2b'` marks audience-specific questions. JSON-LD mirrors the default (no-JS) view: general + B2C only. Toggle handled by site.js; without JS all answers render expanded |
@@ -90,6 +97,23 @@ site.css mirrors the light tokens — never delete it.
 **Reveal/motion:** `.reveal` elements fade in via IntersectionObserver (only when
 `html.js` present). Stagger with inline `style="--d:.07s"`. `prefers-reduced-motion`
 disables float/tilt/reveal — keep that media block intact.
+
+**Page transitions:** cross-document view transitions are enabled CSS-only via
+`@view-transition { navigation: auto }` (site.css); the header carries
+`view-transition-name: glw-header` so it stays stable while content cross-fades.
+Progressive enhancement — unsupported browsers navigate normally. Keep the
+`navigation: none` override inside the reduced-motion block.
+**Testing note:** in headless Chrome, click-initiated navigations stall on the
+render-blocking transition (no compositor frames are produced) and the page
+freezes — always run Playwright/automation with
+`page.emulateMedia({ reducedMotion: 'reduce' })`, which routes through the
+`navigation: none` override. Real, visible browsers are unaffected.
+
+**Blog (opt-in):** posts are Markdown files in `src/content/blog/` rendered through
+`glw-prose--article`. Only ship it for clients who will actually publish. To REMOVE
+the blog: delete `src/content/`, `src/content.config.ts`, `src/pages/blog/`,
+`src/pages/rss.xml.ts`, the RSS `<link>` in BaseLayout, and the three "Blog" links
+(desktop nav + mobile panel in SiteHeader, product column in SiteFooter).
 
 ## 4. Rules
 

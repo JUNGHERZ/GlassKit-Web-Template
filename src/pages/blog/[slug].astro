@@ -1,0 +1,34 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteName, href } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const date = post.data.pubDate.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<BaseLayout title={`${post.data.title} – ${siteName}`} description={post.data.description}>
+  <article class="glw-section glw-page">
+    <div class="glw-container">
+      <div class="glw-article">
+        <span class="glw-eyebrow">Blog</span>
+        <h1 class="glw-h2">{post.data.title}</h1>
+        <p class="glw-article__meta">{date} · {post.data.author}</p>
+
+        <div class="glw-prose glw-prose--article">
+          <Content />
+        </div>
+
+        <div class="glw-page__back">
+          <a class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" href={href('/blog/')}>← Alle Artikel</a>
+          <a class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" href={href('/')}>Zur Startseite</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

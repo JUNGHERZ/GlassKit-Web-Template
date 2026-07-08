@@ -76,6 +76,17 @@ src/
 9. Push auf `main` — GitHub Actions baut und deployed automatisch
    (einmalig: Settings → Pages → Source „GitHub Actions").
 
+## Blog (Opt-in)
+
+Artikel liegen als Markdown in `src/content/blog/` (Frontmatter: title,
+description, pubDate, author) — Übersicht unter `/blog/`, RSS unter `/rss.xml`,
+Verlinkung in Header-Nav und Footer. **Nur für Projekte aktiv lassen, die
+redaktionell liefern**; die Entfernungs-Schritte stehen in der SKILL.md.
+
+Seitenwechsel (z. B. Startseite → Artikel) nutzen native **Cross-Document View
+Transitions** (`@view-transition`, CSS-only): sanfter Übergang in unterstützenden
+Browsern, normale Navigation überall sonst, deaktiviert bei `prefers-reduced-motion`.
+
 ## Kontaktformular anschließen
 
 Das Formular (`#kontakt`) ist provider-agnostisch: Ziel in `src/data/site.ts`

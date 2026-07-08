@@ -1,0 +1,37 @@
+---
+/** Prozess-Sektion („So funktioniert's"). Nummerierte Schritte — hier ist die
+ *  Nummerierung semantisch ehrlich, weil es eine echte Abfolge ist. */
+const steps = [
+  {
+    title: 'Fotografieren',
+    text: 'Kamera aufs Dokument halten – Randerkennung und Zuschnitt passieren automatisch, auch im Stapel.',
+  },
+  {
+    title: 'KI sortiert',
+    text: 'LUMEN erkennt Typ, Absender und Datum, benennt die Datei und legt sie im passenden Ordner ab.',
+  },
+  {
+    title: 'Wiederfinden',
+    text: 'Volltextsuche über alles – auf dem Handy, im Web oder direkt im angebundenen DMS.',
+  },
+];
+---
+<section class="glw-section" id="prozess">
+  <div class="glw-container">
+    <div class="glw-center reveal">
+      <span class="glw-eyebrow">So funktioniert’s</span>
+      <h2 class="glw-h2">Drei Schritte. Kein Handbuch.</h2>
+      <p class="glw-lead">Vom Papier zum durchsuchbaren Archiv – ohne Einarbeitung, ohne Ordner-Disziplin.</p>
+    </div>
+
+    <div class="glw-steps">
+      {steps.map((s, i) => (
+        <div class="glass-card glw-step reveal" style={`--d:${(i * 0.07).toFixed(2)}s`}>
+          <span class="glw-step__num" aria-hidden="true">{i + 1}</span>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

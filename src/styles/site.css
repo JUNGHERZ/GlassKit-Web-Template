@@ -12,6 +12,15 @@
 html { scroll-behavior: smooth; }
 body { margin: 0; }
 
+/* Cross-Document View Transitions (MPA): sanfter Übergang bei Seitenwechseln.
+   Progressive Enhancement – Browser ohne Support navigieren normal. */
+@view-transition {
+  navigation: auto;
+}
+
+/* Header bleibt beim Seitenwechsel stabil statt mitzufaden */
+.glw-header { view-transition-name: glw-header; }
+
 ::selection { background: rgba(245, 166, 35, 0.35); }
 
 :focus-visible {
@@ -1021,6 +1030,256 @@ body { margin: 0; }
 /* Ohne JS alle Antworten aufklappen (GlassKit kollabiert per max-height) */
 html:not(.js) .glass-accordion__content { max-height: none; }
 
+/* ---- 12d. Prozess-Schritte ---------------------------------------- */
+
+.glw-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--gl-space-lg);
+  margin-top: clamp(36px, 5vw, 56px);
+}
+
+.glw-step__num {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(245, 166, 35, 0.22) 0%, rgba(212, 105, 42, 0.16) 100%);
+  border: 1px solid var(--gl-border-warm);
+  border-radius: var(--gl-radius-pill);
+  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--gl-color-primary);
+}
+
+.glw-step h3 {
+  font-size: 17px;
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-text-heading);
+  margin: 0 0 8px;
+}
+
+.glw-step p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gl-color-text-muted);
+  margin: 0;
+}
+
+/* ---- 12e. Team ----------------------------------------------------- */
+
+.glw-team {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--gl-space-lg);
+  margin-top: clamp(32px, 5vw, 48px);
+  text-align: center;
+}
+
+.glw-team__member {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+}
+
+.glw-avatar--lg {
+  width: 72px;
+  height: 72px;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.glw-team__member strong {
+  font-size: 15.5px;
+  color: var(--gl-color-text-heading);
+}
+
+.glw-team__role {
+  font-size: 13.5px;
+  color: var(--gl-color-text-muted);
+}
+
+/* ---- 12f. Referenzen / Erfolgsgeschichten -------------------------- */
+
+.glw-case {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glw-case:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--gl-shadow-modal);
+}
+
+.glw-case__metric {
+  font-size: clamp(1.9rem, 2.8vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(115deg, var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glw-case__metric-label {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gl-color-text-muted);
+  margin: 4px 0 14px;
+}
+
+.glw-case p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--gl-card-text-color);
+  margin: 0 0 16px;
+  flex: 1;
+}
+
+.glw-case__client {
+  font-size: 13.5px;
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-text);
+  opacity: 0.75;
+}
+
+/* ---- 12g. Blog ------------------------------------------------------ */
+
+.glw-postlist {
+  max-width: 780px;
+  margin: clamp(32px, 5vw, 48px) auto 0;
+  display: grid;
+  gap: var(--gl-space-lg);
+}
+
+.glw-post-card__meta {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gl-color-text-muted);
+}
+
+.glw-post-card h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 10px 0 10px;
+  text-wrap: balance;
+}
+
+.glw-post-card h2 a {
+  color: var(--gl-color-text-heading);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.glw-post-card h2 a:hover { color: var(--gl-color-primary); }
+
+.glw-post-card p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gl-color-text-muted);
+  margin: 0 0 16px;
+}
+
+.glw-post-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14.5px;
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-primary);
+  text-decoration: none;
+}
+
+.glw-post-card__more svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.2s ease;
+}
+
+.glw-post-card__more:hover svg { transform: translateX(3px); }
+
+.glw-article { max-width: 720px; }
+
+.glw-article__meta {
+  font-size: 14px;
+  color: var(--gl-color-text-muted);
+  margin: -6px 0 0;
+}
+
+.glw-prose--article { margin-top: 32px; max-width: none; }
+
+/* Markdown-Ausgabe im Artikel */
+.glw-prose--article h2 {
+  font-size: 1.3rem;
+  margin: 18px 0 0;
+}
+
+.glw-prose--article h3 {
+  font-size: 1.05rem;
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-text-heading);
+  margin: 10px 0 0;
+}
+
+.glw-prose--article p {
+  font-size: 15.5px;
+  color: var(--gl-color-text-muted);
+}
+
+.glw-prose--article ul,
+.glw-prose--article ol {
+  margin: 0;
+  padding-left: 22px;
+  display: grid;
+  gap: 8px;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--gl-color-text-muted);
+}
+
+.glw-prose--article li::marker { color: var(--gl-color-primary); }
+
+.glw-prose--article a {
+  color: var(--gl-color-primary);
+  text-decoration: none;
+}
+
+.glw-prose--article a:hover { text-decoration: underline; }
+
+.glw-prose--article strong { color: var(--gl-color-text-heading); }
+
+.glw-prose--article blockquote {
+  margin: 0;
+  padding: 4px 0 4px 18px;
+  border-left: 3px solid var(--gl-border-warm);
+  font-family: 'New York', Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  color: var(--gl-color-text);
+}
+
+.glw-prose--article code {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--gl-surface-2);
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-radius-xs);
+  padding: 1px 6px;
+}
+
 /* ---- 12c. Kontaktformular ---------------------------------------- */
 
 .glw-contact {
@@ -1116,6 +1375,7 @@ html:not(.js) .glass-accordion__content { max-height: none; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  @view-transition { navigation: none; }
   .js .reveal { opacity: 1; transform: none; }
   .glw-device, .glw-chip { animation: none; }
   .glw-window { transform: none !important; transition: none; }

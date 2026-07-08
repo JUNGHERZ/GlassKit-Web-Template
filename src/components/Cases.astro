@@ -1,0 +1,43 @@
+---
+/** Referenzen/Erfolgsgeschichten: Ergebnis-Kennzahl im Fokus, Kurzkontext dazu. */
+const cases = [
+  {
+    metric: '−80 %',
+    metricLabel: 'Bearbeitungszeit im Posteingang',
+    client: 'Stadtwerke Ahlen',
+    text: 'Eingangspost wird gescannt, klassifiziert und landet automatisch im ELO-Workflow – aus drei Tagen wurden vier Stunden.',
+  },
+  {
+    metric: '120.000',
+    metricLabel: 'Aktenseiten digitalisiert',
+    client: 'Kanzlei Brandt & Söhne',
+    text: 'Komplettes Mandatsarchiv in sechs Wochen digitalisiert – revisionssicher und in Sekunden durchsuchbar.',
+  },
+  {
+    metric: '1 Wochenende',
+    metricLabel: 'für zehn Jahre Papierkram',
+    client: 'Lena Martens, Fotografin',
+    text: 'Verträge, Rechnungen, Belege: einmal abfotografiert, seitdem findet die Suche jedes Dokument in Sekunden.',
+  },
+];
+---
+<section class="glw-section" id="referenzen">
+  <div class="glw-container">
+    <div class="glw-center reveal">
+      <span class="glw-eyebrow">Erfolgsgeschichten</span>
+      <h2 class="glw-h2">Zahlen statt Versprechen.</h2>
+      <p class="glw-lead">Drei Projekte, drei messbare Ergebnisse – vom Einzelhaushalt bis zur Stadtverwaltung.</p>
+    </div>
+
+    <div class="glw-grid-3">
+      {cases.map((c, i) => (
+        <div class="glass-card glw-case reveal" style={`--d:${(i * 0.07).toFixed(2)}s`}>
+          <span class="glw-case__metric">{c.metric}</span>
+          <span class="glw-case__metric-label">{c.metricLabel}</span>
+          <p>{c.text}</p>
+          <span class="glw-case__client">{c.client}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

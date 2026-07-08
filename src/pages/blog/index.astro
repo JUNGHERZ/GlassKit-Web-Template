@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteName, href } from '../../data/site';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<BaseLayout title={`Blog – ${siteName}`} description="Praxis-Wissen rund um papierloses Arbeiten, Archivierung und Dokumenten-Workflows.">
+  <section class="glw-section glw-page">
+    <div class="glw-container">
+      <div class="glw-center">
+        <span class="glw-eyebrow">Blog</span>
+        <h1 class="glw-h2">Papierlos, praktisch, erklärt.</h1>
+        <p class="glw-lead">Anleitungen und Hintergründe aus der Praxis – etwa einmal im Monat neu.</p>
+      </div>
+
+      <div class="glw-postlist">
+        {posts.map((post) => (
+          <article class="glass-card glw-post-card">
+            <span class="glw-post-card__meta">{fmt(post.data.pubDate)} · {post.data.author}</span>
+            <h2><a href={href(`/blog/${post.id}/`)}>{post.data.title}</a></h2>
+            <p>{post.data.description}</p>
+            <a class="glw-post-card__more" href={href(`/blog/${post.id}/`)}>
+              Weiterlesen
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
