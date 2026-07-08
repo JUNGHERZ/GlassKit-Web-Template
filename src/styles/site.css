@@ -1059,6 +1059,10 @@ html:not(.js) .glass-accordion__content { max-height: none; }
   overflow: hidden;
 }
 
+/* GlassKits display:flex würde das hidden-Attribut überstimmen
+   (Author-CSS schlägt das UA-Stylesheet) – daher explizit: */
+.glw-status[hidden] { display: none; }
+
 /* Status-Varianten auf GlassKit glass-status */
 .glw-status--success { border-color: var(--gl-color-success); }
 .glw-status--success svg { stroke: var(--gl-color-success); }
