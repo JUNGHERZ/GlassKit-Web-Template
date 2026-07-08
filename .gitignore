@@ -1,0 +1,12 @@
+# Build
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Tooling
+.playwright-cli/
+
+# OS
+.DS_Store

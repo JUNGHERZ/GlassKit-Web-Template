@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteName, href } from '../data/site';
+---
+<BaseLayout title={`Impressum – ${siteName}`} description="Impressum (Platzhalter)">
+  <section class="glw-section glw-page">
+    <div class="glw-container">
+      <span class="glw-eyebrow">Rechtliches</span>
+      <h1 class="glw-h2">Impressum</h1>
+      <p class="glw-lead">Platzhalter – vor Veröffentlichung durch die echten Pflichtangaben ersetzen.</p>
+
+      <div class="glass-card glw-prose">
+        <h2>Angaben gemäß § 5 DDG</h2>
+        <p>{siteName} GmbH · Musterstraße 1 · 00000 Musterstadt</p>
+        <h2>Vertreten durch</h2>
+        <p>Geschäftsführung: Max Mustermann</p>
+        <h2>Kontakt</h2>
+        <p>Telefon: +49 (0) 000 000000 · E-Mail: hallo@example.de</p>
+        <h2>Registereintrag</h2>
+        <p>Handelsregister: HRB 00000 · Registergericht: Amtsgericht Musterstadt · USt-IdNr.: DE000000000</p>
+      </div>
+
+      <div class="glw-page__back">
+        <a class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" href={href('/')}>← Zurück zur Startseite</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

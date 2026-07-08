@@ -1,0 +1,118 @@
+---
+/**
+ * Preis-Sektion mit beiden Zielgruppen-Varianten. Sichtbar ist jeweils das
+ * Grid passend zu data-audience auf <html> (.only-b2c / .only-b2b).
+ */
+type Plan = {
+  name: string;
+  tagline: string;
+  amount: string;
+  per?: string;
+  features: string[];
+  cta: string;
+  variant: 'primary' | 'secondary' | 'tertiary';
+  hot?: boolean;
+  flag?: string;
+};
+
+const plansB2C: Plan[] = [
+  {
+    name: 'Free',
+    tagline: 'Zum Ausprobieren',
+    amount: '0 €',
+    per: 'für immer',
+    features: ['100 Scans pro Monat', '2 GB verschlüsselter Speicher', 'Volltextsuche', '1 Gerät'],
+    cta: 'Kostenlos starten',
+    variant: 'tertiary',
+  },
+  {
+    name: 'Plus',
+    tagline: 'Für den vollen Überblick',
+    amount: '4,99 €',
+    per: 'pro Monat',
+    features: ['Unbegrenzte Scans', '200 GB Speicher', 'KI-Sortierung & Erinnerungen', 'Alle Geräte + Web', 'Prio-Support'],
+    cta: 'Plus holen',
+    variant: 'primary',
+    hot: true,
+    flag: 'Beliebt',
+  },
+  {
+    name: 'Familie',
+    tagline: 'Bis zu 6 Personen',
+    amount: '9,99 €',
+    per: 'pro Monat',
+    features: ['Alles aus Plus', '1 TB gemeinsamer Speicher', 'Geteilte Ordner & Vollmachten', 'Notfall-Zugriff'],
+    cta: 'Familie starten',
+    variant: 'secondary',
+  },
+];
+
+const plansB2B: Plan[] = [
+  {
+    name: 'Team',
+    tagline: 'Ab 5 Nutzer:innen',
+    amount: '12 €',
+    per: 'Nutzer / Monat',
+    features: ['Zentrale Verwaltung', 'Gemeinsame Ablagen & Rollen', 'Audit-Log', 'Support am selben Werktag'],
+    cta: 'Team testen',
+    variant: 'tertiary',
+  },
+  {
+    name: 'Business',
+    tagline: 'Für Fachabteilungen',
+    amount: '29 €',
+    per: 'Nutzer / Monat',
+    features: ['SSO / SCIM-Provisionierung', 'DMS-Integration: ELO, SharePoint', 'Freigabe-Workflows & Fristen', '99,9 % SLA', 'Revisionssichere Archivierung'],
+    cta: 'Demo vereinbaren',
+    variant: 'primary',
+    hot: true,
+    flag: 'Empfohlen',
+  },
+  {
+    name: 'Enterprise',
+    tagline: 'Für Konzerne & Verwaltung',
+    amount: 'Individuell',
+    features: ['On-Premises oder Private Cloud', 'Individuelle Workflows & API', 'Dedizierte Ansprechpartner', 'Onboarding & Schulungen'],
+    cta: 'Angebot anfragen',
+    variant: 'secondary',
+  },
+];
+
+const check = '<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>';
+---
+<section class="glw-section" id="preise">
+  <div class="glw-container">
+    <div class="glw-center reveal">
+      <span class="glw-eyebrow">Preise</span>
+      <h2 class="glw-h2 only-b2c">Fair für dich. Kostenlos zum Start.</h2>
+      <h2 class="glw-h2 only-b2b">Skaliert mit Ihrem Team.</h2>
+      <p class="glw-lead only-b2c">Starte gratis und upgrade erst, wenn dein Archiv wächst. Monatlich kündbar.</p>
+      <p class="glw-lead only-b2b">Transparente Nutzerpreise, jährliche Abrechnung. Enterprise-Konditionen auf Anfrage.</p>
+    </div>
+
+    {[
+      { plans: plansB2C, audience: 'only-b2c' },
+      { plans: plansB2B, audience: 'only-b2b' },
+    ].map(({ plans, audience }) => (
+      <div class={`glw-plans ${audience}`}>
+        {plans.map((p, i) => (
+          <div class={`glass-card glw-plan${p.hot ? ' glw-plan--hot' : ''} reveal`} style={`--d:${(i * 0.07).toFixed(2)}s`}>
+            {p.flag && <span class="glass-badge glass-badge--primary glw-plan__flag">{p.flag}</span>}
+            <h3 class="glw-plan__name">{p.name}</h3>
+            <p class="glw-plan__tagline">{p.tagline}</p>
+            <div class="glw-plan__price">
+              <span class="glw-plan__amount">{p.amount}</span>
+              {p.per && <span class="glw-plan__per">{p.per}</span>}
+            </div>
+            <ul>
+              {p.features.map((f) => (
+                <li><Fragment set:html={check} />{f}</li>
+              ))}
+            </ul>
+            <button class={`glass-btn glass-btn--${p.variant}`} type="button">{p.cta}</button>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>

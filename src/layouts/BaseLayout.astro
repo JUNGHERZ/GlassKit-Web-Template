@@ -1,0 +1,45 @@
+---
+import '@jungherz-de/glasskit/glasskit.css';
+import '../styles/site.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { defaultTitle, defaultDescription, href } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = defaultTitle, description = defaultDescription } = Astro.props;
+---
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href={href('/favicon.svg')} />
+    {/* Bootstrap MUSS is:inline im Head bleiben: setzt js-Marker, Theme und
+        Zielgruppe vor dem ersten Paint. Gebündelt/deferred gäbe es einen
+        Theme-Flash und kurz doppelte B2C/B2B-Inhalte. */}
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add('js');
+        if (!root.hasAttribute('data-theme')) {
+          root.setAttribute('data-theme', matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        }
+        if (!root.hasAttribute('data-audience')) root.setAttribute('data-audience', 'b2c');
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="glass-bg">
+      <SiteHeader />
+      <slot />
+      <SiteFooter />
+    </div>
+    <script>
+      import '../scripts/site.js';
+    </script>
+  </body>
+</html>

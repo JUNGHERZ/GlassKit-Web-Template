@@ -1,0 +1,48 @@
+---
+import BrandMark from './BrandMark.astro';
+import { siteName, glasskitUrl, href } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="glw-footer">
+  <div class="glw-container">
+    <div class="glw-footer__grid">
+      <div>
+        <a class="glw-brand" href={href('/#top')} aria-label={`${siteName} – nach oben`}>
+          <BrandMark gradientId="lg-brand-f" />
+          {siteName}
+        </a>
+        <p class="glw-footer__claim">
+          Das durchsuchbare Zuhause für deine Dokumente – privat wie im Unternehmen.
+        </p>
+      </div>
+      <div>
+        <h4>Produkt</h4>
+        <ul class="glw-footer__links">
+          <li><a href={href('/#features')}>Features</a></li>
+          <li><a href={href('/#preise')}>Preise</a></li>
+          <li><a href={href('/#showcase')}>Plattformen</a></li>
+          <li><a href={href('/#kontakt')}>Kontakt</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Rechtliches</h4>
+        <ul class="glw-footer__links">
+          <li><a href={href('/impressum/')}>Impressum</a></li>
+          <li><a href={href('/datenschutz/')}>Datenschutz</a></li>
+        </ul>
+      </div>
+      <div class="glw-footer__news">
+        <h4>Auf dem Laufenden bleiben</h4>
+        <p>Produktneuheiten und Praxis-Tipps, etwa einmal im Monat.</p>
+        <form class="glw-footer__form" onsubmit="return false">
+          <input class="glass-input" type="email" placeholder="deine@mail.de" aria-label="E-Mail-Adresse" />
+          <button class="glass-btn glass-btn--primary glass-btn--sm glass-btn--auto" type="submit">Abonnieren</button>
+        </form>
+      </div>
+    </div>
+    <div class="glw-footer__bottom">
+      <span>© {year} {siteName} GmbH · Demo-Inhalte für Template-Zwecke</span>
+      <span>Designsprache: <a href={glasskitUrl} rel="noopener">GlassKit</a></span>
+    </div>
+  </div>
+</footer>

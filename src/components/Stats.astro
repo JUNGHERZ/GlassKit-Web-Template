@@ -1,0 +1,21 @@
+---
+/** Kennzahlen-Leiste. Zahlen typografisch (tabular-nums), keine Diagramme. */
+const stats = [
+  { num: '250.000+', label: 'Nutzer:innen' },
+  { num: '12 Mio.', label: 'Dokumente verarbeitet' },
+  { num: '99,9 %', label: 'Verfügbarkeit' },
+  { num: '4,9 ★', label: 'App-Store-Bewertung' },
+];
+---
+<section class="glw-section--tight">
+  <div class="glw-container">
+    <div class="glw-stats reveal">
+      {stats.map((s) => (
+        <div class="glw-stat">
+          <span class="glw-stat__num">{s.num}</span>
+          <span class="glw-stat__label">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
