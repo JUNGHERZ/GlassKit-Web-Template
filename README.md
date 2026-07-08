@@ -76,6 +76,26 @@ src/
 9. Push auf `main` — GitHub Actions baut und deployed automatisch
    (einmalig: Settings → Pages → Source „GitHub Actions").
 
+## Kontaktformular anschließen
+
+Das Formular (`#kontakt`) ist provider-agnostisch: Ziel in `src/data/site.ts`
+unter `contactForm` konfigurieren — leerer `endpoint` = Demo-Modus.
+
+- **n8n-Webhook** (empfohlen, eigener Stack): `endpoint` auf den Webhook setzen;
+  Workflow: Webhook → `botcheck` prüfen → Ziel nach Wahl → Respond 200.
+  Über einen Notion-Node landen Anfragen z. B. direkt in einer Notion-Datenbank.
+  (Die Notion-API nie direkt aus dem Browser aufrufen: Der Secret-Token wäre
+  öffentlich, und Notion blockt Browser-CORS ohnehin.)
+- **Web3Forms**: `endpoint: 'https://api.web3forms.com/submit'` +
+  `hiddenFields: { access_key: '…' }` (der Key ist als öffentlich konzipiert).
+- **Formspree**: `endpoint: 'https://formspree.io/f/<form-id>'`.
+
+Eingebaut: Honeypot (`botcheck`, serverseitig erneut prüfen), Pflicht-Checkbox
+mit Link auf die Datenschutzerklärung, B2B-Zusatzfeld „Unternehmen". DSGVO:
+Der Empfänger gehört in die Datenschutzerklärung. Dies ist die einzige
+dokumentierte Ausnahme von der „keine externen Requests"-Konvention —
+es lädt nichts vor dem Absenden.
+
 **SEO-Hinweis:** Sitemap (`sitemap-index.xml`), `robots.txt`, Canonical- und
 Open-Graph-Meta werden automatisch generiert. Auf GitHub-Pages-*Projektseiten*
 (`…github.io/<repo>/`) liegt `robots.txt` nicht am Domain-Root und wird von

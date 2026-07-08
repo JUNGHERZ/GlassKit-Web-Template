@@ -1021,6 +1021,50 @@ body { margin: 0; }
 /* Ohne JS alle Antworten aufklappen (GlassKit kollabiert per max-height) */
 html:not(.js) .glass-accordion__content { max-height: none; }
 
+/* ---- 12c. Kontaktformular ---------------------------------------- */
+
+.glw-contact {
+  max-width: 780px;
+  margin: clamp(32px, 5vw, 48px) auto 0;
+}
+
+.glw-contact__form {
+  display: grid;
+  gap: var(--gl-space-md);
+}
+
+.glw-contact__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gl-space-md);
+}
+
+@media (max-width: 620px) {
+  .glw-contact__row { grid-template-columns: 1fr; }
+}
+
+.glw-contact .glass-checkbox__label a {
+  color: var(--gl-color-primary);
+  text-decoration: none;
+}
+
+.glw-contact .glass-checkbox__label a:hover { text-decoration: underline; }
+
+/* Honeypot: visuell und für Screenreader unsichtbar, für Bots ein normales Feld */
+.glw-hp {
+  position: absolute !important;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Status-Varianten auf GlassKit glass-status */
+.glw-status--success { border-color: var(--gl-color-success); }
+.glw-status--success svg { stroke: var(--gl-color-success); }
+.glw-status--error { border-color: var(--gl-color-error); }
+.glw-status--error svg { stroke: var(--gl-color-error); }
+
 /* ---- 13. Textseiten (Impressum, Datenschutz, …) ----------------- */
 
 .glw-page { padding-top: clamp(120px, 16vh, 156px); }

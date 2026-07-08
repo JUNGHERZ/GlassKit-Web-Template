@@ -55,6 +55,7 @@ public/og.png           Social preview image (1200×630) — replace per project
 | `Pricing` | Two plan grids, one per audience | `plansB2C[]` / `plansB2B[]`; `hot: true` highlights one plan |
 | `Quote` | Serif testimonial, one per audience | Paired `.only-b2c` / `.only-b2b` blocks |
 | `Faq` | GlassKit accordion + FAQPage JSON-LD | Edit the `faqs[]` array; `audience: 'b2c'\|'b2b'` marks audience-specific questions. JSON-LD mirrors the default (no-JS) view: general + B2C only. Toggle handled by site.js; without JS all answers render expanded |
+| `Contact` | Contact form (`id="kontakt"` — nav/footer link here) | Endpoint configured in `site.ts` (`contactForm`); empty endpoint = demo mode. Honeypot field `botcheck`, required consent checkbox linking to `/datenschutz/`, B2B-only company field. With JS: fetch + inline `glass-status`; without JS: native POST to the endpoint |
 | `CtaBanner` | Closing call-to-action panel | Warm border (`--gl-border-warm`) |
 | `SiteFooter` | Link columns, newsletter dummy, legal links | Rendered by BaseLayout |
 | `glw-page` + `glw-prose` | Plain text subpage (Impressum/Datenschutz pattern) | See `src/pages/impressum.astro` |
@@ -105,8 +106,21 @@ disables float/tilt/reveal — keep that media block intact.
 - No `<style>` blocks inside .astro components (Astro scoping breaks `.only-*`, `.js .reveal`, and JS-toggled classes).
 - Never edit GlassKit CSS or copy it into the repo; bump the npm version instead.
 - No bare `#anchor` hrefs in header/footer (they break on subpages).
-- No external requests (fonts, CDNs, analytics) — the built site is fully self-contained.
+- No external requests (fonts, CDNs, analytics) — the built site is fully self-contained. **Single documented exception:** the contact form's configured endpoint (user-initiated submit only, nothing loads before that; the recipient must be named in the privacy policy).
 - Don't remove the no-JS fallbacks (light-theme token block, `:root:not([data-audience])` rule).
+
+## 4b. Contact Form Providers
+
+Configure in `src/data/site.ts` (`contactForm`). All providers accept the same form POST; the component and site.js need no changes.
+
+| Target | endpoint | hiddenFields | Notes |
+|---|---|---|---|
+| Demo (default) | `''` | — | UI works, nothing is sent |
+| n8n webhook | `https://<n8n-host>/webhook/kontakt` | — | Workflow: Webhook (POST) → IF `botcheck` empty → any target → Respond 200. **This is also the route to Notion**: add a Notion node ("Create Database Page") in the workflow. Never call the Notion API directly from the browser — the secret token would be public and Notion blocks browser CORS |
+| Web3Forms | `https://api.web3forms.com/submit` | `{ access_key: '<key>' }` | access_key is designed to be public |
+| Formspree | `https://formspree.io/f/<form-id>` | — | Their `_gotcha` honeypot can be added via hiddenFields if desired |
+
+Server-side: always re-check the `botcheck` field (client check alone is bypassable). GDPR: name the recipient/processor in `/datenschutz/`.
 
 ## 5. Recipe: New Website From This Template
 

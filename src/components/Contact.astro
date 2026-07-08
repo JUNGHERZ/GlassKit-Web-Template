@@ -1,0 +1,78 @@
+---
+/**
+ * Kontaktformular. Versand-Ziel in src/data/site.ts konfigurieren (contactForm):
+ * n8n-Webhook, Web3Forms oder Formspree – alle nehmen denselben Form-POST an.
+ * Leerer endpoint = Demo-Modus. Ohne JS postet das Formular nativ zum Endpoint;
+ * mit JS übernimmt site.js (fetch + Inline-Status statt Seitenwechsel).
+ * Honeypot: Feld "botcheck" – Einsendungen mit Inhalt verwerfen (macht site.js
+ * clientseitig, der n8n-Workflow sollte es serverseitig ebenfalls prüfen).
+ */
+import { contactForm, href } from '../data/site';
+const hidden = Object.entries(contactForm.hiddenFields);
+---
+<section class="glw-section" id="kontakt">
+  <div class="glw-container">
+    <div class="glw-center reveal">
+      <span class="glw-eyebrow">Kontakt</span>
+      <h2 class="glw-h2 only-b2c">Schreib uns – wir antworten schnell.</h2>
+      <h2 class="glw-h2 only-b2b">Erzählen Sie uns von Ihrem Projekt.</h2>
+      <p class="glw-lead only-b2c">Fragen zur App, zu Tarifen oder zum Datenexport? Meist antworten wir am selben Tag.</p>
+      <p class="glw-lead only-b2b">Schildern Sie kurz Ausgangslage und Ziel – wir melden uns mit einer ehrlichen Einschätzung.</p>
+    </div>
+
+    <div class="glw-contact reveal">
+      <form class="glass-card glw-contact__form" data-contact-form method="POST" action={contactForm.endpoint || undefined}>
+        {hidden.map(([name, value]) => <input type="hidden" name={name} value={value} />)}
+
+        <div class="glw-contact__row">
+          <div class="glass-input-group">
+            <label class="glass-label" for="cf-name">Name</label>
+            <input class="glass-input" id="cf-name" name="name" type="text" required autocomplete="name" placeholder="Vor- und Nachname" />
+          </div>
+          <div class="glass-input-group">
+            <label class="glass-label" for="cf-email">E-Mail</label>
+            <input class="glass-input" id="cf-email" name="email" type="email" required autocomplete="email" placeholder="name@beispiel.de" />
+          </div>
+        </div>
+
+        <div class="glass-input-group only-b2b">
+          <label class="glass-label" for="cf-company">Unternehmen</label>
+          <input class="glass-input" id="cf-company" name="company" type="text" autocomplete="organization" placeholder="Firma / Organisation" />
+        </div>
+
+        <div class="glass-input-group">
+          <label class="glass-label" for="cf-message">Nachricht</label>
+          <textarea class="glass-textarea" id="cf-message" name="message" rows="5" required placeholder="Worum geht es?"></textarea>
+        </div>
+
+        {/* Honeypot – für Menschen unsichtbar, Bots füllen es aus */}
+        <div class="glw-hp" aria-hidden="true">
+          <label>Dieses Feld bitte leer lassen
+            <input type="text" name="botcheck" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+
+        <label class="glass-checkbox">
+          <input class="glass-checkbox__input" type="checkbox" name="consent" required />
+          <span class="glass-checkbox__box">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </span>
+          <span class="glass-checkbox__label">
+            Ich habe die <a href={href('/datenschutz/')}>Datenschutzerklärung</a> gelesen
+            und bin mit der Verarbeitung meiner Angaben einverstanden.
+          </span>
+        </label>
+
+        <button class="glass-btn glass-btn--primary" type="submit">
+          <span class="only-b2c">Nachricht senden</span>
+          <span class="only-b2b">Anfrage senden</span>
+        </button>
+
+        <div class="glass-status glw-status" id="contactStatus" role="status" hidden>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="8"></line></svg>
+          <p></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

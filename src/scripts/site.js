@@ -98,6 +98,48 @@
     });
   });
 
+  /* ---- Kontaktformular -----------------------------------------
+     Endpoint kommt aus src/data/site.ts (action-Attribut). Leer =
+     Demo-Modus. Mit Endpoint: fetch-POST + Inline-Status statt
+     Seitenwechsel; ohne JS postet das Formular nativ. */
+  var cform = document.querySelector('[data-contact-form]');
+  if (cform) {
+    var cstatus = document.getElementById('contactStatus');
+    var cstatusText = cstatus.querySelector('p');
+    var showStatus = function (type, msg) {
+      cstatus.hidden = false;
+      cstatus.classList.remove('glw-status--success', 'glw-status--error');
+      if (type) cstatus.classList.add('glw-status--' + type);
+      cstatusText.textContent = msg;
+    };
+    cform.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (cform.elements.botcheck && cform.elements.botcheck.value) return; /* Honeypot */
+      var endpoint = cform.getAttribute('action');
+      if (!endpoint) {
+        showStatus('success', 'Demo-Modus: Es wurde nichts versendet. Endpoint in src/data/site.ts konfigurieren.');
+        cform.reset();
+        return;
+      }
+      var submitBtn = cform.querySelector('[type="submit"]');
+      submitBtn.disabled = true;
+      showStatus('', 'Nachricht wird gesendet …');
+      fetch(endpoint, {
+        method: 'POST',
+        body: new FormData(cform),
+        headers: { Accept: 'application/json' }
+      }).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        showStatus('success', 'Danke! Die Nachricht ist angekommen – wir melden uns zeitnah.');
+        cform.reset();
+      }).catch(function () {
+        showStatus('error', 'Senden fehlgeschlagen. Bitte später erneut versuchen.');
+      }).finally(function () {
+        submitBtn.disabled = false;
+      });
+    });
+  }
+
   /* ---- Scroll-Reveal ----------------------------------------- */
   var revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !reducedMotion.matches) {
