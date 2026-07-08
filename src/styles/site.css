@@ -968,13 +968,6 @@ body { margin: 0; }
 
 .glw-page__back { margin-top: 32px; }
 
-/* Buttons als Links: <a> ist kein <button> – ohne inline-flex würde
-   glass-btn--auto auf Anchors trotzdem volle Breite einnehmen. */
-a.glass-btn {
-  text-decoration: none;
-  display: inline-flex;
-}
-
 /* ---- 14. Scroll-Reveal & Motion -------------------------------- */
 
 .js .reveal {
