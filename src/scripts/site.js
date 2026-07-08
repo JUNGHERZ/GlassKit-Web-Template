@@ -5,14 +5,13 @@
   var root = document.documentElement;
   var reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
-  /* ---- Theme-Umschalter ------------------------------------- */
-  var themeBtn = document.getElementById('themeToggle');
-  if (themeBtn) {
-    themeBtn.addEventListener('click', function () {
+  /* ---- Theme-Umschalter (alle Instanzen) ---------------------- */
+  document.querySelectorAll('.glass-theme-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
       var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
       root.setAttribute('data-theme', next);
     });
-  }
+  });
 
   /* ---- Zielgruppen-Umschalter (B2C / B2B) -------------------- */
   var segBtns = document.querySelectorAll('[data-audience-btn]');
@@ -42,6 +41,51 @@
   };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---- Mobile-Navigation (details/summary) --------------------
+     Auf-/Zuklappen funktioniert nativ ohne JS; hier nur Komfort:
+     Scroll-Lock, Fokus-Trap im Header, ESC, Schließen nach Klick. */
+  var mnav = document.getElementById('mobileNav');
+  if (mnav && header) {
+    var mnavSummary = mnav.querySelector('summary');
+    var mnavPanel = mnav.querySelector('.glw-mobilenav__panel');
+
+    mnav.addEventListener('toggle', function () {
+      root.classList.toggle('glw-nav-open', mnav.open);
+      if (mnav.open) {
+        var first = mnavPanel.querySelector('a, button');
+        if (first) first.focus();
+      }
+    });
+
+    mnavPanel.addEventListener('click', function (e) {
+      if (e.target.closest('a')) mnav.open = false;
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!mnav.open) return;
+      if (e.key === 'Escape') {
+        mnav.open = false;
+        mnavSummary.focus();
+        return;
+      }
+      if (e.key === 'Tab') {
+        var focusables = [].slice
+          .call(header.querySelectorAll('a, button, summary'))
+          .filter(function (el) { return el.offsetParent !== null; });
+        if (!focusables.length) return;
+        var i = focusables.indexOf(document.activeElement);
+        var last = focusables.length - 1;
+        if (e.shiftKey && i <= 0) {
+          e.preventDefault();
+          focusables[last].focus();
+        } else if (!e.shiftKey && i === last) {
+          e.preventDefault();
+          focusables[0].focus();
+        }
+      }
+    });
+  }
 
   /* ---- Scroll-Reveal ----------------------------------------- */
   var revealEls = document.querySelectorAll('.reveal');

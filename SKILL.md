@@ -32,13 +32,18 @@ src/components/*.astro  One file per section. Copy lives HERE, next to its marku
                         Repeated structures (features, stats, plans) are frontmatter
                         const arrays rendered with .map().
 src/pages/*.astro       File routing. index.astro composes the one-pager.
+                        404.astro → dist/404.html (served by GitHub Pages).
+src/pages/robots.txt.ts Generates robots.txt from site+base (fork-safe).
+                        Note: ignored by crawlers on github.io/<repo>/ project
+                        pages (not at domain root); effective with custom domain.
+public/og.png           Social preview image (1200×630) — replace per project.
 ```
 
 ## 2. Section Catalog (compose in `src/pages/index.astro`)
 
 | Component | Purpose | Notes |
 |---|---|---|
-| `SiteHeader` | Fixed glass nav: brand, anchors, theme toggle, CTA | Always first inside layout (rendered by BaseLayout) |
+| `SiteHeader` | Fixed glass nav: brand, anchors, theme toggle, CTA, mobile menu | Rendered by BaseLayout. Nav links exist TWICE: desktop `.glw-nav` and the `<details id="mobileNav">` overlay panel — always update both. Mobile menu opens/closes natively without JS (details/summary); site.js adds focus trap, ESC, scroll lock |
 | `Hero` | Audience switch + headline pair + CTAs + decorative device panel | The device panel is a mini component showcase (aria-hidden); swap its content to match the product |
 | `LogoStrip` | Social proof wordmarks | Text-only, styled via `glw-wordmark--*` variants |
 | `Features` | 3-column glass card grid | Edit the `features[]` array (icon = inline outline SVG string, 24 viewBox) |
@@ -89,6 +94,7 @@ disables float/tilt/reveal — keep that media block intact.
 - Build every page/anchor link with `href()` from `src/data/site.ts`: `href('/#preise')`, `href('/impressum/')` — subpage links with trailing slash.
 - Use `--gl-*` tokens for every color/radius/shadow; brand re-colors go through a GlassKit theme-override, never hex values in glw rules.
 - New sections: `glw-` prefix, global CSS in site.css, follow the section skeleton.
+- Pass per-page `title`, `description` (and optional `ogImage`) via BaseLayout props — canonical, OG/Twitter meta and sitemap come for free.
 - Keep decorative UI (`Hero` device panel, `Showcase` window) `aria-hidden` and non-interactive (spans styled as buttons, not real `<button>`).
 
 ❌ Never
@@ -103,11 +109,12 @@ disables float/tilt/reveal — keep that media block intact.
 1. Use repo as template/fork; `npm install`.
 2. `astro.config.mjs`: set `base` to `'/<new-repo-name>'` (or remove for custom domain + add `public/CNAME`).
 3. `src/data/site.ts`: siteName, defaultTitle, defaultDescription, repoUrl.
-4. Replace copy per section in `src/components/` (grep for `LUMEN`); adjust the Hero device panel to the product.
-5. Choose sections: reorder/remove imports in `src/pages/index.astro`; single-audience sites may drop the switch and all `.only-b2b` blocks.
-6. Fill `impressum.astro` / `datenschutz.astro` with real legal content.
-7. Verify: `npm run build && npm run preview` — check both themes, both audiences, mobile, subpage links.
-8. Push to `main`; one-time repo setting: Settings → Pages → Source "GitHub Actions".
+4. Replace copy per section in `src/components/` (grep for `LUMEN`); adjust the Hero device panel to the product. Nav links live twice in SiteHeader (desktop + mobile panel).
+5. Replace `public/og.png` (1200×630 social preview) and `public/favicon.svg`.
+6. Choose sections: reorder/remove imports in `src/pages/index.astro`; single-audience sites may drop the switch and all `.only-b2b` blocks.
+7. Fill `impressum.astro` / `datenschutz.astro` with real legal content.
+8. Verify: `npm run build && npm run preview` — check both themes, both audiences, mobile (incl. burger menu), subpage links.
+9. Push to `main`; one-time repo setting: Settings → Pages → Source "GitHub Actions".
 
 ## 6. Recipe: Convert an Existing Website to This Template
 
@@ -120,4 +127,4 @@ disables float/tilt/reveal — keep that media block intact.
    `glass-list`, `glass-badge`, …) instead of importing foreign styles.
 4. Keep the old site's brand colors via a GlassKit theme-override file (token
    overrides), not by editing glasskit.css or glw rules.
-5. Run the verification from recipe step 7.
+5. Run the verification from recipe 5, step 8.

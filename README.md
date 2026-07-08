@@ -64,13 +64,21 @@ src/
 2. `astro.config.mjs`: `base` an den neuen Repo-Namen anpassen — bei Custom Domain
    `base` entfernen, `site` auf die Domain setzen und `public/CNAME` anlegen.
 3. `src/data/site.ts`: Name, Title, Description, Repo-URL.
-4. Copy pro Sektion in `src/components/` tauschen (nach „LUMEN" suchen).
-5. Sektionen in `src/pages/index.astro` an-/abwählen oder umsortieren.
-6. Branding-Farben bei Bedarf per [GlassKit theme-override](https://github.com/JUNGHERZ/GlassKit)
+4. Copy pro Sektion in `src/components/` tauschen (nach „LUMEN" suchen) —
+   die Nav-Links existieren zweimal (Desktop-Nav + Mobile-Menü im Header).
+5. `public/og.png` ersetzen (Social-Vorschaubild, 1200 × 630) und `public/favicon.svg` anpassen.
+6. Sektionen in `src/pages/index.astro` an-/abwählen oder umsortieren.
+7. Branding-Farben bei Bedarf per [GlassKit theme-override](https://github.com/JUNGHERZ/GlassKit)
    (Tokens überschreiben, nie glasskit.css anfassen).
-7. Impressum/Datenschutz mit echten Angaben füllen.
-8. Push auf `main` — GitHub Actions baut und deployed automatisch
+8. Impressum/Datenschutz mit echten Angaben füllen.
+9. Push auf `main` — GitHub Actions baut und deployed automatisch
    (einmalig: Settings → Pages → Source „GitHub Actions").
+
+**SEO-Hinweis:** Sitemap (`sitemap-index.xml`), `robots.txt`, Canonical- und
+Open-Graph-Meta werden automatisch generiert. Auf GitHub-Pages-*Projektseiten*
+(`…github.io/<repo>/`) liegt `robots.txt` nicht am Domain-Root und wird von
+Crawlern ignoriert — die Sitemap dort per Search Console einreichen. Mit
+Custom Domain greift alles automatisch.
 
 ## Roadmap
 

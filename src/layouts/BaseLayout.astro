@@ -3,13 +3,20 @@ import '@jungherz-de/glasskit/glasskit.css';
 import '../styles/site.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import { defaultTitle, defaultDescription, href } from '../data/site';
+import { siteName, defaultTitle, defaultDescription, href } from '../data/site';
 
 interface Props {
   title?: string;
   description?: string;
+  /** Absolute oder base-relative URL; Standard: public/og.png (beim Rebranding ersetzen) */
+  ogImage?: string;
 }
-const { title = defaultTitle, description = defaultDescription } = Astro.props;
+const { title = defaultTitle, description = defaultDescription, ogImage = href('/og.png') } = Astro.props;
+// Trailing Slash erzwingen – GitHub Pages liefert Verzeichnis-URLs, und die
+// Sitemap listet sie mit Slash; Canonical muss dieselbe Form haben.
+const canonicalPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonical = new URL(canonicalPath, Astro.site);
+const ogImageUrl = new URL(ogImage, Astro.site);
 ---
 <html lang="de">
   <head>
@@ -18,6 +25,18 @@ const { title = defaultTitle, description = defaultDescription } = Astro.props;
     <meta name="description" content={description} />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href={href('/favicon.svg')} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href={href('/sitemap-index.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     {/* Bootstrap MUSS is:inline im Head bleiben: setzt js-Marker, Theme und
         Zielgruppe vor dem ersten Paint. Gebündelt/deferred gäbe es einen
         Theme-Flash und kurz doppelte B2C/B2B-Inhalte. */}

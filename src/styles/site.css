@@ -140,12 +140,23 @@ body { margin: 0; }
   border-bottom: 1px solid transparent;
 }
 
-.glw-header.is-scrolled {
+.glw-header.is-scrolled,
+.glw-nav-open .glw-header {
   background: var(--gl-surface-1);
   backdrop-filter: blur(var(--gl-blur));
   -webkit-backdrop-filter: blur(var(--gl-blur));
   border-bottom-color: var(--gl-border-subtle);
   box-shadow: var(--gl-shadow-btn);
+}
+
+/* Bei offenem Mobile-Menü KEIN backdrop-filter auf dem Header:
+   ein Filter macht den Header zum Containing Block für position:fixed –
+   das Menü-Panel würde sonst auf Header-Größe eingesperrt. Stattdessen
+   solide Fläche passend zum Panel-Verlauf. */
+.glw-nav-open .glw-header {
+  background: var(--gl-color-bg-light);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .glw-header__inner {
@@ -195,6 +206,65 @@ body { margin: 0; }
 
 @media (max-width: 900px) {
   .glw-nav { display: none; }
+  .glw-header__cta { display: none; } /* CTA wandert ins Mobile-Menü */
+}
+
+/* ---- 2b. Mobile-Navigation (details/summary) ------------------ */
+
+.glw-mobilenav { display: none; }
+
+@media (max-width: 900px) {
+  .glw-mobilenav { display: block; }
+}
+
+.glw-mobilenav summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+}
+
+.glw-mobilenav summary::-webkit-details-marker { display: none; }
+
+.glw-mobilenav .icon-close { display: none; }
+.glw-mobilenav[open] .icon-close { display: block; }
+.glw-mobilenav[open] .icon-burger { display: none; }
+
+.glw-mobilenav__panel {
+  position: fixed;
+  inset: 76px 0 0 0;
+  z-index: 45;
+  overflow-y: auto;
+  padding: 20px clamp(20px, 4vw, 32px) 40px;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(ellipse at 20% 30%, var(--gl-bg-aurora-1) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, var(--gl-bg-aurora-2) 0%, transparent 50%),
+    linear-gradient(170deg, var(--gl-color-bg-light) 0%, var(--gl-color-bg-mid) 50%, var(--gl-color-bg-dark) 100%);
+}
+
+.glw-mobilenav[open] .glw-mobilenav__panel { animation: glw-fade 0.3s ease both; }
+
+.glw-mobilenav__panel nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.glw-mobilenav__panel nav a {
+  padding: 18px 4px;
+  font-size: 24px;
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gl-border-subtle);
+}
+
+.glw-mobilenav__panel nav a:active { color: var(--gl-color-primary); }
+
+.glw-mobilenav__panel .glass-btn { margin-top: 28px; }
+
+@media (max-width: 900px) {
+  .glw-nav-open { overflow: hidden; } /* Scroll-Lock nur solange das Menü existiert */
 }
 
 /* ---- 3. Zielgruppen-Umschalter (B2C / B2B) ------------------- */
@@ -966,7 +1036,12 @@ body { margin: 0; }
   margin: 0;
 }
 
-.glw-page__back { margin-top: 32px; }
+.glw-page__back {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gl-space-sm);
+}
 
 /* ---- 14. Scroll-Reveal & Motion -------------------------------- */
 
@@ -988,4 +1063,5 @@ body { margin: 0; }
   .glw-window { transform: none !important; transition: none; }
   .glw-feature, .glw-feature:hover { transform: none; transition: none; }
   .glw-aud-fade { animation: none; }
+  .glw-mobilenav[open] .glw-mobilenav__panel { animation: none; }
 }

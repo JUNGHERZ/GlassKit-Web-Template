@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteName, href } from '../data/site';
+---
+<BaseLayout title={`Seite nicht gefunden – ${siteName}`} description="Diese Seite existiert nicht (mehr).">
+  <section class="glw-section glw-page">
+    <div class="glw-container">
+      <span class="glw-eyebrow">Fehler 404</span>
+      <h1 class="glw-h2">Diese Seite ist im Ablagefach nicht auffindbar.</h1>
+      <p class="glw-lead">
+        Der Link ist veraltet oder die Adresse wurde vertippt. Kein Grund zur
+        Sorge – anders als bei Papier geht hier nichts verloren.
+      </p>
+
+      <div class="glw-page__back">
+        <a class="glass-btn glass-btn--primary glass-btn--sm glass-btn--auto" href={href('/')}>Zur Startseite</a>
+        <a class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" href={href('/#kontakt')}>Kontakt aufnehmen</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
