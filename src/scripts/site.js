@@ -87,6 +87,17 @@
     });
   }
 
+  /* ---- Accordion (FAQ) ----------------------------------------
+     GlassKit steuert das Accordion über is-open auf dem Item;
+     hier Klick-Toggle + aria-expanded. Ohne JS zeigt ein CSS-Fallback
+     alle Antworten aufgeklappt (site.css). */
+  document.querySelectorAll('.glass-accordion__trigger').forEach(function (trigger) {
+    trigger.addEventListener('click', function () {
+      var open = trigger.parentElement.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', String(open));
+    });
+  });
+
   /* ---- Scroll-Reveal ----------------------------------------- */
   var revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !reducedMotion.matches) {

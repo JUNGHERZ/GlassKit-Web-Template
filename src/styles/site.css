@@ -1011,6 +1011,16 @@ body { margin: 0; }
   .glw-footer__grid { grid-template-columns: 1fr; }
 }
 
+/* ---- 12b. FAQ ---------------------------------------------------- */
+
+.glw-faq {
+  max-width: 780px;
+  margin: clamp(32px, 5vw, 48px) auto 0;
+}
+
+/* Ohne JS alle Antworten aufklappen (GlassKit kollabiert per max-height) */
+html:not(.js) .glass-accordion__content { max-height: none; }
+
 /* ---- 13. Textseiten (Impressum, Datenschutz, …) ----------------- */
 
 .glw-page { padding-top: clamp(120px, 16vh, 156px); }

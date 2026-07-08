@@ -32,6 +32,7 @@ astro.config.mjs              site + base (GitHub-Pages-Projektseite)
 src/
 ├── data/site.ts              Site-Konstanten + href()-Helper für base-sichere Links
 ├── styles/site.css           Web-Layer (.glw-*): Layout, Sektionen — nur --gl-*-Tokens
+├── styles/brand.css          Kunden-Branding: Token-Overrides (mit Beispiel-Themes)
 ├── scripts/site.js           Theme-Toggle, B2C/B2B-Umschalter, Scroll-Reveal, 3D-Tilt
 ├── layouts/BaseLayout.astro  Head, GlassKit-Import, Bootstrap-Script, Header/Footer
 ├── components/               Eine Datei pro Sektion (Copy wird direkt dort editiert)
@@ -68,8 +69,9 @@ src/
    die Nav-Links existieren zweimal (Desktop-Nav + Mobile-Menü im Header).
 5. `public/og.png` ersetzen (Social-Vorschaubild, 1200 × 630) und `public/favicon.svg` anpassen.
 6. Sektionen in `src/pages/index.astro` an-/abwählen oder umsortieren.
-7. Branding-Farben bei Bedarf per [GlassKit theme-override](https://github.com/JUNGHERZ/GlassKit)
-   (Tokens überschreiben, nie glasskit.css anfassen).
+7. Branding-Farben in `src/styles/brand.css` setzen — Token-Overrides nach dem
+   Muster von [GlassKit theme-override](https://github.com/JUNGHERZ/GlassKit),
+   Beispiel-Themes liegen auskommentiert bei (nie glasskit.css anfassen).
 8. Impressum/Datenschutz mit echten Angaben füllen.
 9. Push auf `main` — GitHub Actions baut und deployed automatisch
    (einmalig: Settings → Pages → Source „GitHub Actions").

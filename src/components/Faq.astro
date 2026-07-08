@@ -1,0 +1,86 @@
+---
+/**
+ * FAQ-Sektion: GlassKit-Accordion + FAQPage-JSON-LD (Chance auf Google-Rich-Results).
+ * Fragen ohne `audience` gelten für beide Zielgruppen; mit `audience` werden sie
+ * über .only-b2c/.only-b2b ein-/ausgeblendet. Das JSON-LD enthält bewusst nur die
+ * Default-Ansicht (allgemein + B2C) — exakt das, was Crawler ohne JS sehen.
+ */
+type QA = { q: string; a: string; audience?: 'b2c' | 'b2b' };
+
+const faqs: QA[] = [
+  {
+    q: 'Wie sicher sind meine Dokumente bei LUMEN?',
+    a: 'Alle Dokumente werden bereits auf dem Gerät verschlüsselt und ausschließlich in deutschen Rechenzentren gespeichert. Auch wir selbst können Ihre Inhalte nicht lesen – Volltextsuche und KI-Sortierung arbeiten auf verschlüsselten Indizes.',
+  },
+  {
+    q: 'Funktioniert LUMEN auch offline?',
+    a: 'Ja. Scannen, Suchen und Lesen funktionieren komplett offline – im Zug genauso wie im Keller-Archiv. Sobald wieder eine Verbindung besteht, synchronisiert LUMEN alle Änderungen automatisch.',
+  },
+  {
+    q: 'Welche Formate werden unterstützt?',
+    a: 'Fotos (JPG, PNG, HEIC), PDFs und Office-Dokumente. Scans werden als durchsuchbares PDF/A abgelegt – dem Standardformat für Langzeitarchivierung.',
+  },
+  {
+    q: 'Kann ich jederzeit kündigen?',
+    a: 'Ja, alle Privat-Tarife sind monatlich kündbar. Dein Archiv kannst du vorher vollständig exportieren – als ZIP mit Ordnerstruktur, ohne Format-Tricks.',
+    audience: 'b2c',
+  },
+  {
+    q: 'Was passiert mit meinen Daten nach der Kündigung?',
+    a: 'Du hast 30 Tage Zeit für den Export, danach werden alle Daten unwiderruflich gelöscht – inklusive Backups. Eine Bestätigung der Löschung bekommst du per E-Mail.',
+    audience: 'b2c',
+  },
+  {
+    q: 'Wie läuft die Integration in ELO oder SharePoint?',
+    a: 'LUMEN Business bringt fertige Connectoren mit: Erfasste Dokumente landen automatisch klassifiziert in Ihrem DMS, inklusive Metadaten und Verschlagwortung. Die Einrichtung begleiten wir im Onboarding – typisch sind ein bis zwei Tage.',
+    audience: 'b2b',
+  },
+  {
+    q: 'Gibt es LUMEN auch On-Premises?',
+    a: 'Im Enterprise-Plan betreiben Sie LUMEN in Ihrer Private Cloud oder vollständig On-Premises – inklusive revisionssicherer Archivierung und dediziertem Support.',
+    audience: 'b2b',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs
+    .filter((f) => f.audience !== 'b2b')
+    .map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+};
+---
+<section class="glw-section" id="faq">
+  <div class="glw-container">
+    <div class="glw-center reveal">
+      <span class="glw-eyebrow">Häufige Fragen</span>
+      <h2 class="glw-h2">Kurz beantwortet.</h2>
+      <p class="glw-lead only-b2c">Alles Wichtige zu Sicherheit, Tarifen und deinen Daten.</p>
+      <p class="glw-lead only-b2b">Alles Wichtige zu Sicherheit, Integration und Betrieb.</p>
+    </div>
+
+    <div class="glw-faq reveal">
+      <div class="glass-accordion">
+        {faqs.map((f, i) => (
+          <div class={`glass-accordion__item${i === 0 ? ' is-open' : ''}${f.audience ? ` only-${f.audience}` : ''}`}>
+            <button class="glass-accordion__trigger" type="button" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`faq-a-${i}`}>
+              <span>{f.q}</span>
+              <span class="glass-accordion__trigger-icon">
+                <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </span>
+            </button>
+            <div class="glass-accordion__content" id={`faq-a-${i}`}>
+              <div class="glass-accordion__body">{f.a}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </div>
+</section>

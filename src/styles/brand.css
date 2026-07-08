@@ -1,0 +1,67 @@
+/* ============================================================
+   BRAND OVERRIDE — Kunden-Branding für dieses Projekt
+
+   Mechanik wie GlassKits theme-override.css: Diese Datei wird
+   NACH glasskit.css und site.css geladen (BaseLayout.astro) und
+   überschreibt NUR die Tokens, die abweichen. glasskit.css und
+   site.css bleiben unangetastet.
+
+   Regeln:
+   - Ausschließlich --gl-*-Tokens überschreiben, keine Selektoren
+     der Komponenten anfassen.
+   - Ein :root-Block genügt für Dark UND Light (brand.css lädt
+     zuletzt und gewinnt die Kaskade gegen beide Theme-Blöcke).
+   - Wer pro Theme unterschiedliche Werte braucht, ergänzt die
+     auskommentierten Blöcke unten.
+   - Kontrast prüfen: Primary muss auf beiden Gründen funktionieren
+     (Dark-Teal und Light-Grau) — im Zweifel Light-Variante dunkler.
+   ============================================================ */
+
+
+/* ============================================================
+   BEISPIEL: Theme "Ocean Blue" — zum Aktivieren auskommentieren
+   ============================================================ */
+
+/*
+:root {
+  --gl-color-primary:        #007AFF;
+  --gl-color-primary-dark:   #0055CC;
+  --gl-color-primary-mid:    #0066E0;
+
+  --gl-border-warm:          rgba(0, 122, 255, 0.35);
+  --gl-border-focus:         rgba(0, 122, 255, 0.60);
+
+  --gl-shadow-btn-primary:   0 6px 24px rgba(0, 100, 220, 0.35),
+                             0 2px 8px rgba(0, 0, 0, 0.15);
+  --gl-shadow-focus:         0 0 0 3px rgba(0, 122, 255, 0.3);
+
+  --gl-bg-warm-glow:         rgba(0, 122, 255, 0.10);
+}
+*/
+
+
+/* ============================================================
+   OPTIONAL: Abweichende Werte pro Theme
+   ============================================================ */
+
+/*
+[data-theme="light"] {
+  --gl-color-primary:        #0062cc;   Light-Grund braucht oft mehr Kontrast
+}
+*/
+
+
+/* ============================================================
+   OPTIONAL: No-JS-Fallback (OS-Präferenz hell, ohne data-theme)
+   Nur nötig, wenn oben ein [data-theme="light"]-Block existiert —
+   dieselben Werte hier spiegeln, damit auch ohne JavaScript das
+   richtige Branding erscheint.
+   ============================================================ */
+
+/*
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --gl-color-primary:      #0062cc;
+  }
+}
+*/

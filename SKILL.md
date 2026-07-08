@@ -24,6 +24,9 @@ astro.config.mjs        site + base. Fork → change base to '/<repo-name>'.
                         Custom domain → remove base, set site, add public/CNAME.
 src/data/site.ts        siteName, titles, repoUrl + base/href() link helper.
 src/styles/site.css     ALL custom CSS (global). glw-* classes, --gl-* tokens only.
+src/styles/brand.css    Per-project brand overrides (--gl-* tokens ONLY, loads last).
+                        This is THE place for client colors — never edit glasskit.css
+                        or recolor glw rules. Ships with commented example themes.
 src/scripts/site.js     Behavior: theme toggle, audience switch, reveal, tilt.
                         Progressive enhancement — pages must work without it.
 src/layouts/BaseLayout.astro  <head>, CSS imports (GlassKit BEFORE site.css),
@@ -51,6 +54,7 @@ public/og.png           Social preview image (1200×630) — replace per project
 | `Stats` | 4 KPI figures, typographic | `stats[]` array; keep `tabular-nums` styling |
 | `Pricing` | Two plan grids, one per audience | `plansB2C[]` / `plansB2B[]`; `hot: true` highlights one plan |
 | `Quote` | Serif testimonial, one per audience | Paired `.only-b2c` / `.only-b2b` blocks |
+| `Faq` | GlassKit accordion + FAQPage JSON-LD | Edit the `faqs[]` array; `audience: 'b2c'\|'b2b'` marks audience-specific questions. JSON-LD mirrors the default (no-JS) view: general + B2C only. Toggle handled by site.js; without JS all answers render expanded |
 | `CtaBanner` | Closing call-to-action panel | Warm border (`--gl-border-warm`) |
 | `SiteFooter` | Link columns, newsletter dummy, legal links | Rendered by BaseLayout |
 | `glw-page` + `glw-prose` | Plain text subpage (Impressum/Datenschutz pattern) | See `src/pages/impressum.astro` |
@@ -92,7 +96,7 @@ disables float/tilt/reveal — keep that media block intact.
 - Import order in BaseLayout: `@jungherz-de/glasskit/glasskit.css` **before** `../styles/site.css`.
 - Keep the bootstrap script as `<script is:inline>` in `<head>` (it must run before first paint).
 - Build every page/anchor link with `href()` from `src/data/site.ts`: `href('/#preise')`, `href('/impressum/')` — subpage links with trailing slash.
-- Use `--gl-*` tokens for every color/radius/shadow; brand re-colors go through a GlassKit theme-override, never hex values in glw rules.
+- Use `--gl-*` tokens for every color/radius/shadow; brand re-colors go into `src/styles/brand.css` (token overrides, loads last), never as hex values in glw rules.
 - New sections: `glw-` prefix, global CSS in site.css, follow the section skeleton.
 - Pass per-page `title`, `description` (and optional `ogImage`) via BaseLayout props — canonical, OG/Twitter meta and sitemap come for free.
 - Keep decorative UI (`Hero` device panel, `Showcase` window) `aria-hidden` and non-interactive (spans styled as buttons, not real `<button>`).
@@ -125,6 +129,6 @@ disables float/tilt/reveal — keep that media block intact.
 3. For content with no matching section type, build a new `glw-` section following the
    skeleton and rules above — compose from GlassKit components (`glass-card`,
    `glass-list`, `glass-badge`, …) instead of importing foreign styles.
-4. Keep the old site's brand colors via a GlassKit theme-override file (token
-   overrides), not by editing glasskit.css or glw rules.
+4. Keep the old site's brand colors via `src/styles/brand.css` (token overrides,
+   example themes included), not by editing glasskit.css or glw rules.
 5. Run the verification from recipe 5, step 8.
