@@ -44,6 +44,10 @@ src/pages/robots.txt.ts Generates robots.txt from site+base (fork-safe).
                         Note: ignored by crawlers on github.io/<repo>/ project
                         pages (not at domain root); effective with custom domain.
 public/og.png           Social preview image (1200×630) — replace per project.
+playwright.config.ts    Smoke-test config. baseURL/webServer derive from astro.config.mjs
+                        (fork-safe); webServer rebuilds before preview (stale-dist guard).
+tests/smoke.spec.ts     CI smoke tests — run as the "test" job in deploy.yml before
+                        deploy; a red suite blocks the release.
 ```
 
 ## 2. Section Catalog (compose in `src/pages/index.astro`)
@@ -108,12 +112,17 @@ render-blocking transition (no compositor frames are produced) and the page
 freezes — always run Playwright/automation with
 `page.emulateMedia({ reducedMotion: 'reduce' })`, which routes through the
 `navigation: none` override. Real, visible browsers are unaffected.
+The repo's own smoke suite (`npm test`) enforces this in a `beforeEach`;
+the `use.reducedMotion` config option alone is NOT enough — the test-runner
+fixture context does not reliably apply it (observed with Playwright 1.61).
 
 **Blog (opt-in):** posts are Markdown files in `src/content/blog/` rendered through
 `glw-prose--article`. Only ship it for clients who will actually publish. To REMOVE
 the blog: delete `src/content/`, `src/content.config.ts`, `src/pages/blog/`,
-`src/pages/rss.xml.ts`, the RSS `<link>` in BaseLayout, and the three "Blog" links
-(desktop nav + mobile panel in SiteHeader, product column in SiteFooter).
+`src/pages/rss.xml.ts`, the RSS `<link>` in BaseLayout, the three "Blog" links
+(desktop nav + mobile panel in SiteHeader, product column in SiteFooter), and the
+blog entries in `tests/smoke.spec.ts` (blog paths in the `pages` list, the
+navigation test's blog steps, the RSS assertion).
 
 ## 4. Rules
 
@@ -155,7 +164,7 @@ Server-side: always re-check the `botcheck` field (client check alone is bypassa
 5. Replace `public/og.png` (1200×630 social preview) and `public/favicon.svg`.
 6. Choose sections: reorder/remove imports in `src/pages/index.astro`; single-audience sites may drop the switch and all `.only-b2b` blocks.
 7. Fill `impressum.astro` / `datenschutz.astro` with real legal content.
-8. Verify: `npm run build && npm run preview` — check both themes, both audiences, mobile (incl. burger menu), subpage links.
+8. Verify: `npm test` (smoke suite; covers themes × audiences × viewports, no-JS, subpage links) plus a manual look via `npm run build && npm run preview`. If sections/pages were removed, update `tests/smoke.spec.ts` accordingly.
 9. Push to `main`; one-time repo setting: Settings → Pages → Source "GitHub Actions".
 
 ## 6. Recipe: Convert an Existing Website to This Template

@@ -22,6 +22,7 @@ npm install
 npm run dev        # → http://localhost:4321/GlassKit-Web-Template/
 npm run build      # → dist/
 npm run preview    # dist/ lokal testen (inkl. base-Pfad wie auf GitHub Pages)
+npm test           # Playwright-Smoke-Tests (baut selbst und startet den Preview)
 ```
 
 ## Struktur
@@ -37,6 +38,7 @@ src/
 ├── layouts/BaseLayout.astro  Head, GlassKit-Import, Bootstrap-Script, Header/Footer
 ├── components/               Eine Datei pro Sektion (Copy wird direkt dort editiert)
 └── pages/                    index + impressum + datenschutz (File-Routing)
+tests/smoke.spec.ts           Playwright-Smoke-Tests (laufen im CI vor jedem Deploy)
 ```
 
 ## Konventionen
@@ -112,6 +114,15 @@ Open-Graph-Meta werden automatisch generiert. Auf GitHub-Pages-*Projektseiten*
 (`…github.io/<repo>/`) liegt `robots.txt` nicht am Domain-Root und wird von
 Crawlern ignoriert — die Sitemap dort per Search Console einreichen. Mit
 Custom Domain greift alles automatisch.
+
+## Tests
+
+`npm test` fährt die Playwright-Smoke-Suite: beide Themes × beide Zielgruppen ×
+Desktop/Mobile, Navigation von Unterseiten (base-Präfix), Mobile-Menü, No-JS-Fallbacks,
+404/RSS/Sitemap und Konsolenfehler. Im CI läuft die Suite als eigener Job **vor** dem
+Deploy — schlägt sie fehl, geht nichts live. Wichtig für eigene Automatisierung:
+Headless-Chrome braucht wegen der View Transitions zwingend
+`reducedMotion: 'reduce'` (Details in der [SKILL.md](SKILL.md), §3).
 
 ## Roadmap
 

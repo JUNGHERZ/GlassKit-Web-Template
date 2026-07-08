@@ -8,6 +8,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test": "playwright test",
     "astro": "astro"
   },
   "dependencies": {
@@ -15,5 +16,8 @@
     "@astrojs/sitemap": "^3.7.3",
     "@jungherz-de/glasskit": "^1.6.3",
     "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
   }
 }
