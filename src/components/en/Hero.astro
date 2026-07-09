@@ -1,0 +1,136 @@
+---
+/**
+ * EN-Sprachzweig von Hero.astro — Zielgruppen-Umschalter (B2C/B2B) und
+ * dekoratives Device-Panel. Copy-Paare liegen als .only-b2c / .only-b2b
+ * nebeneinander; sichtbar ist jeweils die Variante laut data-audience auf <html>.
+ */
+---
+<section class="glw-hero">
+  <div class="glw-container">
+
+    <div class="glw-hero__switch">
+      <div class="glw-seg" role="group" aria-label="Choose audience">
+        <button class="glw-seg__btn" type="button" data-audience-btn="b2c" aria-pressed="true">For individuals</button>
+        <button class="glw-seg__btn" type="button" data-audience-btn="b2b" aria-pressed="false">For business</button>
+      </div>
+    </div>
+
+    <div class="glw-hero__grid">
+      <div class="glw-hero__copy" id="audSwap">
+
+        <div class="glw-hero__badges only-b2c">
+          <span class="glass-badge glass-badge--primary">New</span>
+          <span class="glass-badge">Version 2.0 with AI sorting</span>
+        </div>
+        <div class="glw-hero__badges only-b2b">
+          <span class="glass-badge glass-badge--primary">Enterprise</span>
+          <span class="glass-badge">GDPR-compliant · ISO 27001</span>
+        </div>
+
+        <h1 class="glw-display only-b2c">Your documents. <span class="glw-glint">Sorted, secure, everywhere.</span></h1>
+        <h1 class="glw-display only-b2b">Document workflows that <span class="glw-glint">unburden your team.</span></h1>
+
+        <p class="glw-hero__sub only-b2c">
+          Scan contracts, invoices and receipts in seconds. LUMEN recognises,
+          names and files everything automatically – so you never search again.
+        </p>
+        <p class="glw-hero__sub only-b2b">
+          Digitise inbound mail, approvals and archiving in one workflow.
+          LUMEN Business integrates seamlessly with your DMS – from ELO to SharePoint.
+        </p>
+
+        <div class="glw-cta-row only-b2c">
+          <button class="glass-btn glass-btn--primary glass-btn--auto" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v13"></path><path d="m7 11 5 5 5-5"></path><path d="M4 21h16"></path></svg>
+            Get the app for free
+          </button>
+          <button class="glass-btn glass-btn--tertiary glass-btn--auto" type="button">How it works</button>
+        </div>
+        <div class="glw-cta-row only-b2b">
+          <button class="glass-btn glass-btn--primary glass-btn--auto" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M8 3v4M16 3v4M3 11h18"></path></svg>
+            Book a demo
+          </button>
+          <button class="glass-btn glass-btn--tertiary glass-btn--auto" type="button">View resources</button>
+        </div>
+
+        <div class="glw-microtrust only-b2c">
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.8 6.3.7-4.7 4.3 1.3 6.2-5.6-3.2-5.6 3.2 1.3-6.2L3 9.5l6.3-.7z"></path></svg>4.9 on the App Store</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>250,000+ downloads</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="3"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>Ad-free</span>
+        </div>
+        <div class="glw-microtrust only-b2b">
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>99.9% SLA</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="3"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>Hosted in Germany</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"></path></svg>ISO 27001</span>
+        </div>
+      </div>
+
+      {/* Hero-Visual: Mini-Komponenten-Showcase (dekorativ) */}
+      <div class="glw-hero__visual" aria-hidden="true">
+        <span class="glass-badge glass-badge--success glw-chip glw-chip--1">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          OCR complete
+        </span>
+        <span class="glass-badge glass-badge--primary glw-chip glw-chip--2">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"></path></svg>
+          AI sorting 3 documents
+        </span>
+
+        <div class="glw-device">
+          <nav class="glass-nav">
+            <span class="glass-pill"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></span>
+            <span style="display:flex;gap:8px">
+              <span class="glass-pill"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></span>
+              <span class="glass-pill"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></span>
+            </span>
+          </nav>
+
+          <div class="glass-card glass-card--glow">
+            <div class="glass-card__icon">
+              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 10h20l8 8v30a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V14a4 4 0 0 1 4-4z"></path>
+                <path d="M38 10v8h8"></path><path d="M24 30h16M24 38h10"></path>
+                <circle cx="44" cy="46" r="9" fill="rgba(14,37,48,0.0)"></circle>
+                <path d="M44 42v8M40 46h8"></path>
+              </svg>
+            </div>
+            <p class="glass-card__text">Snap a document, check the edges and upload the whole batch.</p>
+          </div>
+
+          <span class="glass-btn glass-btn--primary">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"></path><circle cx="12" cy="13.5" r="3.6"></circle></svg>
+            Capture document
+          </span>
+          <span class="glass-btn glass-btn--secondary">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4"></path><path d="m7 9 5-5 5 5"></path><path d="M4 20h16"></path></svg>
+            Upload
+          </span>
+
+          <ul class="glass-list">
+            <li class="glass-list__item">
+              <span class="glass-list__leading">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg>
+              </span>
+              <div class="glass-list__content">
+                <div class="glass-list__title">Lease_2026.pdf</div>
+                <div class="glass-list__subtitle">Scanned · 2 min ago</div>
+              </div>
+              <div class="glass-list__trailing"><span class="glass-badge glass-badge--success">Done</span></div>
+            </li>
+            <li class="glass-list__item">
+              <span class="glass-list__leading">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3h13l3 3v15l-2.5-1.5L15 21l-2.5-1.5L10 21l-2.5-1.5L5 21V3z" transform="translate(1 0)"></path><path d="M9 8h7M9 12h7"></path></svg>
+              </span>
+              <div class="glass-list__content">
+                <div class="glass-list__title">Invoice_0421.pdf</div>
+                <div class="glass-list__subtitle">Processing …</div>
+              </div>
+              <div class="glass-list__trailing"><span class="glass-badge glass-badge--primary">Active</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

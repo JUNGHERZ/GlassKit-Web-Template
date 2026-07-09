@@ -8,5 +8,17 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://jungherz.github.io',
   base: '/GlassKit-Web-Template',
-  integrations: [sitemap()],
+  // Mehrsprachigkeit (Opt-in): Default-Sprache liegt an der Wurzel, weitere
+  // Sprachen unter /<code>/. Muss mit `languages` in src/data/site.ts
+  // übereinstimmen. Einsprachige Projekte: i18n-Block + sitemap-i18n entfernen.
+  i18n: {
+    defaultLocale: 'de',
+    locales: ['de', 'en'],
+    routing: { prefixDefaultLocale: false },
+  },
+  integrations: [
+    sitemap({
+      i18n: { defaultLocale: 'de', locales: { de: 'de', en: 'en' } },
+    }),
+  ],
 });

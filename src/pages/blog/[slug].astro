@@ -12,7 +12,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const date = post.data.pubDate.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
-<BaseLayout title={`${post.data.title} – ${siteName}`} description={post.data.description}>
+<BaseLayout title={`${post.data.title} – ${siteName}`} description={post.data.description} translated={false}>
   <article class="glw-section glw-page">
     <div class="glw-container">
       <div class="glw-article">

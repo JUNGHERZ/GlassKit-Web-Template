@@ -1,0 +1,57 @@
+---
+/** EN-Sprachzweig von Features.astro. Copy und Icons (Outline-SVGs, 24er-Viewbox) hier pflegen. */
+const features = [
+  {
+    icon: '<svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.6"/></svg>',
+    title: 'Instant capture',
+    text: 'Edge detection and cropping happen live while you shoot – one page or a batch of fifty.',
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.2 6.2l2 2M15.8 15.8l2 2M17.8 6.2l-2 2M8.2 15.8l-2 2"/></svg>',
+    title: 'AI sorting',
+    text: 'Type, sender, date: LUMEN names every document automatically and files it in the right folder.',
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>',
+    title: 'Full-text search',
+    text: 'OCR makes every scan searchable. Find “deposit” instead of “IMG_2041” – even in handwritten notes.',
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>',
+    title: 'End-to-end encrypted',
+    text: 'Your documents belong to you: encrypted on the device, hosted in German data centres.',
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24"><path d="M17.5 19a4.5 4.5 0 0 0 .4-9A7 7 0 0 0 4.3 12.5 3.5 3.5 0 0 0 6 19z"/><path d="m9.5 14.5 2 2 3.5-3.5"/></svg>',
+    title: 'In sync everywhere',
+    text: 'iPhone, Android, web – one archive, always current. Even offline on the train or in the basement archive.',
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.7c2.6.2 4.4 1.9 5 4.6"/></svg>',
+    title: 'Sharing & approvals',
+    text: 'Secure links with expiry dates and passwords instead of email attachments. For family, accountants or your team.',
+  },
+];
+---
+<section class="glw-section" id="features">
+  <div class="glw-container">
+    <div class="glw-center reveal">
+      <span class="glw-eyebrow">Why LUMEN</span>
+      <h2 class="glw-h2">From paper piles to a searchable archive.</h2>
+      <p class="glw-lead">
+        Six building blocks, one promise: capture, understand and retrieve
+        documents – without manual filing.
+      </p>
+    </div>
+
+    <div class="glw-grid-3">
+      {features.map((f, i) => (
+        <div class="glass-card glw-feature reveal" style={`--d:${((i % 3) * 0.07).toFixed(2)}s`}>
+          <div class="glw-feature__icon" set:html={f.icon} />
+          <h3>{f.title}</h3>
+          <p>{f.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -87,6 +87,22 @@
     });
   }
 
+  /* ---- Sprach-Dropdown (details/summary, nur bei 3+ Sprachen) --
+     Auf-/Zuklappen funktioniert nativ ohne JS; hier nur Komfort:
+     ESC und Klick außerhalb schließen das Menü. */
+  var lmenu = document.getElementById('langMenu');
+  if (lmenu) {
+    document.addEventListener('keydown', function (e) {
+      if (lmenu.open && e.key === 'Escape') {
+        lmenu.open = false;
+        lmenu.querySelector('summary').focus();
+      }
+    });
+    document.addEventListener('click', function (e) {
+      if (lmenu.open && !lmenu.contains(e.target)) lmenu.open = false;
+    });
+  }
+
   /* ---- Accordion (FAQ) ----------------------------------------
      GlassKit steuert das Accordion über is-open auf dem Item;
      hier Klick-Toggle + aria-expanded. Ohne JS zeigt ein CSS-Fallback
@@ -106,6 +122,11 @@
   if (cform) {
     var cstatus = document.getElementById('contactStatus');
     var cstatusText = cstatus.querySelector('p');
+    /* Status-Texte kommen als data-msg-* aus der Komponente (Copy bleibt
+       bei ihrem Markup — wichtig für Sprachzweige); deutsche Fallbacks. */
+    var cmsg = function (key, fallback) {
+      return cform.getAttribute('data-msg-' + key) || fallback;
+    };
     var showStatus = function (type, msg) {
       cstatus.hidden = false;
       cstatus.classList.remove('glw-status--success', 'glw-status--error');
@@ -117,23 +138,23 @@
       if (cform.elements.botcheck && cform.elements.botcheck.value) return; /* Honeypot */
       var endpoint = cform.getAttribute('action');
       if (!endpoint) {
-        showStatus('success', 'Demo-Modus: Es wurde nichts versendet. Endpoint in src/data/site.ts konfigurieren.');
+        showStatus('success', cmsg('demo', 'Demo-Modus: Es wurde nichts versendet. Endpoint in src/data/site.ts konfigurieren.'));
         cform.reset();
         return;
       }
       var submitBtn = cform.querySelector('[type="submit"]');
       submitBtn.disabled = true;
-      showStatus('', 'Nachricht wird gesendet …');
+      showStatus('', cmsg('sending', 'Nachricht wird gesendet …'));
       fetch(endpoint, {
         method: 'POST',
         body: new FormData(cform),
         headers: { Accept: 'application/json' }
       }).then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
-        showStatus('success', 'Danke! Die Nachricht ist angekommen – wir melden uns zeitnah.');
+        showStatus('success', cmsg('success', 'Danke! Die Nachricht ist angekommen – wir melden uns zeitnah.'));
         cform.reset();
       }).catch(function () {
-        showStatus('error', 'Senden fehlgeschlagen. Bitte später erneut versuchen.');
+        showStatus('error', cmsg('error', 'Senden fehlgeschlagen. Bitte später erneut versuchen.'));
       }).finally(function () {
         submitBtn.disabled = false;
       });

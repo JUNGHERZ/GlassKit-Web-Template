@@ -1,0 +1,66 @@
+---
+/**
+ * Sprach-Umschalter — erscheint nur, wenn `languages` in src/data/site.ts
+ * mehr als einen Eintrag hat.
+ *
+ * Genau 2 Sprachen: Segmented-Pill „DE | EN" (Stil des Zielgruppen-Umschalters).
+ * 3+ Sprachen: Flaggen-Dropdown als <details> — öffnet/schließt nativ ohne JS;
+ * site.js ergänzt ESC und Klick-außerhalb-Schließen.
+ *
+ * Die Einträge sind LINKS auf die äquivalente Seite der Zielsprache, kein
+ * JS-Toggle: eigene URLs pro Sprache (SEO/hreflang), No-JS-fähig und
+ * kompatibel mit den Cross-Document View Transitions.
+ */
+import { languages, pathLang, localeHref } from '../data/site';
+
+interface Props {
+  /** false auf Seiten ohne Übersetzung (z. B. Blog): Ziel ist dann die Startseite der Zielsprache. */
+  translated?: boolean;
+}
+const { translated = true } = Astro.props;
+
+const current = pathLang(Astro.url.pathname);
+const target = (code: string) =>
+  translated ? localeHref(Astro.url.pathname, code) : localeHref('/', code);
+
+// Flaggen (nur fürs Dropdown ab 3 Sprachen), zur Buildzeit eingebettet.
+// Die mask-IDs der circle-flags heißen alle „a" — pro Sprache namespacen,
+// sonst kollidieren mehrere Inline-Flaggen auf einer Seite.
+const flagFiles = import.meta.glob<string>('../assets/flags/*.svg', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
+const flag = (code: string) =>
+  (flagFiles[`../assets/flags/${code}.svg`] ?? '')
+    .replaceAll('id="a"', `id="flag-${code}"`)
+    .replaceAll('url(#a)', `url(#flag-${code})`);
+const currentLabel = languages.find((l) => l.code === current)?.label ?? current;
+---
+{languages.length === 2 && (
+  <nav class="glw-lang" aria-label="Sprache / Language">
+    {languages.map((l) => (
+      <a
+        href={target(l.code)}
+        lang={l.code}
+        aria-current={l.code === current ? 'page' : undefined}
+        aria-label={l.label}
+      >{l.code.toUpperCase()}</a>
+    ))}
+  </nav>
+)}
+{languages.length > 2 && (
+  <details class="glw-langmenu" id="langMenu">
+    <summary class="glass-pill" aria-label={`Sprache wählen – aktuell ${currentLabel}`}>
+      <span class="glw-langmenu__flag" aria-hidden="true" set:html={flag(current)} />
+    </summary>
+    <nav class="glw-langmenu__panel" aria-label="Sprache / Language">
+      {languages.map((l) => (
+        <a href={target(l.code)} lang={l.code} aria-current={l.code === current ? 'page' : undefined}>
+          <span class="glw-langmenu__flag" aria-hidden="true" set:html={flag(l.code)} />
+          {l.label}
+        </a>
+      ))}
+    </nav>
+  </details>
+)}

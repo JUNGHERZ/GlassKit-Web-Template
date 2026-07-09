@@ -1,0 +1,43 @@
+---
+/** EN-Sprachzweig von Cases.astro: Ergebnis-Kennzahl im Fokus, Kurzkontext dazu. */
+const cases = [
+  {
+    metric: '−80%',
+    metricLabel: 'mailroom processing time',
+    client: 'Stadtwerke Ahlen',
+    text: 'Inbound mail is scanned, classified and lands straight in the ELO workflow – three days became four hours.',
+  },
+  {
+    metric: '120,000',
+    metricLabel: 'file pages digitised',
+    client: 'Brandt & Söhne law firm',
+    text: 'The entire case archive digitised in six weeks – audit-proof and searchable within seconds.',
+  },
+  {
+    metric: '1 weekend',
+    metricLabel: 'for ten years of paperwork',
+    client: 'Lena Martens, photographer',
+    text: 'Contracts, invoices, receipts: photographed once – ever since, search finds every document in seconds.',
+  },
+];
+---
+<section class="glw-section" id="cases">
+  <div class="glw-container">
+    <div class="glw-center reveal">
+      <span class="glw-eyebrow">Success stories</span>
+      <h2 class="glw-h2">Numbers, not promises.</h2>
+      <p class="glw-lead">Three projects, three measurable results – from a single household to city administration.</p>
+    </div>
+
+    <div class="glw-grid-3">
+      {cases.map((c, i) => (
+        <div class="glass-card glw-case reveal" style={`--d:${(i * 0.07).toFixed(2)}s`}>
+          <span class="glw-case__metric">{c.metric}</span>
+          <span class="glw-case__metric-label">{c.metricLabel}</span>
+          <p>{c.text}</p>
+          <span class="glw-case__client">{c.client}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

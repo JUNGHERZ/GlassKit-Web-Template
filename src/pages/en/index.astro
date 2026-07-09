@@ -1,0 +1,36 @@
+---
+/** EN-Startseite — komponiert die Sektionen aus src/components/en/.
+ *  Sektionsauswahl und -reihenfolge parallel zu src/pages/index.astro halten. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/en/Hero.astro';
+import LogoStrip from '../../components/en/LogoStrip.astro';
+import Features from '../../components/en/Features.astro';
+import Process from '../../components/en/Process.astro';
+import Showcase from '../../components/en/Showcase.astro';
+import Stats from '../../components/en/Stats.astro';
+import Cases from '../../components/en/Cases.astro';
+import Pricing from '../../components/en/Pricing.astro';
+import Quote from '../../components/en/Quote.astro';
+import Team from '../../components/en/Team.astro';
+import Faq from '../../components/en/Faq.astro';
+import Contact from '../../components/en/Contact.astro';
+import CtaBanner from '../../components/en/CtaBanner.astro';
+---
+<BaseLayout
+  title="LUMEN – GlassKit web template"
+  description="LUMEN – glassmorphism template built on GlassKit. One design language for B2C and B2B websites."
+>
+  <Hero />
+  <LogoStrip />
+  <Features />
+  <Process />
+  <Showcase />
+  <Stats />
+  <Cases />
+  <Pricing />
+  <Quote />
+  <Team />
+  <Faq />
+  <Contact />
+  <CtaBanner />
+</BaseLayout>

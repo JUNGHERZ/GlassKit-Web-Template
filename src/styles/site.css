@@ -276,6 +276,103 @@ body { margin: 0; }
   .glw-nav-open { overflow: hidden; } /* Scroll-Lock nur solange das Menü existiert */
 }
 
+/* ---- 2c. Sprach-Umschalter (i18n, Opt-in) --------------------
+   Duale Variante (.glw-lang): Segmented-Pill bei genau 2 Sprachen.
+   Dropdown (.glw-langmenu): details-basiert bei 3+ Sprachen. */
+
+.glw-lang {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--gl-surface-2);
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-radius-full);
+  box-shadow: var(--gl-inset-subtle), var(--gl-shadow-btn);
+}
+
+.glw-lang a {
+  padding: 7px 12px;
+  border-radius: var(--gl-radius-full);
+  font-size: 13px;
+  font-weight: var(--gl-font-weight-medium);
+  letter-spacing: 0.04em;
+  color: var(--gl-color-text-muted);
+  text-decoration: none;
+  transition: var(--gl-transition-fast);
+}
+
+.glw-lang a:hover { color: var(--gl-color-text); }
+
+.glw-lang a[aria-current="page"] {
+  background: var(--gl-surface-milk-strong);
+  color: var(--gl-color-text-on-light);
+  font-weight: var(--gl-font-weight-semibold);
+  box-shadow: var(--gl-shadow-btn), var(--gl-inset-milk);
+}
+
+.glw-langmenu { position: relative; }
+
+.glw-langmenu summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.glw-langmenu summary::-webkit-details-marker { display: none; }
+
+.glw-langmenu__flag {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
+.glw-langmenu__flag svg { width: 100%; height: 100%; }
+
+.glw-langmenu__panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 50;
+  min-width: 200px;
+  padding: var(--gl-space-xs);
+  display: flex;
+  flex-direction: column;
+  background: var(--gl-surface-3);
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border: 1px solid var(--gl-border-medium);
+  border-radius: var(--gl-radius-card);
+  box-shadow: var(--gl-shadow-card), var(--gl-inset-strong);
+}
+
+.glw-langmenu[open] .glw-langmenu__panel { animation: glw-fade 0.2s ease both; }
+
+.glw-langmenu__panel a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--gl-radius-btn);
+  font-size: 15px;
+  font-weight: var(--gl-font-weight-medium);
+  color: var(--gl-color-text);
+  text-decoration: none;
+  transition: var(--gl-transition-fast);
+}
+
+.glw-langmenu__panel a:hover { background: var(--gl-surface-2); }
+
+.glw-langmenu__panel a[aria-current="page"] {
+  background: var(--gl-surface-milk-strong);
+  color: var(--gl-color-text-on-light);
+}
+
+@media (max-width: 900px) {
+  .glw-lang a { padding: 6px 10px; }
+}
+
 /* ---- 3. Zielgruppen-Umschalter (B2C / B2B) ------------------- */
 
 .glw-seg {

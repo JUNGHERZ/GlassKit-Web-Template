@@ -1,0 +1,49 @@
+---
+/** EN-Sprachzweig von SiteFooter.astro. Kein Blog-Link (Blog nur in der Default-Sprache). */
+import BrandMark from '../BrandMark.astro';
+import { siteName, glasskitUrl, href } from '../../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="glw-footer">
+  <div class="glw-container">
+    <div class="glw-footer__grid">
+      <div>
+        <a class="glw-brand" href={href('/en/#top')} aria-label={`${siteName} – back to top`}>
+          <BrandMark gradientId="lg-brand-f" />
+          {siteName}
+        </a>
+        <p class="glw-footer__claim">
+          The searchable home for your documents – at home and at work.
+        </p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul class="glw-footer__links">
+          <li><a href={href('/en/#features')}>Features</a></li>
+          <li><a href={href('/en/#pricing')}>Pricing</a></li>
+          <li><a href={href('/en/#showcase')}>Platforms</a></li>
+          <li><a href={href('/en/#contact')}>Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul class="glw-footer__links">
+          <li><a href={href('/en/impressum/')}>Imprint</a></li>
+          <li><a href={href('/en/datenschutz/')}>Privacy</a></li>
+        </ul>
+      </div>
+      <div class="glw-footer__news">
+        <h4>Stay in the loop</h4>
+        <p>Product news and hands-on tips, about once a month.</p>
+        <form class="glw-footer__form" onsubmit="return false">
+          <input class="glass-input" type="email" placeholder="you@example.com" aria-label="Email address" />
+          <button class="glass-btn glass-btn--primary glass-btn--sm glass-btn--auto" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="glw-footer__bottom">
+      <span>© {year} {siteName} GmbH · Demo content for template purposes</span>
+      <span>Design language: <a href={glasskitUrl} rel="noopener">GlassKit</a></span>
+    </div>
+  </div>
+</footer>

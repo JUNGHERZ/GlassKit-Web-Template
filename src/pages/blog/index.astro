@@ -8,7 +8,7 @@ const posts = (await getCollection('blog')).sort(
 );
 const fmt = (d: Date) => d.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
-<BaseLayout title={`Blog – ${siteName}`} description="Praxis-Wissen rund um papierloses Arbeiten, Archivierung und Dokumenten-Workflows.">
+<BaseLayout title={`Blog – ${siteName}`} description="Praxis-Wissen rund um papierloses Arbeiten, Archivierung und Dokumenten-Workflows." translated={false}>
   <section class="glw-section glw-page">
     <div class="glw-container">
       <div class="glw-center">

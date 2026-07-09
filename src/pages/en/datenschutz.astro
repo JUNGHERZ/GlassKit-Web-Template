@@ -1,0 +1,30 @@
+---
+/** EN-Sprachzweig von datenschutz.astro. Gleicher Slug in allen Sprachen
+ *  (Konvention, hält den Umschalter mapping-frei). */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteName, href } from '../../data/site';
+---
+<BaseLayout title={`Privacy policy – ${siteName}`} description="Privacy policy (placeholder)">
+  <section class="glw-section glw-page">
+    <div class="glw-container">
+      <span class="glw-eyebrow">Legal</span>
+      <h1 class="glw-h2">Privacy policy</h1>
+      <p class="glw-lead">Placeholder – replace with the real, project-specific policy before publishing.</p>
+
+      <div class="glass-card glw-prose">
+        <h2>Controller</h2>
+        <p>{siteName} GmbH · Musterstraße 1 · 00000 Musterstadt, Germany · hallo@example.de</p>
+        <h2>Hosting</h2>
+        <p>This website is served statically (e.g. GitHub Pages). When accessed, technically necessary connection data (IP address, time, requested resource) is processed by the hosting provider.</p>
+        <h2>No cookies, no tracking</h2>
+        <p>This template sets no cookies and embeds no analytics or third-party services. Your theme and audience choices are not stored.</p>
+        <h2>Your rights</h2>
+        <p>Access, rectification, erasure, restriction, data portability, objection and the right to lodge a complaint with a supervisory authority under the GDPR.</p>
+      </div>
+
+      <div class="glw-page__back">
+        <a class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" href={href('/en/')}>← Back to the home page</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

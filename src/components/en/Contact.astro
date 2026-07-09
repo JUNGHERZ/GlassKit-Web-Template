@@ -1,0 +1,85 @@
+---
+/**
+ * EN-Sprachzweig von Contact.astro. Versand-Ziel in src/data/site.ts
+ * konfigurieren (contactForm) — gilt für alle Sprachzweige gemeinsam.
+ * Die Status-Meldungen kommen aus den data-msg-*-Attributen (site.js liest
+ * sie aus; deutsche Fallbacks dort). Honeypot: Feld "botcheck".
+ */
+import { contactForm, href } from '../../data/site';
+const hidden = Object.entries(contactForm.hiddenFields);
+---
+<section class="glw-section" id="contact">
+  <div class="glw-container">
+    <div class="glw-center reveal">
+      <span class="glw-eyebrow">Contact</span>
+      <h2 class="glw-h2 only-b2c">Write to us – we reply fast.</h2>
+      <h2 class="glw-h2 only-b2b">Tell us about your project.</h2>
+      <p class="glw-lead only-b2c">Questions about the app, plans or data export? We usually reply the same day.</p>
+      <p class="glw-lead only-b2b">Briefly describe your starting point and goal – we will get back to you with an honest assessment.</p>
+    </div>
+
+    <div class="glw-contact reveal">
+      <form
+        class="glass-card glw-contact__form"
+        data-contact-form
+        method="POST"
+        action={contactForm.endpoint || undefined}
+        data-msg-demo="Demo mode: nothing was sent. Configure an endpoint in src/data/site.ts."
+        data-msg-sending="Sending your message …"
+        data-msg-success="Thank you! Your message has arrived – we will be in touch shortly."
+        data-msg-error="Sending failed. Please try again later."
+      >
+        {hidden.map(([name, value]) => <input type="hidden" name={name} value={value} />)}
+
+        <div class="glw-contact__row">
+          <div class="glass-input-group">
+            <label class="glass-label" for="cf-name">Name</label>
+            <input class="glass-input" id="cf-name" name="name" type="text" required autocomplete="name" placeholder="First and last name" />
+          </div>
+          <div class="glass-input-group">
+            <label class="glass-label" for="cf-email">Email</label>
+            <input class="glass-input" id="cf-email" name="email" type="email" required autocomplete="email" placeholder="name@example.com" />
+          </div>
+        </div>
+
+        <div class="glass-input-group only-b2b">
+          <label class="glass-label" for="cf-company">Company</label>
+          <input class="glass-input" id="cf-company" name="company" type="text" autocomplete="organization" placeholder="Company / organisation" />
+        </div>
+
+        <div class="glass-input-group">
+          <label class="glass-label" for="cf-message">Message</label>
+          <textarea class="glass-textarea" id="cf-message" name="message" rows="5" required placeholder="What is it about?"></textarea>
+        </div>
+
+        {/* Honeypot – für Menschen unsichtbar, Bots füllen es aus */}
+        <div class="glw-hp" aria-hidden="true">
+          <label>Please leave this field empty
+            <input type="text" name="botcheck" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+
+        <label class="glass-checkbox">
+          <input class="glass-checkbox__input" type="checkbox" name="consent" required />
+          <span class="glass-checkbox__box">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </span>
+          <span class="glass-checkbox__label">
+            I have read the <a href={href('/en/datenschutz/')}>privacy policy</a>
+            and consent to the processing of my details.
+          </span>
+        </label>
+
+        <button class="glass-btn glass-btn--primary" type="submit">
+          <span class="only-b2c">Send message</span>
+          <span class="only-b2b">Send inquiry</span>
+        </button>
+
+        <div class="glass-status glw-status" id="contactStatus" role="status" hidden>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="8"></line></svg>
+          <p></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

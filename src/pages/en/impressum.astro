@@ -1,0 +1,30 @@
+---
+/** EN-Sprachzweig von impressum.astro. Gleicher Slug in allen Sprachen
+ *  (Konvention, hält den Umschalter mapping-frei). */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteName, href } from '../../data/site';
+---
+<BaseLayout title={`Imprint – ${siteName}`} description="Imprint (placeholder)">
+  <section class="glw-section glw-page">
+    <div class="glw-container">
+      <span class="glw-eyebrow">Legal</span>
+      <h1 class="glw-h2">Imprint</h1>
+      <p class="glw-lead">Placeholder – replace with the real mandatory information before publishing.</p>
+
+      <div class="glass-card glw-prose">
+        <h2>Information pursuant to § 5 DDG</h2>
+        <p>{siteName} GmbH · Musterstraße 1 · 00000 Musterstadt, Germany</p>
+        <h2>Represented by</h2>
+        <p>Managing director: Max Mustermann</p>
+        <h2>Contact</h2>
+        <p>Phone: +49 (0) 000 000000 · Email: hallo@example.de</p>
+        <h2>Register entry</h2>
+        <p>Commercial register: HRB 00000 · Register court: Amtsgericht Musterstadt · VAT ID: DE000000000</p>
+      </div>
+
+      <div class="glw-page__back">
+        <a class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" href={href('/en/')}>← Back to the home page</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

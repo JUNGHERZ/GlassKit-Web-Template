@@ -14,6 +14,8 @@ Interne Referenz von JUNGHERZ für neue Webprojekte — „auf dieser Basis soll
 Fiktive Marke **LUMEN** (Dokumenten-Scan & -Management). Alle Inhalte sind Platzhalter.
 Der Zielgruppen-Umschalter im Hero wechselt Copy, Tonalität (Du/Sie), Preise und
 Testimonials zwischen Privat- und Geschäftskunden — dieselbe Designsprache, zwei Ansprachen.
+Die Demo ist zweisprachig (Deutsch an der Wurzel, Englisch unter `/en/`) —
+siehe [Mehrsprachigkeit](#mehrsprachigkeit-opt-in).
 
 ## Schnellstart
 
@@ -37,7 +39,10 @@ src/
 ├── scripts/site.js           Theme-Toggle, B2C/B2B-Umschalter, Scroll-Reveal, 3D-Tilt
 ├── layouts/BaseLayout.astro  Head, GlassKit-Import, Bootstrap-Script, Header/Footer
 ├── components/               Eine Datei pro Sektion (Copy wird direkt dort editiert)
+│   └── en/                   Englischer Sprachzweig derselben Sektionen (Opt-in)
+├── assets/flags/             Sprachflaggen (circle-flags, MIT) für den Umschalter ab 3 Sprachen
 └── pages/                    index + impressum + datenschutz (File-Routing)
+    └── en/                   Englische Seiten unter /en/
 tests/smoke.spec.ts           Playwright-Smoke-Tests (laufen im CI vor jedem Deploy)
 ```
 
@@ -88,6 +93,29 @@ redaktionell liefern**; die Entfernungs-Schritte stehen in der SKILL.md.
 Seitenwechsel (z. B. Startseite → Artikel) nutzen native **Cross-Document View
 Transitions** (`@view-transition`, CSS-only): sanfter Übergang in unterstützenden
 Browsern, normale Navigation überall sonst, deaktiviert bei `prefers-reduced-motion`.
+
+## Mehrsprachigkeit (Opt-in)
+
+Die Default-Sprache liegt an der Wurzel, jede weitere unter `/<code>/` — pro Sprache
+ein eigener Zweig aus Seiten (`src/pages/en/`) und Sektions-Komponenten
+(`src/components/en/`). Die Copy bleibt damit wie überall im Template direkt bei
+ihrem Markup; Slugs sind in allen Sprachen gleich (hält den Umschalter mapping-frei).
+`hreflang`-Alternates, `<html lang>`, `og:locale` und die Sitemap-Verknüpfung
+entstehen automatisch aus der `languages`-Liste in `src/data/site.ts`.
+
+Der **Sprach-Umschalter** im Header hat zwei Gesichter aus derselben Config:
+
+- **Genau 2 Sprachen** → Segmented-Pill „DE | EN" (so live in der Demo).
+- **3+ Sprachen** → Flaggen-Dropdown mit [circle-flags](https://github.com/HatScripts/circle-flags)
+  (MIT; die Sprach-SVGs liegen vendored in `src/assets/flags/`, weitere Codes einfach
+  aus `flags/language/` des Repos dazukopieren).
+
+Beide Varianten sind reine **Links auf die äquivalente Seite der Zielsprache** —
+kein JS-Toggle, daher SEO-sauber und ohne JavaScript funktionsfähig. Der Blog
+erscheint bewusst nur in der Default-Sprache. **Entfernen** (einsprachige Projekte)
+und **weitere Sprache ergänzen**: Schritte in der [SKILL.md](SKILL.md), §3b.
+Projekte mit vielen Sprachen (3+) sollten stattdessen zentrale Sprachdateien
+erwägen — auch das ist dort notiert.
 
 ## Kontaktformular anschließen
 

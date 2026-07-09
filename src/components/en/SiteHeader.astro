@@ -1,7 +1,12 @@
 ---
-import BrandMark from './BrandMark.astro';
-import LanguageSwitcher from './LanguageSwitcher.astro';
-import { siteName, href } from '../data/site';
+/**
+ * EN-Sprachzweig von SiteHeader.astro — Struktur identisch halten, nur Copy
+ * (und Anker-Ziele) übersetzen. Kein Blog-Link: der Blog erscheint nur in der
+ * Default-Sprache (siehe SKILL.md §3b).
+ */
+import BrandMark from '../BrandMark.astro';
+import LanguageSwitcher from '../LanguageSwitcher.astro';
+import { siteName, href } from '../../data/site';
 
 interface Props {
   /** Durchgereicht an den Sprach-Umschalter (false = Seite ohne Übersetzung). */
@@ -11,48 +16,46 @@ const { translated = true } = Astro.props;
 ---
 <header class="glw-header" id="top">
   <div class="glw-container glw-header__inner">
-    <a class="glw-brand" href={href('/#top')} aria-label={`${siteName} – Startseite`}>
+    <a class="glw-brand" href={href('/en/#top')} aria-label={`${siteName} – home`}>
       <BrandMark />
       {siteName}
     </a>
 
-    <nav class="glw-nav" aria-label="Hauptnavigation">
-      <a href={href('/#features')}>Produkt</a>
-      <a href={href('/#showcase')}>Showcase</a>
-      <a href={href('/#preise')}>Preise</a>
-      <a href={href('/blog/')}>Blog</a>
-      <a href={href('/#kontakt')}>Kontakt</a>
+    <nav class="glw-nav" aria-label="Main navigation">
+      <a href={href('/en/#features')}>Product</a>
+      <a href={href('/en/#showcase')}>Showcase</a>
+      <a href={href('/en/#pricing')}>Pricing</a>
+      <a href={href('/en/#contact')}>Contact</a>
     </nav>
 
     <div class="glw-header__actions">
       <LanguageSwitcher translated={translated} />
-      <button class="glass-theme-toggle" id="themeToggle" type="button" aria-label="Farbschema wechseln">
+      <button class="glass-theme-toggle" id="themeToggle" type="button" aria-label="Switch color scheme">
         <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.4"></circle><path d="M12 2.5v2.4M12 19.1v2.4M4.3 4.3l1.7 1.7M18 18l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.3 19.7 6 18M18 6l1.7-1.7"></path></svg>
       </button>
       <button class="glass-btn glass-btn--primary glass-btn--sm glass-btn--auto glw-header__cta" type="button">
-        <span class="only-b2c">Kostenlos starten</span>
-        <span class="only-b2b">Demo vereinbaren</span>
+        <span class="only-b2c">Start for free</span>
+        <span class="only-b2b">Book a demo</span>
       </button>
 
       {/* Mobile-Navigation: <details> klappt nativ ohne JS auf/zu;
           site.js ergänzt Fokus-Trap, ESC, Scroll-Lock und Auto-Schließen. */}
       <details class="glw-mobilenav" id="mobileNav">
-        <summary class="glass-pill glw-mobilenav__toggle" aria-label="Menü">
+        <summary class="glass-pill glw-mobilenav__toggle" aria-label="Menu">
           <svg class="icon-burger" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
           <svg class="icon-close" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
         </summary>
         <div class="glw-mobilenav__panel">
-          <nav aria-label="Mobile Navigation">
-            <a href={href('/#features')}>Produkt</a>
-            <a href={href('/#showcase')}>Showcase</a>
-            <a href={href('/#preise')}>Preise</a>
-            <a href={href('/blog/')}>Blog</a>
-            <a href={href('/#kontakt')}>Kontakt</a>
+          <nav aria-label="Mobile navigation">
+            <a href={href('/en/#features')}>Product</a>
+            <a href={href('/en/#showcase')}>Showcase</a>
+            <a href={href('/en/#pricing')}>Pricing</a>
+            <a href={href('/en/#contact')}>Contact</a>
           </nav>
           <button class="glass-btn glass-btn--primary" type="button">
-            <span class="only-b2c">Kostenlos starten</span>
-            <span class="only-b2b">Demo vereinbaren</span>
+            <span class="only-b2c">Start for free</span>
+            <span class="only-b2b">Book a demo</span>
           </button>
         </div>
       </details>

@@ -1,0 +1,37 @@
+---
+/** EN-Sprachzweig von Process.astro („How it works"). Nummerierte Schritte —
+ *  hier ist die Nummerierung semantisch ehrlich, weil es eine echte Abfolge ist. */
+const steps = [
+  {
+    title: 'Snap it',
+    text: 'Point the camera at the document – edge detection and cropping happen automatically, even in batches.',
+  },
+  {
+    title: 'AI files it',
+    text: 'LUMEN recognises type, sender and date, names the file and puts it in the right folder.',
+  },
+  {
+    title: 'Find it again',
+    text: 'Full-text search across everything – on your phone, on the web or right inside your connected DMS.',
+  },
+];
+---
+<section class="glw-section" id="process">
+  <div class="glw-container">
+    <div class="glw-center reveal">
+      <span class="glw-eyebrow">How it works</span>
+      <h2 class="glw-h2">Three steps. No manual.</h2>
+      <p class="glw-lead">From paper to a searchable archive – no onboarding, no folder discipline.</p>
+    </div>
+
+    <div class="glw-steps">
+      {steps.map((s, i) => (
+        <div class="glass-card glw-step reveal" style={`--d:${(i * 0.07).toFixed(2)}s`}>
+          <span class="glw-step__num" aria-hidden="true">{i + 1}</span>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

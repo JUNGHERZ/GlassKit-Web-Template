@@ -22,7 +22,8 @@ placeholder meant to be replaced per project.
 ```
 astro.config.mjs        site + base. Fork → change base to '/<repo-name>'.
                         Custom domain → remove base, set site, add public/CNAME.
-src/data/site.ts        siteName, titles, repoUrl + base/href() link helper.
+src/data/site.ts        siteName, titles, repoUrl + base/href() link helper +
+                        languages[] (i18n opt-in) with pathLang()/localeHref().
 src/styles/site.css     ALL custom CSS (global). glw-* classes, --gl-* tokens only.
 src/styles/brand.css    Per-project brand overrides (--gl-* tokens ONLY, loads last).
                         This is THE place for client colors — never edit glasskit.css
@@ -34,6 +35,10 @@ src/layouts/BaseLayout.astro  <head>, CSS imports (GlassKit BEFORE site.css),
 src/components/*.astro  One file per section. Copy lives HERE, next to its markup.
                         Repeated structures (features, stats, plans) are frontmatter
                         const arrays rendered with .map().
+src/components/en/      English language branch of the same sections (i18n opt-in;
+                        same structure, translated copy). See §3b.
+src/pages/en/           English pages under /en/ (same slugs as the default language).
+src/assets/flags/       circle-flags language SVGs (MIT) for the 3+-language switcher.
 src/pages/*.astro       File routing. index.astro composes the one-pager.
                         404.astro → dist/404.html (served by GitHub Pages).
 src/content.config.ts   Blog collection schema (title, description, pubDate, author).
@@ -66,6 +71,7 @@ tests/smoke.spec.ts     CI smoke tests — run as the "test" job in deploy.yml b
 | `Pricing` | Two plan grids, one per audience | `plansB2C[]` / `plansB2B[]`; `hot: true` highlights one plan |
 | `Quote` | Serif testimonial, one per audience | Paired `.only-b2c` / `.only-b2b` blocks |
 | `Faq` | GlassKit accordion + FAQPage JSON-LD | Edit the `faqs[]` array; `audience: 'b2c'\|'b2b'` marks audience-specific questions. JSON-LD mirrors the default (no-JS) view: general + B2C only. Toggle handled by site.js; without JS all answers render expanded |
+| `LanguageSwitcher` | Language switcher in the header actions | Renders nothing with 1 language, a "DE \| EN" segmented pill with exactly 2, a details-based flag dropdown with 3+. Entries are LINKS to the equivalent page in the target language — never a JS toggle |
 | `Contact` | Contact form (`id="kontakt"` — nav/footer link here) | Endpoint configured in `site.ts` (`contactForm`); empty endpoint = demo mode. Honeypot field `botcheck`, required consent checkbox linking to `/datenschutz/`, B2B-only company field. With JS: fetch + inline `glass-status`; without JS: native POST to the endpoint |
 | `CtaBanner` | Closing call-to-action panel | Warm border (`--gl-border-warm`) |
 | `SiteFooter` | Link columns, newsletter dummy, legal links | Rendered by BaseLayout |
@@ -116,6 +122,47 @@ The repo's own smoke suite (`npm test`) enforces this in a `beforeEach`;
 the `use.reducedMotion` config option alone is NOT enough — the test-runner
 fixture context does not reliably apply it (observed with Playwright 1.61).
 
+### 3b. i18n (opt-in) — language branches
+
+Default language lives at the root, every additional language under `/<code>/`
+as its OWN BRANCH: pages in `src/pages/<code>/`, section components in
+`src/components/<code>/` (same structure, translated copy — the "copy next to
+its markup" convention stays intact). Configured in TWO places that must match:
+`languages[]` in `src/data/site.ts` and the `i18n` block in `astro.config.mjs`.
+BaseLayout derives `<html lang>`, `og:locale` and hreflang alternates from the
+URL; the sitemap gets xhtml:link alternates via its `i18n` option.
+
+Rules for language branches:
+- Same slugs in every language (`/en/impressum/`, not `/en/imprint/`) — keeps
+  `localeHref()` mapping-free. Anchor IDs MAY be translated (they are copy);
+  links inside a branch always carry the prefix: `href('/en/#pricing')`.
+- Keep structure changes (new/removed/reordered sections) in sync across all
+  branches — the smoke tests catch missing pages, not missing sections.
+- Pages without a translation (blog, 404) pass `translated={false}` to
+  BaseLayout: no hreflang is emitted and the switcher links to the target
+  language's home page instead. The blog appears only in the default language
+  (no blog link in EN header/footer).
+- Contact form status messages travel as `data-msg-*` attributes on the form
+  (site.js reads them; German fallbacks live in site.js).
+- Header/Footer are part of each branch (nav labels are copy); BaseLayout picks
+  the pair by locale — a new language adds one more branch there.
+
+**Add a language:** extend `languages[]` + astro.config locales; copy
+`src/components/en/` + `src/pages/en/` to the new code and translate; add the
+branch to BaseLayout's header/footer pick; with 3+ languages drop the matching
+circle-flags SVG (repo: HatScripts/circle-flags, `flags/language/`) into
+`src/assets/flags/` — the switcher becomes a flag dropdown automatically.
+**Remove i18n** (single-language project): delete `src/pages/en/`,
+`src/components/en/`, `src/assets/flags/`, `LanguageSwitcher.astro` and its
+usage in both SiteHeaders, the EN imports/branches in BaseLayout, the `i18n`
+blocks in astro.config.mjs, `languages`/`pathLang`/`localeHref` in site.ts,
+the i18n tests in `tests/smoke.spec.ts`, and the `.glw-lang`/`.glw-langmenu`
+styles in site.css.
+**3+ languages at scale:** duplicated branches grow linearly — for projects
+with many languages, consider refactoring to central per-language dictionaries
+(`src/i18n/<code>.ts`) as a PROJECT decision; the template deliberately stays
+with branches to keep copy next to markup.
+
 **Blog (opt-in):** posts are Markdown files in `src/content/blog/` rendered through
 `glw-prose--article`. Only ship it for clients who will actually publish. To REMOVE
 the blog: delete `src/content/`, `src/content.config.ts`, `src/pages/blog/`,
@@ -129,7 +176,7 @@ navigation test's blog steps, the RSS assertion).
 ✅ Always
 - Import order in BaseLayout: `@jungherz-de/glasskit/glasskit.css` **before** `../styles/site.css`.
 - Keep the bootstrap script as `<script is:inline>` in `<head>` (it must run before first paint).
-- Build every page/anchor link with `href()` from `src/data/site.ts`: `href('/#preise')`, `href('/impressum/')` — subpage links with trailing slash.
+- Build every page/anchor link with `href()` from `src/data/site.ts`: `href('/#preise')`, `href('/impressum/')` — subpage links with trailing slash. Inside a language branch include the prefix: `href('/en/#pricing')`.
 - Use `--gl-*` tokens for every color/radius/shadow; brand re-colors go into `src/styles/brand.css` (token overrides, loads last), never as hex values in glw rules.
 - New sections: `glw-` prefix, global CSS in site.css, follow the section skeleton.
 - Pass per-page `title`, `description` (and optional `ogImage`) via BaseLayout props — canonical, OG/Twitter meta and sitemap come for free.
@@ -162,7 +209,7 @@ Server-side: always re-check the `botcheck` field (client check alone is bypassa
 3. `src/data/site.ts`: siteName, defaultTitle, defaultDescription, repoUrl.
 4. Replace copy per section in `src/components/` (grep for `LUMEN`); adjust the Hero device panel to the product. Nav links live twice in SiteHeader (desktop + mobile panel).
 5. Replace `public/og.png` (1200×630 social preview) and `public/favicon.svg`.
-6. Choose sections: reorder/remove imports in `src/pages/index.astro`; single-audience sites may drop the switch and all `.only-b2b` blocks.
+6. Choose sections: reorder/remove imports in `src/pages/index.astro`; single-audience sites may drop the switch and all `.only-b2b` blocks. Mirror the choice in `src/pages/en/index.astro` — or remove i18n entirely for single-language projects (steps in §3b).
 7. Fill `impressum.astro` / `datenschutz.astro` with real legal content.
 8. Verify: `npm test` (smoke suite; covers themes × audiences × viewports, no-JS, subpage links) plus a manual look via `npm run build && npm run preview`. If sections/pages were removed, update `tests/smoke.spec.ts` accordingly.
 9. Push to `main`; one-time repo setting: Settings → Pages → Source "GitHub Actions".

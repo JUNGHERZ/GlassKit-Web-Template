@@ -26,6 +26,9 @@ const pages = [
   { path: 'blog/papierkram-wochenende/', name: 'Blog-Artikel' },
   { path: 'impressum/', name: 'Impressum' },
   { path: 'datenschutz/', name: 'Datenschutz' },
+  { path: 'en/', name: 'EN-Startseite' },
+  { path: 'en/impressum/', name: 'EN-Imprint' },
+  { path: 'en/datenschutz/', name: 'EN-Privacy' },
 ];
 
 for (const p of pages) {
@@ -98,6 +101,47 @@ test('Mobile-Menü öffnet, navigiert und schließt', async ({ page }) => {
   await blogLink.click();
   await expect(page).toHaveURL(/\/blog\/$/);
   await expect(page.locator('.glw-mobilenav__panel a').first()).toBeHidden();
+});
+
+test('Sprach-Umschalter: DE → EN → DE', async ({ page }) => {
+  await page.goto('');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'de');
+
+  await page.locator('.glw-lang a[lang="en"]').click();
+  await expect(page).toHaveURL(/\/en\/$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expect(page.locator('h1.only-b2c')).toContainText('Your documents');
+
+  await page.locator('.glw-lang a[lang="de"]').click();
+  await expect(page).toHaveURL(String(test.info().project.use.baseURL));
+  await expect(page.locator('html')).toHaveAttribute('lang', 'de');
+});
+
+test('Sprach-Umschalter erhält die Unterseite', async ({ page }) => {
+  await page.goto('impressum/');
+  await expect(page.locator('.glw-lang a[lang="en"]')).toHaveAttribute('href', /\/en\/impressum\/$/);
+  await page.locator('.glw-lang a[lang="en"]').click();
+  await expect(page).toHaveURL(/\/en\/impressum\/$/);
+  await expect(page.locator('h1')).toContainText('Imprint');
+});
+
+test('hreflang: Alternates auf übersetzten Seiten, keine im Blog', async ({ page }) => {
+  await page.goto('');
+  await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveCount(1);
+  await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveCount(1);
+
+  await page.goto('blog/');
+  await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(0);
+  // Blog ist nicht übersetzt: der Umschalter fällt auf die EN-Startseite zurück
+  await expect(page.locator('.glw-lang a[lang="en"]')).toHaveAttribute('href', /\/en\/$/);
+});
+
+test('EN: Anker-Navigation von Unterseite', async ({ page }) => {
+  test.skip(test.info().project.name !== 'desktop', 'Desktop-Nav ist mobil ausgeblendet');
+  await page.goto('en/impressum/');
+  await page.locator('.glw-nav a', { hasText: 'Pricing' }).click();
+  await expect(page).toHaveURL(/\/en\/#pricing$/);
+  await expect(page.locator('#pricing')).toBeVisible();
 });
 
 test.describe('Ohne JavaScript', () => {
