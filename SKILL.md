@@ -270,3 +270,41 @@ Server-side: always re-check the `botcheck` field (client check alone is bypassa
 4. Keep the old site's brand colors via `src/styles/brand.css` (token overrides,
    example themes included), not by editing glasskit.css or glw rules.
 5. Run the verification from recipe 5, step 9.
+
+## 7. Recipe: Pull Template Updates into a Derived Project
+
+Derived projects (monaoffice.de, monahilft.de, …) are standalone repos —
+template changes do NOT flow automatically. Updates live on two layers:
+
+**GlassKit layer:** bump `@jungherz-de/glasskit` in package.json — done.
+
+**Template layer** — use the template repo as a second remote:
+
+1. One-time setup in the project repo:
+   `git remote add template https://github.com/JUNGHERZ/GlassKit-Web-Template.git`
+2. `git fetch template`, then read the CURRENT template reference before doing
+   anything: `git show template/main:SKILL.md` (the project's own SKILL.md copy
+   may be outdated — this recipe itself might have changed).
+3. Review what changed: `git log --oneline ..template/main` and
+   `git diff HEAD template/main -- src/styles/site.css src/scripts/site.js`.
+4. **Mechanics files** are designed to stay project-neutral and can be taken
+   wholesale — then REVIEW the staged diff and revert any project-specific
+   deviations you find (tests may reference removed sections, BaseLayout may
+   carry per-project meta):
+   `git checkout template/main -- src/styles/site.css src/scripts/site.js SKILL.md`
+   (add `src/layouts/BaseLayout.astro`, `tests/smoke.spec.ts`,
+   `playwright.config.ts` only after diffing them — they drift more often).
+5. **NEVER overwrite:** `src/data/site.ts`, `src/styles/brand.css`,
+   `src/components/**` (copy lives there), `public/**`, legal pages.
+6. **New opt-in sections/features** (new files under `src/components/` since
+   the last sync): do NOT copy silently. List them with a one-line purpose
+   each (from §2's catalog) and **ask the user per feature** whether to adopt
+   it — e.g. "The template now ships `Bento` (feature cards with embedded
+   mini visualizations), `Flow` (process diagram), `HeroEditorial`
+   (typographic hero) — which should this project get?" If adopted: copy the
+   component (+ every language branch the project has), replace the LUMEN
+   demo copy with project copy, wire it into each branch's index.astro.
+7. Verify: `npm test` + `npm run build && npm run preview`; fix fallout.
+8. Commit with the synced template commit in the message
+   (`template-sync: <short-sha>`) — the next sync's step 3 uses it as the
+   starting point.

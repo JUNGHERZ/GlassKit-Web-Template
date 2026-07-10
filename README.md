@@ -86,6 +86,12 @@ tests/smoke.spec.ts           Playwright-Smoke-Tests (laufen im CI vor jedem Dep
 10. Push auf `main` — GitHub Actions baut und deployed automatisch
     (einmalig: Settings → Pages → Source „GitHub Actions").
 
+**Updates später einspielen:** Abgeleitete Projekte sind eigenständige Repos —
+Template-Änderungen fließen nicht automatisch. Das Template als zweites Remote
+anlegen und Mechanik-Dateien gezielt übernehmen; neue Opt-in-Sektionen werden
+dabei pro Projekt bewusst gewählt statt still kopiert. Schritt-für-Schritt:
+SKILL.md, Recipe §7.
+
 ## Hero-Varianten & Visualisierungen (Opt-in)
 
 Zwei Hero-Typen stehen zur Wahl: das **Showcase-Hero** (`Hero.astro`, Device-Panel
