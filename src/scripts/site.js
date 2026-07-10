@@ -133,10 +133,12 @@
       if (type) cstatus.classList.add('glw-status--' + type);
       cstatusText.textContent = msg;
     };
-    /* Pflichtfeld-Hinweis: die Consent-Checkbox ist visuell versteckt (0×0) —
-       blockiert die native Validierung den Submit ihretwegen, bliebe das
-       Formular stumm, weil die Browser-Bubble keinen Ankerpunkt hat
-       (Click feuert VOR der Validierung, Submit dann gar nicht). */
+    /* Pflichtfeld-Hinweis: blockiert die native Validierung den Submit,
+       zeigt der Click-Handler zusätzlich eine dauerhafte, übersetzbare
+       Inline-Meldung (Click feuert VOR der Validierung, Submit dann gar
+       nicht). Bis GlassKit 1.6.3 war das sogar zwingend: das 0×0 versteckte
+       Checkbox-Input bot der Browser-Bubble keinen Anker — der Submit blieb
+       komplett stumm (upstream in 1.6.4 behoben). */
     var submitBtn = cform.querySelector('[type="submit"]');
     submitBtn.addEventListener('click', function () {
       if (!cform.checkValidity()) {

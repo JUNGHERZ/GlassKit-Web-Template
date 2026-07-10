@@ -108,8 +108,8 @@ test('Kontaktformular: Hinweis bei fehlenden Pflichtfeldern, danach Demo-Versand
   const status = page.locator('#contactStatus');
   await expect(status).toBeHidden();
 
-  // Leer abschicken: die native Validierung blockiert den Submit stumm
-  // (Consent-Checkbox ist 0×0 versteckt) — der Click-Handler muss melden.
+  // Leer abschicken: die native Validierung blockiert den Submit —
+  // der Click-Handler muss die Inline-Meldung zeigen.
   await page.locator('#kontakt [type="submit"]').click();
   await expect(status).toBeVisible();
   await expect(status).toHaveClass(/glw-status--error/);

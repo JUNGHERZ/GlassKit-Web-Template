@@ -14,7 +14,7 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
-    "@jungherz-de/glasskit": "^1.6.3",
+    "@jungherz-de/glasskit": "^1.6.4",
     "astro": "^5.0.0"
   },
   "devDependencies": {

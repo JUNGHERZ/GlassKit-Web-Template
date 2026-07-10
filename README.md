@@ -133,8 +133,8 @@ unter `contactForm` konfigurieren — leerer `endpoint` = Demo-Modus.
 
 Eingebaut: Honeypot (`botcheck`, serverseitig erneut prüfen), Pflicht-Checkbox
 mit Link auf die Datenschutzerklärung, B2B-Zusatzfeld „Unternehmen" und ein
-sichtbarer Hinweis bei fehlenden Pflichtfeldern (die native Browser-Meldung
-kann an der visuell versteckten Checkbox nicht andocken). DSGVO:
+sichtbarer Hinweis bei fehlenden Pflichtfeldern (dauerhaft und übersetzbar,
+ergänzend zur flüchtigen Browser-Meldung). DSGVO:
 Der Empfänger gehört in die Datenschutzerklärung. Dies ist die einzige
 dokumentierte Ausnahme von der „keine externen Requests"-Konvention —
 es lädt nichts vor dem Absenden.
