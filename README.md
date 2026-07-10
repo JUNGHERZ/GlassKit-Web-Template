@@ -132,7 +132,9 @@ unter `contactForm` konfigurieren — leerer `endpoint` = Demo-Modus.
 - **Formspree**: `endpoint: 'https://formspree.io/f/<form-id>'`.
 
 Eingebaut: Honeypot (`botcheck`, serverseitig erneut prüfen), Pflicht-Checkbox
-mit Link auf die Datenschutzerklärung, B2B-Zusatzfeld „Unternehmen". DSGVO:
+mit Link auf die Datenschutzerklärung, B2B-Zusatzfeld „Unternehmen" und ein
+sichtbarer Hinweis bei fehlenden Pflichtfeldern (die native Browser-Meldung
+kann an der visuell versteckten Checkbox nicht andocken). DSGVO:
 Der Empfänger gehört in die Datenschutzerklärung. Dies ist die einzige
 dokumentierte Ausnahme von der „keine externen Requests"-Konvention —
 es lädt nichts vor dem Absenden.

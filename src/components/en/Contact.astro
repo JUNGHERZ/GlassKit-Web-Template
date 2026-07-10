@@ -28,6 +28,7 @@ const hidden = Object.entries(contactForm.hiddenFields);
         data-msg-sending="Sending your message …"
         data-msg-success="Thank you! Your message has arrived – we will be in touch shortly."
         data-msg-error="Sending failed. Please try again later."
+        data-msg-invalid="Please fill in all required fields and accept the privacy policy."
       >
         {hidden.map(([name, value]) => <input type="hidden" name={name} value={value} />)}
 

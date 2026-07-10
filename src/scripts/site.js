@@ -133,6 +133,18 @@
       if (type) cstatus.classList.add('glw-status--' + type);
       cstatusText.textContent = msg;
     };
+    /* Pflichtfeld-Hinweis: die Consent-Checkbox ist visuell versteckt (0×0) —
+       blockiert die native Validierung den Submit ihretwegen, bliebe das
+       Formular stumm, weil die Browser-Bubble keinen Ankerpunkt hat
+       (Click feuert VOR der Validierung, Submit dann gar nicht). */
+    var submitBtn = cform.querySelector('[type="submit"]');
+    submitBtn.addEventListener('click', function () {
+      if (!cform.checkValidity()) {
+        showStatus('error', cmsg('invalid', 'Bitte alle Pflichtfelder ausfüllen und die Datenschutzerklärung bestätigen.'));
+      } else if (cstatus.classList.contains('glw-status--error')) {
+        cstatus.hidden = true;
+      }
+    });
     cform.addEventListener('submit', function (e) {
       e.preventDefault();
       if (cform.elements.botcheck && cform.elements.botcheck.value) return; /* Honeypot */
@@ -142,7 +154,6 @@
         cform.reset();
         return;
       }
-      var submitBtn = cform.querySelector('[type="submit"]');
       submitBtn.disabled = true;
       showStatus('', cmsg('sending', 'Nachricht wird gesendet …'));
       fetch(endpoint, {

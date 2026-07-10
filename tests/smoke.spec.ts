@@ -90,6 +90,48 @@ test('Navigation: Startseite → Blog → Artikel → Anker von Unterseite', asy
   await expect(page.locator('#preise')).toBeVisible();
 });
 
+test('Footer-Brand (#top) scrollt zurück nach oben', async ({ page }) => {
+  await page.goto('');
+  const brand = page.locator('.glw-footer .glw-brand');
+  await brand.scrollIntoViewIfNeeded();
+  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+
+  // id="top" liegt auf dem glass-bg-Wrapper (BaseLayout) — auf dem fixed
+  // Header würde der Same-Page-Anker nicht scrollen.
+  await brand.click();
+  await expect(page).toHaveURL(/#top$/);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+});
+
+test('Kontaktformular: Hinweis bei fehlenden Pflichtfeldern, danach Demo-Versand', async ({ page }) => {
+  await page.goto('');
+  const status = page.locator('#contactStatus');
+  await expect(status).toBeHidden();
+
+  // Leer abschicken: die native Validierung blockiert den Submit stumm
+  // (Consent-Checkbox ist 0×0 versteckt) — der Click-Handler muss melden.
+  await page.locator('#kontakt [type="submit"]').click();
+  await expect(status).toBeVisible();
+  await expect(status).toHaveClass(/glw-status--error/);
+  await expect(status).toContainText('Pflichtfelder');
+
+  await page.locator('#cf-name').fill('Test Person');
+  await page.locator('#cf-email').fill('test@example.com');
+  await page.locator('#cf-message').fill('Testnachricht');
+  await page.locator('#kontakt .glass-checkbox__box').click();
+  await page.locator('#kontakt [type="submit"]').click();
+  await expect(status).toContainText('Demo-Modus');
+  await expect(status).not.toHaveClass(/glw-status--error/);
+});
+
+test('EN: Pflichtfeld-Hinweis nutzt data-msg-invalid', async ({ page }) => {
+  await page.goto('en/');
+  await page.locator('#contact [type="submit"]').click();
+  const status = page.locator('#contactStatus');
+  await expect(status).toBeVisible();
+  await expect(status).toContainText('required fields');
+});
+
 test('Mobile-Menü öffnet, navigiert und schließt', async ({ page }) => {
   test.skip(test.info().project.name !== 'mobile', 'Burger-Menü existiert nur mobil');
   await page.goto('');

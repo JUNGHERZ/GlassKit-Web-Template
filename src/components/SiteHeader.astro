@@ -9,7 +9,9 @@ interface Props {
 }
 const { translated = true } = Astro.props;
 ---
-<header class="glw-header" id="top">
+{/* Kein id="top" hier: der Header ist position:fixed — Same-Page-Anker auf
+    fixierte Elemente scrollen nicht. Das Ziel liegt in BaseLayout (glass-bg). */}
+<header class="glw-header">
   <div class="glw-container glw-header__inner">
     <a class="glw-brand" href={href('/#top')} aria-label={`${siteName} – Startseite`}>
       <BrandMark />

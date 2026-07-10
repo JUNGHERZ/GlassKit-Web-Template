@@ -70,7 +70,9 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     </script>
   </head>
   <body>
-    <div class="glass-bg">
+    {/* id="top" (Ziel der Brand-Links) muss auf dem scrollenden Inhalt liegen —
+        auf dem fixed Header würde ein Same-Page-Klick auf /#top nicht scrollen. */}
+    <div class="glass-bg" id="top">
       {/* Header/Footer je Sprachzweig (Nav-Labels sind Copy). Eine weitere
           Sprache bekommt hier einen weiteren Zweig — siehe SKILL.md §3b. */}
       {lang === 'en' ? <SiteHeaderEn translated={translated} /> : <SiteHeader translated={translated} />}

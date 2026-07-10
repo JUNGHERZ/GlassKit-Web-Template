@@ -72,7 +72,7 @@ tests/smoke.spec.ts     CI smoke tests — run as the "test" job in deploy.yml b
 | `Quote` | Serif testimonial, one per audience | Paired `.only-b2c` / `.only-b2b` blocks |
 | `Faq` | GlassKit accordion + FAQPage JSON-LD | Edit the `faqs[]` array; `audience: 'b2c'\|'b2b'` marks audience-specific questions. JSON-LD mirrors the default (no-JS) view: general + B2C only. Toggle handled by site.js; without JS all answers render expanded |
 | `LanguageSwitcher` | Language switcher in the header actions | Renders nothing with 1 language, a "DE \| EN" segmented pill with exactly 2, a details-based flag dropdown with 3+. Entries are LINKS to the equivalent page in the target language — never a JS toggle |
-| `Contact` | Contact form (`id="kontakt"` — nav/footer link here) | Endpoint configured in `site.ts` (`contactForm`); empty endpoint = demo mode. Honeypot field `botcheck`, required consent checkbox linking to `/datenschutz/`, B2B-only company field. With JS: fetch + inline `glass-status`; without JS: native POST to the endpoint |
+| `Contact` | Contact form (`id="kontakt"` — nav/footer link here) | Endpoint configured in `site.ts` (`contactForm`); empty endpoint = demo mode. Honeypot field `botcheck`, required consent checkbox linking to `/datenschutz/`, B2B-only company field. With JS: fetch + inline `glass-status`; without JS: native POST to the endpoint. A click handler on the submit button shows `data-msg-invalid` when `checkValidity()` fails — the consent checkbox is visually hidden (0×0), so the native validation bubble has no anchor and the form would otherwise stay silent |
 | `CtaBanner` | Closing call-to-action panel | Warm border (`--gl-border-warm`) |
 | `SiteFooter` | Link columns, newsletter dummy, legal links | Rendered by BaseLayout |
 | `glw-page` + `glw-prose` | Plain text subpage (Impressum/Datenschutz pattern) | See `src/pages/impressum.astro` |
@@ -143,7 +143,8 @@ Rules for language branches:
   language's home page instead. The blog appears only in the default language
   (no blog link in EN header/footer).
 - Contact form status messages travel as `data-msg-*` attributes on the form
-  (site.js reads them; German fallbacks live in site.js).
+  (site.js reads them; German fallbacks live in site.js) — including
+  `data-msg-invalid`, shown when native validation blocks the submit.
 - Header/Footer are part of each branch (nav labels are copy); BaseLayout picks
   the pair by locale — a new language adds one more branch there.
 
@@ -188,6 +189,7 @@ navigation test's blog steps, the RSS assertion).
 - No bare `#anchor` hrefs in header/footer (they break on subpages).
 - No external requests (fonts, CDNs, analytics) — the built site is fully self-contained. **Single documented exception:** the contact form's configured endpoint (user-initiated submit only, nothing loads before that; the recipient must be named in the privacy policy).
 - Don't remove the no-JS fallbacks (light-theme token block, `:root:not([data-audience])` rule).
+- No `id` anchor targets on the fixed header — same-page anchors to `position: fixed` elements don't scroll. `id="top"` lives on the `.glass-bg` wrapper in BaseLayout (once per page, so it also can't duplicate across language branches).
 
 ## 4b. Contact Form Providers
 
