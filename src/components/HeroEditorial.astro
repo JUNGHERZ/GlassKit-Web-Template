@@ -1,0 +1,43 @@
+---
+/**
+ * Editorial-Hero — Alternative zum Showcase-Hero für Dienstleister und
+ * Agenturen ohne Produkt-UI: typografisch, einspaltig, ohne Device-Panel
+ * (schnellster LCP). Einsatz: in index.astro Hero durch HeroEditorial
+ * ersetzen. Bewusst ohne B2C/B2B-Umschalter (Dienstleister-Seiten sind
+ * meist single-audience — sonst .only-*-Paare wie im Hero ergänzen).
+ * Leistungen, Kennzahlen und Claims sind Platzhalter pro Projekt.
+ */
+---
+<section class="glw-hero glw-hero--editorial">
+  <div class="glw-container">
+    <span class="glw-eyebrow">LUMEN · IT-Entwicklung &amp; Beratung</span>
+    <h1 class="glw-display">Digitalisierung, die im Alltag <span class="glw-glint">ankommt.</span></h1>
+    <p class="glw-hero__sub">
+      Wir entwickeln Individualsoftware und begleiten Unternehmen von der
+      Prozessanalyse bis zum Betrieb — spezialisiert auf Dokumentenmanagement,
+      Schnittstellen und Automatisierung. Ohne Buzzwords, mit Ergebnissen.
+    </p>
+    <div class="glw-cta-row">
+      <button class="glass-btn glass-btn--primary glass-btn--auto" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.3 8.7 8.7 0 0 1-3.9-.9L3 20l1.2-5.2a8 8 0 0 1-.7-3.3A8.4 8.4 0 0 1 12 3.2a8.4 8.4 0 0 1 9 8.3z"></path></svg>
+        Projekt anfragen
+      </button>
+      <button class="glass-btn glass-btn--tertiary glass-btn--auto" type="button">Referenzen ansehen</button>
+    </div>
+
+    <div class="glw-services" aria-label="Leistungen">
+      <span class="glass-badge">Individualentwicklung</span>
+      <span class="glass-badge">Systemintegration</span>
+      <span class="glass-badge">DMS &amp; ECM</span>
+      <span class="glass-badge">KI-Automatisierung</span>
+      <span class="glass-badge">Beratung &amp; Schulung</span>
+    </div>
+
+    <div class="glw-statline">
+      <div><strong>60+</strong><small>umgesetzte Projekte</small></div>
+      <div><strong>15 Jahre</strong><small>Entwicklung &amp; Beratung</small></div>
+      <div><strong>&lt; 24 h</strong><small>Reaktionszeit im Support</small></div>
+      <div><strong>100 %</strong><small>Hosting in Deutschland</small></div>
+    </div>
+  </div>
+</section>

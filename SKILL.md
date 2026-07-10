@@ -60,11 +60,13 @@ tests/smoke.spec.ts     CI smoke tests — run as the "test" job in deploy.yml b
 | Component | Purpose | Notes |
 |---|---|---|
 | `SiteHeader` | Fixed glass nav: brand, anchors, theme toggle, CTA, mobile menu | Rendered by BaseLayout. Nav links exist TWICE: desktop `.glw-nav` and the `<details id="mobileNav">` overlay panel — always update both. Mobile menu opens/closes natively without JS (details/summary); site.js adds focus trap, ESC, scroll lock |
-| `Hero` | Audience switch + headline pair + CTAs + decorative device panel | The device panel is a mini component showcase (aria-hidden); swap its content to match the product |
+| `Hero` | Audience switch + headline pair + CTAs + decorative device panel | The device panel is a mini component showcase (aria-hidden); swap its content to match the product. 3D tilt is OPT-IN: `glw-hero__visual--tilt` + `data-tilt` on the visual (default ON in the demo; remove both for a flat panel) |
+| `HeroEditorial` | ALTERNATIVE hero: typographic, single-column, no device panel | For service providers/agencies without a product UI (fastest LCP). Swap for `Hero` in index.astro; ships without the audience switch (add `.only-*` pairs if needed). Services badges + stat line are placeholders |
 | `LogoStrip` | Social proof wordmarks | Text-only, styled via `glw-wordmark--*` variants |
 | `Features` | 3-column glass card grid | Edit the `features[]` array (icon = inline outline SVG string, 24 viewBox) |
 | `Process` | Numbered how-it-works steps | `steps[]` array; numbering is honest here (real sequence) — don't add numbers to non-sequential sections |
-| `Showcase` | 3D-tilted "spatial" glass window (visionOS look) | Decorative; tilt via `#tiltWindow` in site.js |
+| `Flow` | Embedded process visualization: sources → core → targets | Glass nodes (DOM) over an SVG with connector paths + traveling data points (`animateMotion`, no JS). Diagram is decorative (aria-hidden) — the message lives in the lead. See §2b |
+| `Showcase` | 3D-tilted "spatial" glass window (visionOS look) | Decorative; parallax via `data-tilt` (generic mechanism in site.js) |
 | `Stats` | 4 KPI figures, typographic | `stats[]` array; keep `tabular-nums` styling |
 | `Cases` | Success stories / references | `cases[]` array: metric (gradient number) + label + text + client name |
 | `Team` | People grid with initials avatars | `team[]` array; no photos in the template — replace avatars per project or drop the section |
@@ -91,6 +93,34 @@ Section skeleton (every section follows this):
   </div>
 </section>
 ```
+
+### 2b. Embedded visualizations (build, don't screenshot)
+
+Whenever a task calls for "more visuals" — product depictions, process flows,
+architecture derivations, integration overviews — build them from DOM/SVG
+instead of images. Rationale: glassmorphism cannot be screenshotted
+(`backdrop-filter` needs the live page background), DOM visuals inherit
+tokens/theme/rebranding for free, and they cost no LCP.
+
+Building blocks, in escalating order:
+
+1. **Component collage** — GlassKit components arranged decoratively
+   (`Hero` device panel pattern). For product/app depictions.
+2. **Tilt/parallax** — `data-tilt` on any element + base angles in CSS via
+   `calc(<base> + var(--tilt-dx/dy, 0deg))`; site.js sets the deltas on
+   pointermove (fine pointers only, disabled with reduced motion).
+   Used by `Showcase` (`.glw-window`) and the hero tilt opt-in.
+3. **Flow diagram** — `.glw-flow` box (fixed `aspect-ratio`, `min-width`,
+   horizontal scroll inside `.glw-flow-scroll`), `.glw-node` glass nodes
+   positioned absolutely in % (SVG coordinate ÷ 10 and ÷ 4.6 for a
+   1000×460 viewBox), connector `<path>`s + `.glw-flow__pulse` circles with
+   SMIL `animateMotion`. No JS; reduced motion hides the pulses via CSS
+   (SMIL can't be paused from CSS). Adapt the `Flow` section rather than
+   building from scratch; give path/mpath ids a `glwFp` prefix per page to
+   avoid collisions.
+
+Rules: diagrams are decorative (`aria-hidden`) with the message in the
+section lead; never introduce raster/stock imagery for these purposes.
 
 ## 3. Core Mechanics
 
@@ -209,17 +239,23 @@ Server-side: always re-check the `botcheck` field (client check alone is bypassa
 1. Use repo as template/fork; `npm install`.
 2. `astro.config.mjs`: set `base` to `'/<new-repo-name>'` (or remove for custom domain + add `public/CNAME`).
 3. `src/data/site.ts`: siteName, defaultTitle, defaultDescription, repoUrl.
-4. Replace copy per section in `src/components/` (grep for `LUMEN`); adjust the Hero device panel to the product. Nav links live twice in SiteHeader (desktop + mobile panel).
-5. Replace `public/og.png` (1200×630 social preview) and `public/favicon.svg`.
-6. Choose sections: reorder/remove imports in `src/pages/index.astro`; single-audience sites may drop the switch and all `.only-b2b` blocks. Mirror the choice in `src/pages/en/index.astro` — or remove i18n entirely for single-language projects (steps in §3b).
-7. Fill `impressum.astro` / `datenschutz.astro` with real legal content.
-8. Verify: `npm test` (smoke suite; covers themes × audiences × viewports, no-JS, subpage links) plus a manual look via `npm run build && npm run preview`. If sections/pages were removed, update `tests/smoke.spec.ts` accordingly.
-9. Push to `main`; one-time repo setting: Settings → Pages → Source "GitHub Actions".
+4. **Choose the hero — ask the user:** product with a UI → `Hero` (showcase
+   panel; then ask: tilted or flat? Tilt is the demo default — remove
+   `glw-hero__visual--tilt` + `data-tilt` for flat) · service provider/agency
+   without product UI → `HeroEditorial` (swap the import in index.astro).
+   Also offer the `Flow` section when the product/service connects systems or
+   automates a process (§2b); drop it otherwise.
+5. Replace copy per section in `src/components/` (grep for `LUMEN`); adjust the Hero device panel (or the `HeroEditorial` services/stat line) to the product. Nav links live twice in SiteHeader (desktop + mobile panel).
+6. Replace `public/og.png` (1200×630 social preview) and `public/favicon.svg`.
+7. Choose sections: reorder/remove imports in `src/pages/index.astro`; single-audience sites may drop the switch and all `.only-b2b` blocks. Mirror the choice in `src/pages/en/index.astro` — or remove i18n entirely for single-language projects (steps in §3b).
+8. Fill `impressum.astro` / `datenschutz.astro` with real legal content.
+9. Verify: `npm test` (smoke suite; covers themes × audiences × viewports, no-JS, subpage links) plus a manual look via `npm run build && npm run preview`. If sections/pages were removed, update `tests/smoke.spec.ts` accordingly.
+10. Push to `main`; one-time repo setting: Settings → Pages → Source "GitHub Actions".
 
 ## 6. Recipe: Convert an Existing Website to This Template
 
 1. Inventory the existing site's content and map each block to a catalog section
-   (hero → `Hero`, feature/benefit lists → `Features`, prices → `Pricing`, testimonials
+   (hero → `Hero` or `HeroEditorial`, feature/benefit lists → `Features`, prices → `Pricing`, testimonials
    → `Quote`, contact → `CtaBanner`, text pages → `glw-page`/`glw-prose`).
 2. Migrate copy into the matching components; do NOT port the old site's CSS.
 3. For content with no matching section type, build a new `glw-` section following the
@@ -227,4 +263,4 @@ Server-side: always re-check the `botcheck` field (client check alone is bypassa
    `glass-list`, `glass-badge`, …) instead of importing foreign styles.
 4. Keep the old site's brand colors via `src/styles/brand.css` (token overrides,
    example themes included), not by editing glasskit.css or glw rules.
-5. Run the verification from recipe 5, step 8.
+5. Run the verification from recipe 5, step 9.

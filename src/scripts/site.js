@@ -190,20 +190,25 @@
     revealEls.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* ---- Spatial-Fenster: sanfter Parallax-Tilt ----------------- */
-  var tiltEl = document.getElementById('tiltWindow');
-  if (tiltEl && matchMedia('(pointer: fine)').matches && !reducedMotion.matches) {
-    var stage = tiltEl.closest('.glw-stage') || tiltEl;
-    stage.addEventListener('pointermove', function (e) {
-      var r = tiltEl.getBoundingClientRect();
-      var x = (e.clientX - r.left) / r.width - 0.5;
-      var y = (e.clientY - r.top) / r.height - 0.5;
-      tiltEl.style.setProperty('--tilt-x', (3 + y * -5).toFixed(2) + 'deg');
-      tiltEl.style.setProperty('--tilt-y', (-5 + x * 7).toFixed(2) + 'deg');
-    });
-    stage.addEventListener('pointerleave', function () {
-      tiltEl.style.removeProperty('--tilt-x');
-      tiltEl.style.removeProperty('--tilt-y');
+  /* ---- Parallax-Tilt (Spatial-Fenster, Hero-Panel) -------------
+     Jedes Element mit [data-tilt] bekommt bei Mausbewegung die Deltas
+     --tilt-dx/--tilt-dy (in deg) gesetzt; die Basiswinkel stehen im CSS
+     als calc(<basis> + var(--tilt-dx/dy, 0deg)). Hover-Zone ist die
+     umgebende .glw-stage, sonst das Element selbst. */
+  if (matchMedia('(pointer: fine)').matches && !reducedMotion.matches) {
+    document.querySelectorAll('[data-tilt]').forEach(function (tiltEl) {
+      var zone = tiltEl.closest('.glw-stage') || tiltEl;
+      zone.addEventListener('pointermove', function (e) {
+        var r = tiltEl.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        tiltEl.style.setProperty('--tilt-dx', (y * -5).toFixed(2) + 'deg');
+        tiltEl.style.setProperty('--tilt-dy', (x * 7).toFixed(2) + 'deg');
+      });
+      zone.addEventListener('pointerleave', function () {
+        tiltEl.style.removeProperty('--tilt-dx');
+        tiltEl.style.removeProperty('--tilt-dy');
+      });
     });
   }
 })();

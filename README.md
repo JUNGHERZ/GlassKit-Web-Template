@@ -72,16 +72,35 @@ tests/smoke.spec.ts           Playwright-Smoke-Tests (laufen im CI vor jedem Dep
 2. `astro.config.mjs`: `base` an den neuen Repo-Namen anpassen — bei Custom Domain
    `base` entfernen, `site` auf die Domain setzen und `public/CNAME` anlegen.
 3. `src/data/site.ts`: Name, Title, Description, Repo-URL.
-4. Copy pro Sektion in `src/components/` tauschen (nach „LUMEN" suchen) —
+4. Hero wählen: Produkt mit UI → `Hero` (Device-Panel, wahlweise geneigt oder
+   flach — siehe „Hero-Varianten"); Dienstleister/Agentur → `HeroEditorial`
+   (Import in `index.astro` tauschen).
+5. Copy pro Sektion in `src/components/` tauschen (nach „LUMEN" suchen) —
    die Nav-Links existieren zweimal (Desktop-Nav + Mobile-Menü im Header).
-5. `public/og.png` ersetzen (Social-Vorschaubild, 1200 × 630) und `public/favicon.svg` anpassen.
-6. Sektionen in `src/pages/index.astro` an-/abwählen oder umsortieren.
-7. Branding-Farben in `src/styles/brand.css` setzen — Token-Overrides nach dem
+6. `public/og.png` ersetzen (Social-Vorschaubild, 1200 × 630) und `public/favicon.svg` anpassen.
+7. Sektionen in `src/pages/index.astro` an-/abwählen oder umsortieren.
+8. Branding-Farben in `src/styles/brand.css` setzen — Token-Overrides nach dem
    Muster von [GlassKit theme-override](https://github.com/JUNGHERZ/GlassKit),
    Beispiel-Themes liegen auskommentiert bei (nie glasskit.css anfassen).
-8. Impressum/Datenschutz mit echten Angaben füllen.
-9. Push auf `main` — GitHub Actions baut und deployed automatisch
-   (einmalig: Settings → Pages → Source „GitHub Actions").
+9. Impressum/Datenschutz mit echten Angaben füllen.
+10. Push auf `main` — GitHub Actions baut und deployed automatisch
+    (einmalig: Settings → Pages → Source „GitHub Actions").
+
+## Hero-Varianten & Visualisierungen (Opt-in)
+
+Zwei Hero-Typen stehen zur Wahl: das **Showcase-Hero** (`Hero.astro`, Device-Panel
+aus GlassKit-Komponenten — für Produkte mit UI) und das **Editorial-Hero**
+(`HeroEditorial.astro`, typografisch, einspaltig, ohne Panel — für Dienstleister
+und Agenturen, schnellster LCP). Das Device-Panel kann per Opt-in **3D-geneigt**
+werden (`glw-hero__visual--tilt` + `data-tilt` auf dem Visual, im Demo aktiv):
+Maus-Parallax wie im Spatial-Showcase, echte Tiefe der Chips via `translateZ`,
+stillgelegt bei `prefers-reduced-motion`.
+
+Grundsatz des Templates: **Visualisierungen werden gebaut, nicht gescreenshottet.**
+Produktdarstellungen, Prozesse und Integrations-Übersichten entstehen aus
+GlassKit-Komponenten und SVG (Beispiel: `Flow.astro` — Glas-Nodes über animierten
+Verbindungspfaden, ganz ohne JavaScript). So greifen Theme, Tokens und Rebranding
+automatisch auch in den Schaubildern; Muster und Regeln stehen in der SKILL.md (§2b).
 
 ## Blog (Opt-in)
 

@@ -555,9 +555,60 @@ body { margin: 0; }
 .glw-chip--1 { top: 9%; right: -2%; animation-delay: -2s; }
 .glw-chip--2 { bottom: 14%; left: -3%; animation-delay: -4s; }
 
+/* Float läuft über die separate translate-Property, damit sie sich
+   nicht mit dem transform des Tilt-Opt-ins beißt */
 @keyframes glw-float {
-  from { transform: translateY(-7px); }
-  to   { transform: translateY(9px); }
+  from { translate: 0 -7px; }
+  to   { translate: 0 9px; }
+}
+
+/* Hero-Tilt (Opt-in): Klasse + data-tilt auf dem Visual aktivieren —
+   <div class="glw-hero__visual glw-hero__visual--tilt" data-tilt aria-hidden="true">
+   Gleiche Parallax-Mechanik wie das Spatial-Fenster (--tilt-dx/-dy, site.js).
+   Die Chips kippen mit und sitzen per translateZ VOR der Panel-Ebene —
+   der Tiefenversatz entsteht durch die Perspektive von selbst. */
+
+.glw-hero__visual--tilt { perspective: 1100px; }
+
+.glw-hero__visual--tilt .glw-device {
+  transform: rotateY(calc(-15deg + var(--tilt-dy, 0deg)))
+             rotateX(calc(6deg + var(--tilt-dx, 0deg)));
+  transition: transform 0.25s ease-out;
+}
+
+.glw-hero__visual--tilt .glw-chip {
+  transition: transform 0.25s ease-out;
+}
+
+.glw-hero__visual--tilt .glw-chip--1 {
+  top: 2%; right: 0;
+  transform: rotateY(calc(-15deg + var(--tilt-dy, 0deg)))
+             rotateX(calc(6deg + var(--tilt-dx, 0deg)))
+             translateZ(70px);
+}
+
+.glw-hero__visual--tilt .glw-chip--2 {
+  bottom: 5%; left: -10%;
+  transform: rotateY(calc(-15deg + var(--tilt-dy, 0deg)))
+             rotateX(calc(6deg + var(--tilt-dx, 0deg)))
+             translateZ(46px);
+}
+
+/* Ambient-Schatten unter dem gekippten Panel */
+.glw-hero__visual--tilt::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 14%; right: 20%; bottom: -3%;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.3) 0%, transparent 70%);
+  filter: blur(14px);
+}
+
+@media (max-width: 640px) {
+  .glw-hero__visual--tilt .glw-device,
+  .glw-hero__visual--tilt .glw-chip { transform: none; }
+  .glw-hero__visual--tilt::after { display: none; }
 }
 
 @media (max-width: 980px) {
@@ -565,6 +616,47 @@ body { margin: 0; }
   .glw-hero__visual { margin-top: 8px; }
   .glw-chip--1 { right: 4%; }
   .glw-chip--2 { left: 4%; }
+}
+
+/* ---- 4b. Editorial-Hero (HeroEditorial.astro) -----------------
+   Alternative zum Showcase-Hero für Dienstleister/Agenturen:
+   typografisch, einspaltig, ohne Device-Panel. */
+
+.glw-hero--editorial .glw-display {
+  font-size: clamp(2.9rem, 6.6vw, 5.2rem);
+  max-width: 17ch;
+}
+
+.glw-hero--editorial .glw-hero__sub { max-width: 62ch; }
+
+.glw-services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 34px;
+}
+
+.glw-statline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 56px;
+  margin-top: clamp(36px, 5vw, 56px);
+  padding-top: clamp(24px, 3vw, 34px);
+  border-top: 1px solid var(--gl-border-subtle);
+}
+
+.glw-statline strong {
+  display: block;
+  font-size: clamp(1.7rem, 2.6vw, 2.3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--gl-color-text-heading);
+  font-variant-numeric: tabular-nums;
+}
+
+.glw-statline small {
+  font-size: 13.5px;
+  color: var(--gl-color-text-muted);
 }
 
 /* ---- 5. Logo-Leiste ------------------------------------------ */
@@ -660,9 +752,8 @@ body { margin: 0; }
 }
 
 .glw-window {
-  --tilt-x: 3deg;
-  --tilt-y: -5deg;
-  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform: rotateX(calc(3deg + var(--tilt-dx, 0deg)))
+             rotateY(calc(-5deg + var(--tilt-dy, 0deg)));
   transform-style: preserve-3d;
   transition: transform 0.25s ease-out;
   display: grid;
@@ -816,6 +907,113 @@ body { margin: 0; }
 @media (max-width: 620px) {
   .glw-window { grid-template-columns: 1fr; transform: none; }
   .glw-window__rail { flex-direction: row; justify-content: center; }
+}
+
+/* ---- 7b. Flow-Diagramm (Prozess-Visualisierung) ---------------
+   Eingebettete Visualisierung statt Bildmaterial: Glas-Nodes (DOM,
+   absolut in % positioniert) über einem SVG mit Verbindungspfaden
+   und wandernden Datenpunkten (animateMotion, ohne JS). Auf schmalen
+   Screens scrollt das Diagramm horizontal in der eigenen Box. */
+
+.glw-flow-scroll {
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-top: clamp(40px, 6vw, 64px);
+}
+
+.glw-flow {
+  position: relative;
+  min-width: 760px;
+  aspect-ratio: 1000 / 460;
+}
+
+.glw-flow__wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.glw-flow__wires path {
+  fill: none;
+  stroke: var(--gl-border-strong);
+  stroke-width: 1.5;
+}
+
+.glw-flow__pulse { fill: var(--gl-color-primary); }
+
+.glw-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 18px 12px 13px;
+  background: var(--gl-surface-2);
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: var(--gl-radius-card);
+  box-shadow: var(--gl-shadow-card), var(--gl-inset-subtle);
+  white-space: nowrap;
+}
+
+.glw-node__icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 11px;
+  background: var(--gl-surface-3);
+  border: 1px solid var(--gl-border-subtle);
+  box-shadow: var(--gl-inset-subtle);
+}
+
+.glw-node__icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--gl-icon-strong);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.glw-node b {
+  display: block;
+  font-size: 14.5px;
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-text-heading);
+}
+
+.glw-node small {
+  font-size: 12px;
+  color: var(--gl-color-text-muted);
+}
+
+.glw-node--core {
+  padding: 16px 24px 16px 16px;
+  background: var(--gl-surface-3);
+  border-color: var(--gl-border-warm);
+  box-shadow: var(--gl-shadow-glow), var(--gl-inset-medium), 0 0 42px var(--gl-bg-warm-glow);
+}
+
+.glw-node--core .glw-node__icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--gl-color-primary) 0%, var(--gl-color-primary-dark) 100%);
+  border: 0;
+}
+
+.glw-node--core .glw-node__icon svg { stroke: #fff; }
+
+.glw-node--core b { font-size: 16px; }
+
+.glw-flow .glass-badge {
+  position: absolute;
+  transform: translate(-50%, -50%);
 }
 
 /* ---- 8. Kennzahlen ------------------------------------------- */
@@ -1476,6 +1674,11 @@ html:not(.js) .glass-accordion__content { max-height: none; }
   .js .reveal { opacity: 1; transform: none; }
   .glw-device, .glw-chip { animation: none; }
   .glw-window { transform: none !important; transition: none; }
+  .glw-hero__visual--tilt .glw-device,
+  .glw-hero__visual--tilt .glw-chip { transform: none !important; transition: none; }
+  .glw-hero__visual--tilt::after { display: none; }
+  /* SMIL lässt sich per CSS nicht anhalten — die Datenpunkte verschwinden */
+  .glw-flow__pulse { display: none; }
   .glw-feature, .glw-feature:hover { transform: none; transition: none; }
   .glw-aud-fade { animation: none; }
   .glw-mobilenav[open] .glw-mobilenav__panel { animation: none; }

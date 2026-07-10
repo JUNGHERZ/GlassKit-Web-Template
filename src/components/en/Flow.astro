@@ -1,0 +1,73 @@
+---
+/**
+ * EN-Sprachzweig von Flow.astro: eingebettete Prozess-Visualisierung
+ * (Quellen → Kern → Ziele) statt Bildmaterial. Struktur identisch zum
+ * DE-Zweig; Details siehe dort.
+ */
+---
+<section class="glw-section" id="integrations">
+  <div class="glw-container">
+    <div class="glw-center reveal">
+      <span class="glw-eyebrow">One inbox, every destination</span>
+      <h2 class="glw-h2">From inbox to system — automatically.</h2>
+      <p class="glw-lead">
+        LUMEN receives documents from e-mail, scanners and the app, classifies
+        them with AI and routes them to the archive, into workflows and the
+        full-text search.
+      </p>
+    </div>
+
+    <div class="glw-flow-scroll reveal">
+      <div class="glw-flow" aria-hidden="true">
+        <svg class="glw-flow__wires" viewBox="0 0 1000 460">
+          <path id="glwFp1" d="M 232 80 C 330 80 315 230 393 230"></path>
+          <path id="glwFp2" d="M 218 230 C 290 230 320 230 393 230"></path>
+          <path id="glwFp3" d="M 224 380 C 330 380 315 230 393 230"></path>
+          <path id="glwFp4" d="M 607 230 C 685 230 670 80 762 80"></path>
+          <path id="glwFp5" d="M 607 230 C 680 230 710 230 770 230"></path>
+          <path id="glwFp6" d="M 607 230 C 685 230 670 380 764 380"></path>
+          <g>
+            <circle class="glw-flow__pulse" r="4"><animateMotion dur="3.2s" repeatCount="indefinite" begin="0s"><mpath href="#glwFp1"></mpath></animateMotion></circle>
+            <circle class="glw-flow__pulse" r="4"><animateMotion dur="3.2s" repeatCount="indefinite" begin="-1.1s"><mpath href="#glwFp2"></mpath></animateMotion></circle>
+            <circle class="glw-flow__pulse" r="4"><animateMotion dur="3.2s" repeatCount="indefinite" begin="-2.2s"><mpath href="#glwFp3"></mpath></animateMotion></circle>
+            <circle class="glw-flow__pulse" r="4"><animateMotion dur="3.2s" repeatCount="indefinite" begin="-0.5s"><mpath href="#glwFp4"></mpath></animateMotion></circle>
+            <circle class="glw-flow__pulse" r="4"><animateMotion dur="3.2s" repeatCount="indefinite" begin="-1.6s"><mpath href="#glwFp5"></mpath></animateMotion></circle>
+            <circle class="glw-flow__pulse" r="4"><animateMotion dur="3.2s" repeatCount="indefinite" begin="-2.7s"><mpath href="#glwFp6"></mpath></animateMotion></circle>
+          </g>
+        </svg>
+
+        <div class="glw-node" style="left:15%; top:17.4%">
+          <span class="glw-node__icon"><svg viewBox="0 0 24 24"><path d="M22 7 12 13 2 7"></path><rect x="2" y="5" width="20" height="14" rx="2"></rect></svg></span>
+          <span><b>E-mail inbox</b><small>invoices, requests</small></span>
+        </div>
+        <div class="glw-node" style="left:14%; top:50%">
+          <span class="glw-node__icon"><svg viewBox="0 0 24 24"><path d="M4 7V5a1 1 0 0 1 1-1h3M20 7V5a1 1 0 0 0-1-1h-3M4 17v2a1 1 0 0 0 1 1h3M20 17v2a1 1 0 0 1-1 1h-3"></path><path d="M3 12h18"></path></svg></span>
+          <span><b>Scanning line</b><small>paper inbox</small></span>
+        </div>
+        <div class="glw-node" style="left:14.6%; top:82.6%">
+          <span class="glw-node__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.5"></rect><path d="M11 18.5h2"></path></svg></span>
+          <span><b>Mobile app</b><small>photo upload</small></span>
+        </div>
+
+        <span class="glass-badge glass-badge--primary" style="left:50%; top:31%">runs automatically</span>
+        <div class="glw-node glw-node--core" style="left:50%; top:50%">
+          <span class="glw-node__icon"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"></path></svg></span>
+          <span><b>AI classification</b><small>OCR · extraction · routing</small></span>
+        </div>
+
+        <div class="glw-node" style="left:85%; top:17.4%">
+          <span class="glw-node__icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="2.5"></ellipse><path d="M4 5v14c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5V5"></path><path d="M4 12c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5"></path></svg></span>
+          <span><b>Audit-proof archive</b><small>DMS storage</small></span>
+        </div>
+        <div class="glw-node" style="left:86%; top:50%">
+          <span class="glw-node__icon"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg></span>
+          <span><b>Workflow &amp; approval</b><small>invoice → accounting</small></span>
+        </div>
+        <div class="glw-node" style="left:85.4%; top:82.6%">
+          <span class="glw-node__icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span>
+          <span><b>Full-text search</b><small>found in seconds</small></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
