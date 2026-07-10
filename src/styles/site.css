@@ -744,6 +744,101 @@ body { margin: 0; }
   margin: 0;
 }
 
+/* ---- 6b. Bento-Grid (Feature-Karten mit Media-Slot) -----------
+   Mehrspaltiges Karten-Raster, jede Karte trägt oben eine EINGEBAUTE
+   Mini-Visualisierung (Media-Slot) aus GlassKit-/glw-Komponenten statt
+   eines Bildes — Muster siehe SKILL.md §2b. Media-Slots sind dekorativ
+   (aria-hidden), die Aussage steht in Titel + Text der Karte. */
+
+.glw-bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gl-space-lg);
+  margin-top: clamp(36px, 5vw, 56px);
+}
+
+.glw-bento__card {
+  grid-column: span 6;
+  padding: var(--gl-space-md);
+  background: var(--gl-surface-1);
+  backdrop-filter: blur(var(--gl-blur));
+  -webkit-backdrop-filter: blur(var(--gl-blur));
+  border: 1px solid var(--gl-border-subtle);
+  border-radius: calc(var(--gl-radius-card) + 4px);
+  box-shadow: var(--gl-shadow-card), var(--gl-inset-subtle);
+}
+
+.glw-bento__card--wide { grid-column: span 7; }
+.glw-bento__card--narrow { grid-column: span 5; }
+
+.glw-bento__media {
+  position: relative;
+  height: 200px;
+  margin-bottom: 18px;
+  border-radius: var(--gl-radius-card);
+  background: var(--gl-surface-2);
+  border: 1px solid var(--gl-border-subtle);
+  box-shadow: var(--gl-inset-subtle);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+/* Innenleben der Media-Slots */
+.glw-bento__stack {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  width: min(340px, 86%);
+}
+
+.glw-bento__avatars { display: flex; }
+.glw-bento__avatars .glw-avatar {
+  border: 2px solid var(--gl-surface-milk-strong);
+}
+.glw-bento__avatars .glw-avatar + .glw-avatar { margin-left: -10px; }
+
+.glw-bento__stack .glass-progress { width: 100%; }
+
+.glw-bento__stack .glass-search { width: 100%; }
+.glw-bento__stack .glass-search .glass-input { display: block; }
+
+.glw-bento__chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.glw-bento__chain svg {
+  width: 16px; height: 16px;
+  stroke: var(--gl-icon-muted);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.glw-bento__card h3 {
+  font-size: 17px;
+  font-weight: var(--gl-font-weight-semibold);
+  color: var(--gl-color-text-heading);
+  margin: 0 0 8px;
+}
+
+.glw-bento__card p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gl-color-text-muted);
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .glw-bento__card,
+  .glw-bento__card--wide,
+  .glw-bento__card--narrow { grid-column: span 12; }
+}
+
 /* ---- 7. Spatial-Showcase (Fenster mit Tiefe) ------------------ */
 
 .glw-stage {

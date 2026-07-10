@@ -64,6 +64,7 @@ tests/smoke.spec.ts     CI smoke tests — run as the "test" job in deploy.yml b
 | `HeroEditorial` | ALTERNATIVE hero: typographic, single-column, no device panel | For service providers/agencies without a product UI (fastest LCP). Swap for `Hero` in index.astro; ships without the audience switch (add `.only-*` pairs if needed). Services badges + stat line are placeholders |
 | `LogoStrip` | Social proof wordmarks | Text-only, styled via `glw-wordmark--*` variants |
 | `Features` | 3-column glass card grid | Edit the `features[]` array (icon = inline outline SVG string, 24 viewBox) |
+| `Bento` | Multi-column feature cards, each with an embedded mini visualization in a media slot | Built from GlassKit/glw components (badges, progress, search, `glw-node`, avatars) instead of images — see §2b. Media slots are decorative (aria-hidden); column widths via `--wide`/`--narrow` (7/5 of 12) |
 | `Process` | Numbered how-it-works steps | `steps[]` array; numbering is honest here (real sequence) — don't add numbers to non-sequential sections |
 | `Flow` | Embedded process visualization: sources → core → targets | Glass nodes (DOM) over an SVG with connector paths + traveling data points (`animateMotion`, no JS). Diagram is decorative (aria-hidden) — the message lives in the lead. See §2b |
 | `Showcase` | 3D-tilted "spatial" glass window (visionOS look) | Decorative; parallax via `data-tilt` (generic mechanism in site.js) |
@@ -106,11 +107,16 @@ Building blocks, in escalating order:
 
 1. **Component collage** — GlassKit components arranged decoratively
    (`Hero` device panel pattern). For product/app depictions.
-2. **Tilt/parallax** — `data-tilt` on any element + base angles in CSS via
+2. **Feature cards with media slots** — `Bento` pattern: `.glw-bento__media`
+   (fixed height, sunken glass surface) holding a small built visualization
+   per card — a `glw-node` with orbiting badges, avatars + `glass-progress`,
+   a `glass-search` mock (use a `<span class="glass-input">`, never a real
+   input — decorative), a badge chain with arrows. For feature highlights.
+3. **Tilt/parallax** — `data-tilt` on any element + base angles in CSS via
    `calc(<base> + var(--tilt-dx/dy, 0deg))`; site.js sets the deltas on
    pointermove (fine pointers only, disabled with reduced motion).
    Used by `Showcase` (`.glw-window`) and the hero tilt opt-in.
-3. **Flow diagram** — `.glw-flow` box (fixed `aspect-ratio`, `min-width`,
+4. **Flow diagram** — `.glw-flow` box (fixed `aspect-ratio`, `min-width`,
    horizontal scroll inside `.glw-flow-scroll`), `.glw-node` glass nodes
    positioned absolutely in % (SVG coordinate ÷ 10 and ÷ 4.6 for a
    1000×460 viewBox), connector `<path>`s + `.glw-flow__pulse` circles with

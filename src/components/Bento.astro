@@ -1,0 +1,103 @@
+---
+/**
+ * Bento-Sektion: mehrspaltiges Feature-Raster, jede Karte mit eingebetteter
+ * Mini-Visualisierung im Media-Slot (GlassKit-/glw-Komponenten statt Bilder —
+ * Muster in SKILL.md §2b). Media-Slots sind dekorativ (aria-hidden); die
+ * Aussage steht in Titel + Text. Spaltenbreiten über --wide/--narrow.
+ */
+---
+<section class="glw-section" id="werkzeuge">
+  <div class="glw-container">
+    <div class="glw-center reveal">
+      <span class="glw-eyebrow">Mehr als ein Archiv</span>
+      <h2 class="glw-h2">Gemacht für den Alltag mit Dokumenten.</h2>
+      <p class="glw-lead">
+        Vier Situationen, in denen LUMEN den Unterschied macht — vom
+        automatischen Sortieren bis zur Übergabe ans Steuerbüro.
+      </p>
+    </div>
+
+    <div class="glw-bento reveal">
+
+      <article class="glw-bento__card glw-bento__card--wide">
+        <div class="glw-bento__media" aria-hidden="true">
+          <span class="glass-badge" style="position:absolute; left:14%; top:22%">Vertrag</span>
+          <span class="glass-badge" style="position:absolute; right:12%; top:30%">Rechnung</span>
+          <span class="glass-badge" style="position:absolute; left:22%; bottom:18%">Beleg</span>
+          <div class="glw-node glw-node--core" style="left:50%; top:50%">
+            <span class="glw-node__icon"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"></path></svg></span>
+            <span><b>KI-Klassifizierung</b><small>erkennt · benennt · sortiert</small></span>
+          </div>
+        </div>
+        <h3>Sortiert sich von selbst</h3>
+        <p>
+          Jedes Dokument wird erkannt, benannt und im richtigen Ordner abgelegt —
+          ohne dass du je eine Ablagestruktur pflegen musst.
+        </p>
+      </article>
+
+      <article class="glw-bento__card glw-bento__card--narrow">
+        <div class="glw-bento__media" aria-hidden="true">
+          <div class="glw-bento__stack">
+            <div class="glw-bento__avatars">
+              <span class="glw-avatar">MK</span>
+              <span class="glw-avatar glw-avatar--teal">JS</span>
+              <span class="glw-avatar">AL</span>
+            </div>
+            <div class="glass-progress glass-progress--success">
+              <div class="glass-progress__header">
+                <span class="glass-progress__label">Freigaben</span>
+                <span class="glass-progress__value">3/4</span>
+              </div>
+              <div class="glass-progress__track">
+                <div class="glass-progress__fill" style="width: 75%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3>Freigaben im Team</h3>
+        <p>
+          Rechnungen und Verträge im Vier-Augen-Prinzip freigeben — wer wann
+          zugestimmt hat, bleibt nachvollziehbar.
+        </p>
+      </article>
+
+      <article class="glw-bento__card glw-bento__card--narrow">
+        <div class="glw-bento__media" aria-hidden="true">
+          <div class="glw-bento__stack">
+            <div class="glass-search">
+              <svg class="glass-search__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <span class="glass-input">Kaution Mietvertrag</span>
+            </div>
+            <span class="glass-badge glass-badge--success">2 Treffer in 0,3 s</span>
+          </div>
+        </div>
+        <h3>Suchen, wie du denkst</h3>
+        <p>
+          Volltext statt Dateiname: OCR macht jeden Scan durchsuchbar —
+          „Kaution" findet den Mietvertrag, nicht IMG_2041.
+        </p>
+      </article>
+
+      <article class="glw-bento__card glw-bento__card--wide">
+        <div class="glw-bento__media" aria-hidden="true">
+          <div class="glw-bento__chain">
+            <span class="glass-badge glass-badge--primary">LUMEN</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            <span class="glass-badge">DMS</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            <span class="glass-badge">Buchhaltung</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            <span class="glass-badge">Steuerbüro</span>
+          </div>
+        </div>
+        <h3>Fließt in eure Systeme</h3>
+        <p>
+          Export und Schnittstellen statt Sackgasse: Belege wandern gebündelt
+          in DMS, Buchhaltung oder direkt ans Steuerbüro.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>

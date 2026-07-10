@@ -98,7 +98,8 @@ stillgelegt bei `prefers-reduced-motion`.
 
 Grundsatz des Templates: **Visualisierungen werden gebaut, nicht gescreenshottet.**
 Produktdarstellungen, Prozesse und Integrations-Übersichten entstehen aus
-GlassKit-Komponenten und SVG (Beispiel: `Flow.astro` — Glas-Nodes über animierten
+GlassKit-Komponenten und SVG — vom Media-Slot in den Bento-Karten (`Bento.astro`)
+bis zum Prozess-Diagramm (`Flow.astro`, Glas-Nodes über animierten
 Verbindungspfaden, ganz ohne JavaScript). So greifen Theme, Tokens und Rebranding
 automatisch auch in den Schaubildern; Muster und Regeln stehen in der SKILL.md (§2b).
 
