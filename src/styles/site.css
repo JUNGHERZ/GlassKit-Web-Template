@@ -801,7 +801,12 @@ body { margin: 0; }
 .glw-bento__stack .glass-progress { width: 100%; }
 
 .glw-bento__stack .glass-search { width: 100%; }
-.glw-bento__stack .glass-search .glass-input { display: block; }
+/* .glass-input ist für <input> gebaut (52px hoch, Text nativ zentriert) —
+   der dekorative <span> braucht die Zentrierung explizit */
+.glw-bento__stack .glass-search .glass-input {
+  display: flex;
+  align-items: center;
+}
 
 .glw-bento__chain {
   display: flex;
