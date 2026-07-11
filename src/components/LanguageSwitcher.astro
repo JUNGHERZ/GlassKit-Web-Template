@@ -16,10 +16,11 @@ import { languages, pathLang, localeHref } from '../data/site';
 interface Props {
   /** false auf Seiten ohne Übersetzung (z. B. Blog): Ziel ist dann die Startseite der Zielsprache. */
   translated?: boolean;
+  /** Sprache des umgebenden Sprachzweigs. Nötig auf der 404 (beide Zweige
+      gerendert, Build-URL ist /404/) — sonst aus der URL abgeleitet. */
+  current?: string;
 }
-const { translated = true } = Astro.props;
-
-const current = pathLang(Astro.url.pathname);
+const { translated = true, current = pathLang(Astro.url.pathname) } = Astro.props;
 const target = (code: string) =>
   translated ? localeHref(Astro.url.pathname, code) : localeHref('/', code);
 

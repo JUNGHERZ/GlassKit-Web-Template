@@ -181,9 +181,17 @@ Rules for language branches:
 - Keep structure changes (new/removed/reordered sections) in sync across all
   branches — the smoke tests catch missing pages, not missing sections.
 - Pages without a translation (blog, 404) pass `translated={false}` to
-  BaseLayout: no hreflang is emitted and the switcher links to the target
-  language's home page instead. The blog appears only in the default language
-  (no blog link in EN header/footer).
+  BaseLayout: no hreflang is emitted, the switcher links to the target
+  language's home page instead, and BaseLayout renders BOTH header/footer
+  pairs, each wrapped in `.glw-i18n .glw-i18n--<code>`. The blog appears only
+  in the default language (no blog link in EN header/footer).
+- The 404 is ONE file for every path (GitHub Pages serves dist/404.html under
+  /en/… too), so 404.astro also renders its content once per language as
+  `.glw-i18n--<code>` branches. The bootstrap script sets `data-path-lang` on
+  `<html>` from the URL before first paint; CSS in site.css shows only the
+  matching branch (no JS → default language). The build URL is always /404/,
+  so the switcher can't derive the branch language from the URL — the
+  SiteHeaders pass it via the `current` prop of LanguageSwitcher.
 - Contact form status messages travel as `data-msg-*` attributes on the form
   (site.js reads them; German fallbacks live in site.js) — including
   `data-msg-invalid`, shown when native validation blocks the submit.
@@ -192,15 +200,18 @@ Rules for language branches:
 
 **Add a language:** extend `languages[]` + astro.config locales; copy
 `src/components/en/` + `src/pages/en/` to the new code and translate; add the
-branch to BaseLayout's header/footer pick; with 3+ languages drop the matching
+branch to BaseLayout's header/footer pick AND its dual-render block for
+untranslated pages, a content branch to 404.astro, and a `.glw-i18n--<code>`
+rule to site.css; with 3+ languages drop the matching
 circle-flags SVG (repo: HatScripts/circle-flags, `flags/language/`) into
 `src/assets/flags/` — the switcher becomes a flag dropdown automatically.
 **Remove i18n** (single-language project): delete `src/pages/en/`,
 `src/components/en/`, `src/assets/flags/`, `LanguageSwitcher.astro` and its
 usage in both SiteHeaders, the EN imports/branches in BaseLayout, the `i18n`
 blocks in astro.config.mjs, `languages`/`pathLang`/`localeHref` in site.ts,
-the i18n tests in `tests/smoke.spec.ts`, and the `.glw-lang`/`.glw-langmenu`
-styles in site.css.
+the i18n tests in `tests/smoke.spec.ts`, the `.glw-lang`/`.glw-langmenu`/
+`.glw-i18n` styles in site.css, the EN branch (`.glw-i18n--en`) in 404.astro,
+and the `data-path-lang` line in BaseLayout's bootstrap script.
 **3+ languages at scale:** duplicated branches grow linearly — for projects
 with many languages, consider refactoring to central per-language dictionaries
 (`src/i18n/<code>.ts`) as a PROJECT decision; the template deliberately stays

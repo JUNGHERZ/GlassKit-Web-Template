@@ -280,6 +280,15 @@ body { margin: 0; }
    Duale Variante (.glw-lang): Segmented-Pill bei genau 2 Sprachen.
    Dropdown (.glw-langmenu): details-basiert bei 3+ Sprachen. */
 
+/* Nicht übersetzte Seiten (404): beide Sprachzweige sind gerendert,
+   sichtbar ist der zur URL passende. data-path-lang setzt das
+   Bootstrap-Script vor dem ersten Paint; ohne JS gilt die
+   Default-Sprache (Deutsch). Bei einer dritten Sprache erweitern. */
+.glw-i18n { display: contents; }
+
+[data-path-lang="en"] .glw-i18n--de,
+:root:not([data-path-lang="en"]) .glw-i18n--en { display: none; }
+
 .glw-lang {
   display: inline-flex;
   gap: 2px;

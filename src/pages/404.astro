@@ -1,25 +1,43 @@
 ---
+/**
+ * 404-Seite — landet als dist/404.html und wird von GitHub Pages für ALLE
+ * unbekannten Pfade ausgeliefert (auch unter /en/…). Deshalb sind beide
+ * Sprachzweige gerendert; sichtbar ist der zur URL passende (data-path-lang,
+ * CSS .glw-i18n--*). translated={false}: keine hreflang-Links, der
+ * Sprach-Umschalter führt zur Startseite der Zielsprache.
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteName, href } from '../data/site';
 ---
-{/* GitHub Pages liefert genau EINE 404.html für alle Pfade — auch /en/…;
-    deshalb zweisprachig und ohne hreflang (translated={false}). */}
 <BaseLayout title={`Seite nicht gefunden – ${siteName}`} description="Diese Seite existiert nicht (mehr)." translated={false}>
   <section class="glw-section glw-page">
     <div class="glw-container">
-      <span class="glw-eyebrow">Fehler 404</span>
-      <h1 class="glw-h2">Diese Seite ist im Ablagefach nicht auffindbar.</h1>
-      <p class="glw-lead">
-        Der Link ist veraltet oder die Adresse wurde vertippt. Kein Grund zur
-        Sorge – anders als bei Papier geht hier nichts verloren.
-      </p>
-      <p class="glw-lead" lang="en">
-        <em>This page could not be found — the link may be outdated or mistyped.</em>
-      </p>
+      <div class="glw-i18n glw-i18n--de">
+        <span class="glw-eyebrow">Fehler 404</span>
+        <h1 class="glw-h2">Diese Seite ist im Ablagefach nicht auffindbar.</h1>
+        <p class="glw-lead">
+          Der Link ist veraltet oder die Adresse wurde vertippt. Kein Grund zur
+          Sorge – anders als bei Papier geht hier nichts verloren.
+        </p>
 
-      <div class="glw-page__back">
-        <a class="glass-btn glass-btn--primary glass-btn--sm glass-btn--auto" href={href('/')}>Zur Startseite</a>
-        <a class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" href={href('/#kontakt')}>Kontakt aufnehmen</a>
+        <div class="glw-page__back">
+          <a class="glass-btn glass-btn--primary glass-btn--sm glass-btn--auto" href={href('/')}>Zur Startseite</a>
+          <a class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" href={href('/#kontakt')}>Kontakt aufnehmen</a>
+        </div>
+      </div>
+
+      <div class="glw-i18n glw-i18n--en" lang="en">
+        <span class="glw-eyebrow">Error 404</span>
+        <h1 class="glw-h2">This page is nowhere to be found in the filing tray.</h1>
+        <p class="glw-lead">
+          The link is outdated or the address was mistyped. No need to worry –
+          unlike paper, nothing gets lost here.
+        </p>
+
+        <div class="glw-page__back">
+          <a class="glass-btn glass-btn--primary glass-btn--sm glass-btn--auto" href={href('/en/')}>Back to the home page</a>
+          <a class="glass-btn glass-btn--tertiary glass-btn--sm glass-btn--auto" href={href('/en/#contact')}>Get in touch</a>
+        </div>
       </div>
     </div>
   </section>

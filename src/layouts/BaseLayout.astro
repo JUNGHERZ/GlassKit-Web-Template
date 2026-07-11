@@ -6,7 +6,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeaderEn from '../components/en/SiteHeader.astro';
 import SiteFooterEn from '../components/en/SiteFooter.astro';
-import { siteName, defaultTitle, defaultDescription, href, languages, defaultLang, pathLang, localeHref } from '../data/site';
+import { siteName, defaultTitle, defaultDescription, href, base, languages, defaultLang, pathLang, localeHref } from '../data/site';
 
 interface Props {
   title?: string;
@@ -55,10 +55,11 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    {/* Bootstrap MUSS is:inline im Head bleiben: setzt js-Marker, Theme und
-        Zielgruppe vor dem ersten Paint. Gebündelt/deferred gäbe es einen
-        Theme-Flash und kurz doppelte B2C/B2B-Inhalte. */}
-    <script is:inline>
+    {/* Bootstrap MUSS is:inline im Head bleiben: setzt js-Marker, Theme,
+        Zielgruppe und data-path-lang (für die zweisprachige 404) vor dem
+        ersten Paint. Gebündelt/deferred gäbe es einen Theme-Flash und kurz
+        doppelte B2C/B2B- bzw. DE/EN-Inhalte. */}
+    <script is:inline define:vars={{ base, altLangs: languages.filter((l) => l.code !== defaultLang).map((l) => l.code), defaultLang }}>
       (function () {
         var root = document.documentElement;
         root.classList.add('js');
@@ -66,6 +67,8 @@ const ogImageUrl = new URL(ogImage, Astro.site);
           root.setAttribute('data-theme', matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
         }
         if (!root.hasAttribute('data-audience')) root.setAttribute('data-audience', 'b2c');
+        var seg = location.pathname.slice(base.length).split('/')[1];
+        root.setAttribute('data-path-lang', altLangs.indexOf(seg) > -1 ? seg : defaultLang);
       })();
     </script>
   </head>
@@ -74,10 +77,30 @@ const ogImageUrl = new URL(ogImage, Astro.site);
         auf dem fixed Header würde ein Same-Page-Klick auf /#top nicht scrollen. */}
     <div class="glass-bg" id="top">
       {/* Header/Footer je Sprachzweig (Nav-Labels sind Copy). Eine weitere
-          Sprache bekommt hier einen weiteren Zweig — siehe SKILL.md §3b. */}
-      {lang === 'en' ? <SiteHeaderEn translated={translated} /> : <SiteHeader translated={translated} />}
+          Sprache bekommt hier einen weiteren Zweig — siehe SKILL.md §3b.
+          Nicht übersetzte Seiten (404, eine Datei für alle Pfade): beide
+          Zweige rendern, sichtbar per data-path-lang (CSS .glw-i18n--*). */}
+      {translated === false && languages.length > 1 ? (
+        <>
+          <div class="glw-i18n glw-i18n--de"><SiteHeader translated={false} /></div>
+          <div class="glw-i18n glw-i18n--en" lang="en"><SiteHeaderEn translated={false} /></div>
+        </>
+      ) : lang === 'en' ? (
+        <SiteHeaderEn translated={translated} />
+      ) : (
+        <SiteHeader translated={translated} />
+      )}
       <slot />
-      {lang === 'en' ? <SiteFooterEn /> : <SiteFooter />}
+      {translated === false && languages.length > 1 ? (
+        <>
+          <div class="glw-i18n glw-i18n--de"><SiteFooter /></div>
+          <div class="glw-i18n glw-i18n--en" lang="en"><SiteFooterEn /></div>
+        </>
+      ) : lang === 'en' ? (
+        <SiteFooterEn />
+      ) : (
+        <SiteFooter />
+      )}
     </div>
     <script>
       import '../scripts/site.js';

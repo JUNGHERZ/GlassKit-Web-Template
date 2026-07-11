@@ -175,7 +175,8 @@ test('hreflang: Alternates auf übersetzten Seiten, keine im Blog', async ({ pag
   await page.goto('blog/');
   await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(0);
   // Blog ist nicht übersetzt: der Umschalter fällt auf die EN-Startseite zurück
-  await expect(page.locator('.glw-lang a[lang="en"]')).toHaveAttribute('href', /\/en\/$/);
+  // (auf den sichtbaren DE-Zweig scopen — untranslated Seiten rendern beide Header)
+  await expect(page.locator('.glw-i18n--de .glw-lang a[lang="en"]')).toHaveAttribute('href', /\/en\/$/);
 });
 
 test('EN: Anker-Navigation von Unterseite', async ({ page }) => {
@@ -218,5 +219,14 @@ test('RSS-Feed, Sitemap und llms.txt sind erreichbar', async ({ request }) => {
 test('Unbekannte URL liefert die 404-Seite', async ({ page }) => {
   const res = await page.goto('diese-seite-gibt-es-nicht/');
   expect(res?.status()).toBe(404);
-  await expect(page.locator('h1').first()).toBeVisible();
+  await expect(page.locator('.glw-i18n--de h1')).toBeVisible();
+  await expect(page.locator('.glw-i18n--en h1')).toBeHidden();
+});
+
+test('404 unter /en/ zeigt den englischen Zweig', async ({ page }) => {
+  const res = await page.goto('en/diese-seite-gibt-es-nicht/');
+  expect(res?.status()).toBe(404);
+  await expect(page.locator('html')).toHaveAttribute('data-path-lang', 'en');
+  await expect(page.locator('.glw-i18n--en h1')).toBeVisible();
+  await expect(page.locator('.glw-i18n--de h1')).toBeHidden();
 });
