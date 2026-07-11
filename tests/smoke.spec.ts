@@ -200,13 +200,19 @@ test.describe('Ohne JavaScript', () => {
   });
 });
 
-test('RSS-Feed und Sitemap sind erreichbar', async ({ request }) => {
+test('RSS-Feed, Sitemap und llms.txt sind erreichbar', async ({ request }) => {
   const rss = await request.get('rss.xml');
   expect(rss.status()).toBe(200);
   expect(await rss.text()).toContain('<rss');
 
   const sitemap = await request.get('sitemap-index.xml');
   expect(sitemap.status()).toBe(200);
+
+  const llms = await request.get('llms.txt');
+  expect(llms.status()).toBe(200);
+  const llmsBody = await llms.text();
+  expect(llmsBody).toContain('# LUMEN');
+  expect(llmsBody).toContain('## Blog-Artikel');
 });
 
 test('Unbekannte URL liefert die 404-Seite', async ({ page }) => {

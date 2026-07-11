@@ -165,10 +165,15 @@ Der Empfänger gehört in die Datenschutzerklärung. Dies ist die einzige
 dokumentierte Ausnahme von der „keine externen Requests"-Konvention —
 es lädt nichts vor dem Absenden.
 
-**SEO-Hinweis:** Sitemap (`sitemap-index.xml`), `robots.txt`, Canonical- und
-Open-Graph-Meta werden automatisch generiert. Auf GitHub-Pages-*Projektseiten*
-(`…github.io/<repo>/`) liegt `robots.txt` nicht am Domain-Root und wird von
-Crawlern ignoriert — die Sitemap dort per Search Console einreichen. Mit
+**SEO- & KI-Hinweis:** Sitemap (`sitemap-index.xml`), `robots.txt`, `llms.txt`,
+Canonical- und Open-Graph-Meta werden automatisch generiert. Die
+[llms.txt](https://llmstxt.org/) ist ein kuratierter Markdown-Index für
+KI-Assistenten, erzeugt aus `site.ts` + Blog-Collection — mit realistischer
+Erwartung: Die großen AI-Suchcrawler ignorieren die Datei bislang und lesen das
+HTML direkt; zuverlässig genutzt wird sie von KI-Coding-Assistenten (Claude
+Code, Cursor & Co.), denen man die Site gibt. Auf GitHub-Pages-*Projektseiten*
+(`…github.io/<repo>/`) liegen `robots.txt` und `llms.txt` nicht am Domain-Root
+und werden dort ignoriert — die Sitemap per Search Console einreichen. Mit
 Custom Domain greift alles automatisch.
 
 ## Tests

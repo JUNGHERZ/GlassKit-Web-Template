@@ -48,6 +48,12 @@ src/pages/rss.xml.ts    RSS feed from the blog collection (base-safe links).
 src/pages/robots.txt.ts Generates robots.txt from site+base (fork-safe).
                         Note: ignored by crawlers on github.io/<repo>/ project
                         pages (not at domain root); effective with custom domain.
+src/pages/llms.txt.ts   llms.txt (llmstxt.org): curated Markdown index for AI
+                        assistants, generated from site.ts + blog collection +
+                        languages[]. The page notes in mainPages[] are copy —
+                        adjust per project. Honest scope: AI search crawlers
+                        ignore the file today, AI coding assistants do fetch
+                        it; same domain-root caveat as robots.txt.
 public/og.png           Social preview image (1200×630) — replace per project.
 playwright.config.ts    Smoke-test config. baseURL/webServer derive from astro.config.mjs
                         (fork-safe); webServer rebuilds before preview (stale-dist guard).
@@ -204,9 +210,11 @@ with branches to keep copy next to markup.
 `glw-prose--article`. Only ship it for clients who will actually publish. To REMOVE
 the blog: delete `src/content/`, `src/content.config.ts`, `src/pages/blog/`,
 `src/pages/rss.xml.ts`, the RSS `<link>` in BaseLayout, the three "Blog" links
-(desktop nav + mobile panel in SiteHeader, product column in SiteFooter), and the
-blog entries in `tests/smoke.spec.ts` (blog paths in the `pages` list, the
-navigation test's blog steps, the RSS assertion).
+(desktop nav + mobile panel in SiteHeader, product column in SiteFooter), the blog
+block in `src/pages/llms.txt.ts` (getCollection import + posts section + the
+`/blog/` entry in `mainPages[]`), and the blog entries in `tests/smoke.spec.ts`
+(blog paths in the `pages` list, the navigation test's blog steps, the RSS and
+`## Blog-Artikel` assertions).
 
 ## 4. Rules
 
