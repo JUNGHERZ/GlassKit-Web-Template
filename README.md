@@ -1,4 +1,32 @@
-# GlassKit Web
+<h1 align="center">🧊 GlassKit Web</h1>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/version-1.0.0-orange?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/Astro-5-ff5d01?style=flat-square&logo=astro&logoColor=white" alt="Astro 5">
+  <img src="https://img.shields.io/badge/sections-20-green?style=flat-square" alt="20 Sections">
+  <img src="https://img.shields.io/badge/i18n-DE%20%2F%20EN-7ec8e3?style=flat-square" alt="i18n DE/EN">
+  <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License">
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.0.0-f5a623?style=flat-square" alt="Changelog"></a>
+  <a href="https://github.com/JUNGHERZ/GlassKit-Web/generate"><img src="https://img.shields.io/badge/template-use_this-44cc11?style=flat-square&logo=github&logoColor=white" alt="Use this template"></a>
+</p>
+
+<p align="center">
+  <strong>Das Website-Template der <a href="https://glasskit.jungherz.com">GlassKit</a>-Designsprache.</strong><br>
+  Glassmorphism-Websites für B2C &amp; B2B aus einer Codebasis ·
+  Zweisprachig · SEO · No-JS-Fallbacks · Smoke-getestet
+</p>
+
+<p align="center">
+  <a href="https://glasskit-web.jungherz.com">🌐 Produktseite</a> &nbsp;·&nbsp;
+  <a href="https://glasskit-web.jungherz.com/demo/">🖥️ Live-Demo</a> &nbsp;·&nbsp;
+  <a href="https://glasskit-web.jungherz.com/docs.html">📖 Dokumentation</a> &nbsp;·&nbsp;
+  <a href="https://github.com/JUNGHERZ/GlassKit">🧊 GlassKit</a> &nbsp;·&nbsp;
+  <a href="https://github.com/JUNGHERZ/GlassKit-Elements">🔌 Elements</a>
+</p>
+
+---
+
+## ✨ Was ist GlassKit Web?
 
 Astro-Template in der [GlassKit](https://github.com/JUNGHERZ/GlassKit)-Designsprache:
 Glassmorphism-Websites, die mit **einer Codebasis B2C- und B2B-Zielgruppen** ansprechen.
@@ -6,21 +34,19 @@ Drittes Mitglied der GlassKit-Familie — neben [GlassKit](https://glasskit.jung
 (CSS-Fundament) und [GlassKit Elements](https://glasskit-elements.jungherz.com)
 (Web Components für App-UIs) ist GlassKit Web die Website-Schicht.
 
-**Produktseite:** https://glasskit-web.jungherz.com
-**Live-Demo:** https://glasskit-web.jungherz.com/demo/
-
 > 🤖 **Für KI-Assistenten:** Die maschinenlesbare Referenz (Sektions-Katalog, Regeln,
-> Rezepte für neue Projekte und Umstellungen) liegt in [SKILL.md](SKILL.md).
+> Rezepte für neue Projekte und Umstellungen) liegt in [SKILL.md](SKILL.md) — der
+> fertige Prompt steht in der [Dokumentation](https://glasskit-web.jungherz.com/docs.html#ai-prompt).
 
-## Demo-Szenario
+## 🎭 Demo-Szenario
 
 Fiktive Marke **LUMEN** (Dokumenten-Scan & -Management). Alle Inhalte sind Platzhalter.
 Der Zielgruppen-Umschalter im Hero wechselt Copy, Tonalität (Du/Sie), Preise und
 Testimonials zwischen Privat- und Geschäftskunden — dieselbe Designsprache, zwei Ansprachen.
 Die Demo ist zweisprachig (Deutsch an der Wurzel, Englisch unter `/en/`) —
-siehe [Mehrsprachigkeit](#mehrsprachigkeit-opt-in).
+siehe [Mehrsprachigkeit](#-mehrsprachigkeit-opt-in).
 
-## Schnellstart
+## 🚀 Schnellstart
 
 ```bash
 npm install
@@ -30,7 +56,7 @@ npm run preview    # dist/ lokal testen (inkl. base-Pfad wie auf GitHub Pages)
 npm test           # Playwright-Smoke-Tests (baut selbst und startet den Preview)
 ```
 
-## Struktur
+## 📁 Struktur
 
 ```
 astro.config.mjs              site + base (Demo baut nach /demo/ neben die Produktseite)
@@ -52,7 +78,7 @@ src/
 tests/smoke.spec.ts           Playwright-Smoke-Tests (laufen im CI vor jedem Deploy)
 ```
 
-## Konventionen
+## 📐 Konventionen
 
 - **GlassKit kommt aus npm** (`@jungherz-de/glasskit`) und wird **nie lokal editiert**.
   Update = Version in `package.json` anheben. (Ohne Build-Step ginge alternativ jsDelivr:
@@ -72,7 +98,7 @@ tests/smoke.spec.ts           Playwright-Smoke-Tests (laufen im CI vor jedem Dep
 - **Barrierefreiheit:** `prefers-reduced-motion` deaktiviert Float/Tilt/Reveal,
   Fokus-Ringe in Primary-Farbe, dekorative Demo-UI ist `aria-hidden`.
 
-## Neues Projekt aus dem Template
+## 🧱 Neues Projekt aus dem Template
 
 1. Repo als Vorlage verwenden / forken.
 2. `astro.config.mjs`: `base` an den neuen Repo-Namen anpassen — bei Custom Domain
@@ -98,7 +124,7 @@ anlegen und Mechanik-Dateien gezielt übernehmen; neue Opt-in-Sektionen werden
 dabei pro Projekt bewusst gewählt statt still kopiert. Schritt-für-Schritt:
 SKILL.md, Recipe §7.
 
-## Hero-Varianten & Visualisierungen (Opt-in)
+## 🪟 Hero-Varianten & Visualisierungen (Opt-in)
 
 Zwei Hero-Typen stehen zur Wahl: das **Showcase-Hero** (`Hero.astro`, Device-Panel
 aus GlassKit-Komponenten — für Produkte mit UI) und das **Editorial-Hero**
@@ -115,7 +141,7 @@ bis zum Prozess-Diagramm (`Flow.astro`, Glas-Nodes über animierten
 Verbindungspfaden, ganz ohne JavaScript). So greifen Theme, Tokens und Rebranding
 automatisch auch in den Schaubildern; Muster und Regeln stehen in der SKILL.md (§2b).
 
-## Blog (Opt-in)
+## 📝 Blog (Opt-in)
 
 Artikel liegen als Markdown in `src/content/blog/` (Frontmatter: title,
 description, pubDate, author) — Übersicht unter `/blog/`, RSS unter `/rss.xml`,
@@ -126,7 +152,7 @@ Seitenwechsel (z. B. Startseite → Artikel) nutzen native **Cross-Document View
 Transitions** (`@view-transition`, CSS-only): sanfter Übergang in unterstützenden
 Browsern, normale Navigation überall sonst, deaktiviert bei `prefers-reduced-motion`.
 
-## Mehrsprachigkeit (Opt-in)
+## 🌍 Mehrsprachigkeit (Opt-in)
 
 Die Default-Sprache liegt an der Wurzel, jede weitere unter `/<code>/` — pro Sprache
 ein eigener Zweig aus Seiten (`src/pages/en/`) und Sektions-Komponenten
@@ -149,7 +175,7 @@ und **weitere Sprache ergänzen**: Schritte in der [SKILL.md](SKILL.md), §3b.
 Projekte mit vielen Sprachen (3+) sollten stattdessen zentrale Sprachdateien
 erwägen — auch das ist dort notiert.
 
-## Kontaktformular anschließen
+## ✉️ Kontaktformular anschließen
 
 Das Formular (`#kontakt`) ist provider-agnostisch: Ziel in `src/data/site.ts`
 unter `contactForm` konfigurieren — leerer `endpoint` = Demo-Modus.
@@ -182,7 +208,7 @@ Code, Cursor & Co.), denen man die Site gibt. Auf GitHub-Pages-*Projektseiten*
 und werden dort ignoriert — die Sitemap per Search Console einreichen. Mit
 Custom Domain greift alles automatisch.
 
-## Tests
+## 🧪 Tests
 
 `npm test` fährt die Playwright-Smoke-Suite: beide Themes × beide Zielgruppen ×
 Desktop/Mobile, Navigation von Unterseiten (base-Präfix), Mobile-Menü, No-JS-Fallbacks,
@@ -191,7 +217,7 @@ Deploy — schlägt sie fehl, geht nichts live. Wichtig für eigene Automatisier
 Headless-Chrome braucht wegen der View Transitions zwingend
 `reducedMotion: 'reduce'` (Details in der [SKILL.md](SKILL.md), §3).
 
-## Versionierung & Releases
+## 🏷️ Versionierung & Releases
 
 GlassKit Web ist seit **v1.0.0** versioniert ([SemVer](https://semver.org),
 Format: [Keep a Changelog](https://keepachangelog.com)). Jede Template-Änderung
@@ -201,6 +227,6 @@ Distribution läuft bewusst über GitHub („Use this template" bzw.
 `npm create astro -- --template JUNGHERZ/GlassKit-Web`), nicht über npm;
 nur das GlassKit-Fundament kommt als npm-Paket.
 
-## Lizenz
+## 📄 Lizenz
 
 MIT © Jungherz GmbH
