@@ -11,222 +11,228 @@
 </p>
 
 <p align="center">
-  <strong>Das Website-Template der <a href="https://glasskit.jungherz.com">GlassKit</a>-Designsprache.</strong><br>
-  Glassmorphism-Websites für B2C &amp; B2B aus einer Codebasis ·
-  Zweisprachig · SEO · No-JS-Fallbacks · Smoke-getestet
+  <strong>The website template of the <a href="https://glasskit.jungherz.com">GlassKit</a> design language.</strong><br>
+  Glassmorphism websites for B2C &amp; B2B from one codebase ·
+  Bilingual · SEO · No-JS fallbacks · Smoke-tested
 </p>
 
 <p align="center">
-  <a href="https://glasskit-web.jungherz.com">🌐 Produktseite</a> &nbsp;·&nbsp;
-  <a href="https://glasskit-web.jungherz.com/demo/">🖥️ Live-Demo</a> &nbsp;·&nbsp;
-  <a href="https://glasskit-web.jungherz.com/docs.html">📖 Dokumentation</a> &nbsp;·&nbsp;
+  <a href="https://glasskit-web.jungherz.com">🌐 Product page</a> &nbsp;·&nbsp;
+  <a href="https://glasskit-web.jungherz.com/demo/">🖥️ Live demo</a> &nbsp;·&nbsp;
+  <a href="https://glasskit-web.jungherz.com/docs.html">📖 Documentation</a> &nbsp;·&nbsp;
   <a href="https://github.com/JUNGHERZ/GlassKit">🧊 GlassKit</a> &nbsp;·&nbsp;
   <a href="https://github.com/JUNGHERZ/GlassKit-Elements">🔌 Elements</a>
 </p>
 
+<p align="center">
+  <strong>🇬🇧 English</strong> · <a href="README.de.md">🇩🇪 Deutsch</a>
+</p>
+
 ---
 
-## ✨ Was ist GlassKit Web?
+## ✨ What is GlassKit Web?
 
-Astro-Template in der [GlassKit](https://github.com/JUNGHERZ/GlassKit)-Designsprache:
-Glassmorphism-Websites, die mit **einer Codebasis B2C- und B2B-Zielgruppen** ansprechen.
-Drittes Mitglied der GlassKit-Familie — neben [GlassKit](https://glasskit.jungherz.com)
-(CSS-Fundament) und [GlassKit Elements](https://glasskit-elements.jungherz.com)
-(Web Components für App-UIs) ist GlassKit Web die Website-Schicht.
+An Astro template in the [GlassKit](https://github.com/JUNGHERZ/GlassKit) design
+language: glassmorphism websites that address **B2C and B2B audiences from a
+single codebase**. Third member of the GlassKit family — alongside
+[GlassKit](https://glasskit.jungherz.com) (the CSS foundation) and
+[GlassKit Elements](https://glasskit-elements.jungherz.com) (web components for
+app UIs), GlassKit Web is the website layer.
 
-> 🤖 **Für KI-Assistenten:** Die maschinenlesbare Referenz (Sektions-Katalog, Regeln,
-> Rezepte für neue Projekte und Umstellungen) liegt in [SKILL.md](SKILL.md) — der
-> fertige Prompt steht in der [Dokumentation](https://glasskit-web.jungherz.com/docs.html#ai-prompt).
+> 🤖 **For AI assistants:** the machine-readable reference (section catalog,
+> rules, recipes for new projects and conversions) lives in [SKILL.md](SKILL.md) —
+> the ready-made prompt is in the [documentation](https://glasskit-web.jungherz.com/docs.html#ai-prompt).
 
-## 🎭 Demo-Szenario
+## 🎭 Demo scenario
 
-Fiktive Marke **LUMEN** (Dokumenten-Scan & -Management). Alle Inhalte sind Platzhalter.
-Der Zielgruppen-Umschalter im Hero wechselt Copy, Tonalität (Du/Sie), Preise und
-Testimonials zwischen Privat- und Geschäftskunden — dieselbe Designsprache, zwei Ansprachen.
-Die Demo ist zweisprachig (Deutsch an der Wurzel, Englisch unter `/en/`) —
-siehe [Mehrsprachigkeit](#-mehrsprachigkeit-opt-in).
+Fictional brand **LUMEN** (document scanning & management). All content is
+placeholder copy. The audience switch in the hero flips copy, tone, pricing and
+testimonials between private and business customers — the same design language,
+two voices. The demo is bilingual (German at the root, English under `/en/`) —
+see [Multilingual](#-multilingual-opt-in).
 
-## 🚀 Schnellstart
+## 🚀 Quick start
 
 ```bash
 npm install
 npm run dev        # → http://localhost:4321/demo/
 npm run build      # → dist/
-npm run preview    # dist/ lokal testen (inkl. base-Pfad wie auf GitHub Pages)
-npm test           # Playwright-Smoke-Tests (baut selbst und startet den Preview)
+npm run preview    # test dist/ locally (incl. the base path used on GitHub Pages)
+npm test           # Playwright smoke tests (builds and starts the preview itself)
 ```
 
-## 📁 Struktur
+## 📁 Structure
 
 ```
-astro.config.mjs              site + base (Demo baut nach /demo/ neben die Produktseite)
-.github/workflows/deploy.yml  Build & Deploy bei jedem Push auf main
-site/                         Produkt-Landing-Page + Doku von GlassKit Web selbst
-                              (statisch, DE/EN) — NICHT Teil des Templates,
-                              beim Ableiten eines Projekts löschen
+astro.config.mjs              site + base (the demo builds to /demo/ next to the product page)
+.github/workflows/deploy.yml  build & deploy on every push to main
+site/                         product landing page + docs of GlassKit Web itself
+                              (static, DE/EN) — NOT part of the template,
+                              delete it when deriving a project
 src/
-├── data/site.ts              Site-Konstanten + href()-Helper für base-sichere Links
-├── styles/site.css           Web-Layer (.glw-*): Layout, Sektionen — nur --gl-*-Tokens
-├── styles/brand.css          Kunden-Branding: Token-Overrides (mit Beispiel-Themes)
-├── scripts/site.js           Theme-Toggle, B2C/B2B-Umschalter, Scroll-Reveal, 3D-Tilt
-├── layouts/BaseLayout.astro  Head, GlassKit-Import, Bootstrap-Script, Header/Footer
-├── components/               Eine Datei pro Sektion (Copy wird direkt dort editiert)
-│   └── en/                   Englischer Sprachzweig derselben Sektionen (Opt-in)
-├── assets/flags/             Sprachflaggen (circle-flags, MIT) für den Umschalter ab 3 Sprachen
-└── pages/                    index + impressum + datenschutz (File-Routing)
-    └── en/                   Englische Seiten unter /en/
-tests/smoke.spec.ts           Playwright-Smoke-Tests (laufen im CI vor jedem Deploy)
+├── data/site.ts              site constants + href() helper for base-safe links
+├── styles/site.css           web layer (.glw-*): layout, sections — --gl-* tokens only
+├── styles/brand.css          client branding: token overrides (with example themes)
+├── scripts/site.js           theme toggle, B2C/B2B switch, scroll reveal, 3D tilt
+├── layouts/BaseLayout.astro  head, GlassKit import, bootstrap script, header/footer
+├── components/               one file per section (copy is edited right there)
+│   └── en/                   English language branch of the same sections (opt-in)
+├── assets/flags/             language flags (circle-flags, MIT) for the 3+-language switcher
+└── pages/                    index + impressum + datenschutz (file routing)
+    └── en/                   English pages under /en/
+tests/smoke.spec.ts           Playwright smoke tests (run in CI before every deploy)
 ```
 
-## 📐 Konventionen
+## 📐 Conventions
 
-- **GlassKit kommt aus npm** (`@jungherz-de/glasskit`) und wird **nie lokal editiert**.
-  Update = Version in `package.json` anheben. (Ohne Build-Step ginge alternativ jsDelivr:
-  `https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1/glasskit.min.css` — vom Template
-  bewusst nicht genutzt, damit die Seite ohne externe Requests auskommt.)
-- **Eigene Klassen** tragen das Präfix `.glw-` und verwenden ausschließlich
-  `--gl-*`-Design-Tokens — keine hartkodierten Farbwerte.
-- **Kein Astro-Scoped-CSS** (`<style>` in Komponenten): Das Scoping würde die globalen
-  Mechaniken (`.only-b2c/.only-b2b`, `.js .reveal`, JS-getoggelte Klassen) brechen.
-  Alle Styles leben global in `src/styles/site.css`.
-- **Theming:** `data-theme="dark|light"` auf `<html>`, gesetzt vom Bootstrap-Script
-  (OS-Präferenz) bzw. Toggle. Ohne JavaScript greift ein CSS-Fallback.
-- **Zielgruppen:** `data-audience="b2c|b2b"` auf `<html>`; Inhalte über
-  `.only-b2c` / `.only-b2b`. Ohne JavaScript gilt B2C.
-- **Links** immer über `href()` aus `src/data/site.ts` bauen (`href('/#preise')`,
-  `href('/impressum/')` mit Trailing Slash) — nackte `#anker` brechen auf Unterseiten.
-- **Barrierefreiheit:** `prefers-reduced-motion` deaktiviert Float/Tilt/Reveal,
-  Fokus-Ringe in Primary-Farbe, dekorative Demo-UI ist `aria-hidden`.
+- **GlassKit comes from npm** (`@jungherz-de/glasskit`) and is **never edited
+  locally**. Updating = bumping the version in `package.json`. (Without a build
+  step, jsDelivr would work as an alternative:
+  `https://cdn.jsdelivr.net/npm/@jungherz-de/glasskit@1/glasskit.min.css` —
+  deliberately not used by the template so the site ships without external requests.)
+- **Own classes** carry the `.glw-` prefix and use `--gl-*` design tokens
+  exclusively — no hard-coded color values.
+- **No Astro scoped CSS** (`<style>` inside components): scoping would break the
+  global mechanics (`.only-b2c/.only-b2b`, `.js .reveal`, JS-toggled classes).
+  All styles live globally in `src/styles/site.css`.
+- **Theming:** `data-theme="dark|light"` on `<html>`, set by the bootstrap
+  script (OS preference) or the toggle. Without JavaScript a CSS fallback applies.
+- **Audiences:** `data-audience="b2c|b2b"` on `<html>`; content via
+  `.only-b2c` / `.only-b2b`. Without JavaScript, B2C is shown.
+- **Links** are always built via `href()` from `src/data/site.ts`
+  (`href('/#preise')`, `href('/impressum/')` with trailing slash) — bare
+  `#anchor` links break on subpages.
+- **Accessibility:** `prefers-reduced-motion` disables float/tilt/reveal, focus
+  rings in the primary color, decorative demo UI is `aria-hidden`.
 
-## 🧱 Neues Projekt aus dem Template
+## 🧱 New project from this template
 
-1. Repo als Vorlage verwenden / forken.
-2. `astro.config.mjs`: `base` an den neuen Repo-Namen anpassen — bei Custom Domain
-   `base` entfernen, `site` auf die Domain setzen und `public/CNAME` anlegen.
-3. `src/data/site.ts`: Name, Title, Description, Repo-URL.
-4. Hero wählen: Produkt mit UI → `Hero` (Device-Panel, wahlweise geneigt oder
-   flach — siehe „Hero-Varianten"); Dienstleister/Agentur → `HeroEditorial`
-   (Import in `index.astro` tauschen).
-5. Copy pro Sektion in `src/components/` tauschen (nach „LUMEN" suchen) —
-   die Nav-Links existieren zweimal (Desktop-Nav + Mobile-Menü im Header).
-6. `public/og.png` ersetzen (Social-Vorschaubild, 1200 × 630) und `public/favicon.svg` anpassen.
-7. Sektionen in `src/pages/index.astro` an-/abwählen oder umsortieren.
-8. Branding-Farben in `src/styles/brand.css` setzen — Token-Overrides nach dem
-   Muster von [GlassKit theme-override](https://github.com/JUNGHERZ/GlassKit),
-   Beispiel-Themes liegen auskommentiert bei (nie glasskit.css anfassen).
-9. Impressum/Datenschutz mit echten Angaben füllen.
-10. Push auf `main` — GitHub Actions baut und deployed automatisch
-    (einmalig: Settings → Pages → Source „GitHub Actions").
+1. Use the repo as a template / fork it.
+2. `astro.config.mjs`: adapt `base` to the new repo name — for a custom domain
+   remove `base`, set `site` to the domain and add `public/CNAME`.
+3. `src/data/site.ts`: name, title, description, repo URL.
+4. Choose the hero: product with a UI → `Hero` (device panel, tilted or flat —
+   see "Hero variants"); service provider/agency → `HeroEditorial`
+   (swap the import in `index.astro`).
+5. Replace the copy per section in `src/components/` (search for "LUMEN") —
+   nav links exist twice (desktop nav + mobile menu in the header).
+6. Replace `public/og.png` (social preview image, 1200 × 630) and adapt `public/favicon.svg`.
+7. Select/deselect or reorder sections in `src/pages/index.astro`.
+8. Set brand colors in `src/styles/brand.css` — token overrides following the
+   [GlassKit theme-override](https://github.com/JUNGHERZ/GlassKit) pattern,
+   commented example themes are included (never touch glasskit.css).
+9. Fill impressum/datenschutz (legal pages) with real content.
+10. Push to `main` — GitHub Actions builds and deploys automatically
+    (one-time: Settings → Pages → Source "GitHub Actions").
 
-**Updates später einspielen:** Abgeleitete Projekte sind eigenständige Repos —
-Template-Änderungen fließen nicht automatisch. Das Template als zweites Remote
-anlegen und Mechanik-Dateien gezielt übernehmen; neue Opt-in-Sektionen werden
-dabei pro Projekt bewusst gewählt statt still kopiert. Schritt-für-Schritt:
-SKILL.md, Recipe §7.
+**Pulling updates later:** derived projects are standalone repos — template
+changes do not flow automatically. Add the template as a second remote and take
+the mechanics files selectively; new opt-in sections are chosen consciously per
+project instead of being copied silently. Step by step: SKILL.md, recipe §7.
 
-## 🪟 Hero-Varianten & Visualisierungen (Opt-in)
+## 🪟 Hero variants & visualizations (opt-in)
 
-Zwei Hero-Typen stehen zur Wahl: das **Showcase-Hero** (`Hero.astro`, Device-Panel
-aus GlassKit-Komponenten — für Produkte mit UI) und das **Editorial-Hero**
-(`HeroEditorial.astro`, typografisch, einspaltig, ohne Panel — für Dienstleister
-und Agenturen, schnellster LCP). Das Device-Panel kann per Opt-in **3D-geneigt**
-werden (`glw-hero__visual--tilt` + `data-tilt` auf dem Visual, im Demo aktiv):
-Maus-Parallax wie im Spatial-Showcase, echte Tiefe der Chips via `translateZ`,
-stillgelegt bei `prefers-reduced-motion`.
+Two hero types are available: the **showcase hero** (`Hero.astro`, device panel
+built from GlassKit components — for products with a UI) and the **editorial
+hero** (`HeroEditorial.astro`, typographic, single-column, no panel — for
+service providers and agencies, fastest LCP). The device panel can opt into a
+**3D tilt** (`glw-hero__visual--tilt` + `data-tilt` on the visual, active in the
+demo): mouse parallax like the spatial showcase, real chip depth via
+`translateZ`, disabled with `prefers-reduced-motion`.
 
-Grundsatz des Templates: **Visualisierungen werden gebaut, nicht gescreenshottet.**
-Produktdarstellungen, Prozesse und Integrations-Übersichten entstehen aus
-GlassKit-Komponenten und SVG — vom Media-Slot in den Bento-Karten (`Bento.astro`)
-bis zum Prozess-Diagramm (`Flow.astro`, Glas-Nodes über animierten
-Verbindungspfaden, ganz ohne JavaScript). So greifen Theme, Tokens und Rebranding
-automatisch auch in den Schaubildern; Muster und Regeln stehen in der SKILL.md (§2b).
+The template's principle: **visualizations are built, not screenshotted.**
+Product depictions, processes and integration overviews are made from GlassKit
+components and SVG — from the media slots in the Bento cards (`Bento.astro`) to
+the process diagram (`Flow.astro`, glass nodes over animated connector paths,
+entirely without JavaScript). Theme, tokens and rebranding automatically apply
+to the diagrams too; patterns and rules are in SKILL.md (§2b).
 
-## 📝 Blog (Opt-in)
+## 📝 Blog (opt-in)
 
-Artikel liegen als Markdown in `src/content/blog/` (Frontmatter: title,
-description, pubDate, author) — Übersicht unter `/blog/`, RSS unter `/rss.xml`,
-Verlinkung in Header-Nav und Footer. **Nur für Projekte aktiv lassen, die
-redaktionell liefern**; die Entfernungs-Schritte stehen in der SKILL.md.
+Articles live as Markdown in `src/content/blog/` (frontmatter: title,
+description, pubDate, author) — overview at `/blog/`, RSS at `/rss.xml`, linked
+in the header nav and footer. **Only keep it active for projects that will
+actually publish**; the removal steps are in SKILL.md.
 
-Seitenwechsel (z. B. Startseite → Artikel) nutzen native **Cross-Document View
-Transitions** (`@view-transition`, CSS-only): sanfter Übergang in unterstützenden
-Browsern, normale Navigation überall sonst, deaktiviert bei `prefers-reduced-motion`.
+Page transitions (e.g. home → article) use native **cross-document view
+transitions** (`@view-transition`, CSS-only): a smooth transition in supporting
+browsers, normal navigation everywhere else, disabled with
+`prefers-reduced-motion`.
 
-## 🌍 Mehrsprachigkeit (Opt-in)
+## 🌍 Multilingual (opt-in)
 
-Die Default-Sprache liegt an der Wurzel, jede weitere unter `/<code>/` — pro Sprache
-ein eigener Zweig aus Seiten (`src/pages/en/`) und Sektions-Komponenten
-(`src/components/en/`). Die Copy bleibt damit wie überall im Template direkt bei
-ihrem Markup; Slugs sind in allen Sprachen gleich (hält den Umschalter mapping-frei).
-`hreflang`-Alternates, `<html lang>`, `og:locale` und die Sitemap-Verknüpfung
-entstehen automatisch aus der `languages`-Liste in `src/data/site.ts`.
+The default language lives at the root, every additional one under `/<code>/` —
+per language its own branch of pages (`src/pages/en/`) and section components
+(`src/components/en/`). Copy thus stays right next to its markup, as everywhere
+in the template; slugs are identical across languages (keeps the switcher
+mapping-free). `hreflang` alternates, `<html lang>`, `og:locale` and the sitemap
+links are generated automatically from the `languages` list in `src/data/site.ts`.
 
-Der **Sprach-Umschalter** im Header hat zwei Gesichter aus derselben Config:
+The **language switcher** in the header has two faces from the same config:
 
-- **Genau 2 Sprachen** → Segmented-Pill „DE | EN" (so live in der Demo).
-- **3+ Sprachen** → Flaggen-Dropdown mit [circle-flags](https://github.com/HatScripts/circle-flags)
-  (MIT; die Sprach-SVGs liegen vendored in `src/assets/flags/`, weitere Codes einfach
-  aus `flags/language/` des Repos dazukopieren).
+- **Exactly 2 languages** → segmented pill "DE | EN" (live in the demo).
+- **3+ languages** → flag dropdown using [circle-flags](https://github.com/HatScripts/circle-flags)
+  (MIT; the language SVGs are vendored in `src/assets/flags/`, additional codes
+  are simply copied from the repo's `flags/language/`).
 
-Beide Varianten sind reine **Links auf die äquivalente Seite der Zielsprache** —
-kein JS-Toggle, daher SEO-sauber und ohne JavaScript funktionsfähig. Der Blog
-erscheint bewusst nur in der Default-Sprache. **Entfernen** (einsprachige Projekte)
-und **weitere Sprache ergänzen**: Schritte in der [SKILL.md](SKILL.md), §3b.
-Projekte mit vielen Sprachen (3+) sollten stattdessen zentrale Sprachdateien
-erwägen — auch das ist dort notiert.
+Both variants are pure **links to the equivalent page in the target language** —
+no JS toggle, hence SEO-clean and functional without JavaScript. The blog
+deliberately appears only in the default language. **Removing** it
+(single-language projects) and **adding another language**: steps in
+[SKILL.md](SKILL.md), §3b. Projects with many languages (3+) should consider
+central language dictionaries instead — that is noted there as well.
 
-## ✉️ Kontaktformular anschließen
+## ✉️ Wiring up the contact form
 
-Das Formular (`#kontakt`) ist provider-agnostisch: Ziel in `src/data/site.ts`
-unter `contactForm` konfigurieren — leerer `endpoint` = Demo-Modus.
+The form (`#kontakt`) is provider-agnostic: configure the target in
+`src/data/site.ts` under `contactForm` — an empty `endpoint` = demo mode.
 
-- **n8n-Webhook** (empfohlen, eigener Stack): `endpoint` auf den Webhook setzen;
-  Workflow: Webhook → `botcheck` prüfen → Ziel nach Wahl → Respond 200.
-  Über einen Notion-Node landen Anfragen z. B. direkt in einer Notion-Datenbank.
-  (Die Notion-API nie direkt aus dem Browser aufrufen: Der Secret-Token wäre
-  öffentlich, und Notion blockt Browser-CORS ohnehin.)
+- **n8n webhook** (recommended, your own stack): point `endpoint` at the
+  webhook; workflow: Webhook → check `botcheck` → any target → Respond 200.
+  Via a Notion node, inquiries land directly in a Notion database, for example.
+  (Never call the Notion API directly from the browser: the secret token would
+  be public, and Notion blocks browser CORS anyway.)
 - **Web3Forms**: `endpoint: 'https://api.web3forms.com/submit'` +
-  `hiddenFields: { access_key: '…' }` (der Key ist als öffentlich konzipiert).
+  `hiddenFields: { access_key: '…' }` (the key is designed to be public).
 - **Formspree**: `endpoint: 'https://formspree.io/f/<form-id>'`.
 
-Eingebaut: Honeypot (`botcheck`, serverseitig erneut prüfen), Pflicht-Checkbox
-mit Link auf die Datenschutzerklärung, B2B-Zusatzfeld „Unternehmen" und ein
-sichtbarer Hinweis bei fehlenden Pflichtfeldern (dauerhaft und übersetzbar,
-ergänzend zur flüchtigen Browser-Meldung). DSGVO:
-Der Empfänger gehört in die Datenschutzerklärung. Dies ist die einzige
-dokumentierte Ausnahme von der „keine externen Requests"-Konvention —
-es lädt nichts vor dem Absenden.
+Built in: honeypot (`botcheck`, re-check server-side), required consent checkbox
+linking to the privacy policy, B2B-only "company" field and a visible message
+when required fields are missing (persistent and translatable, complementing the
+transient browser bubble). GDPR: the recipient belongs in the privacy policy.
+This is the single documented exception to the "no external requests"
+convention — nothing loads before submit.
 
-**SEO- & KI-Hinweis:** Sitemap (`sitemap-index.xml`), `robots.txt`, `llms.txt`,
-Canonical- und Open-Graph-Meta werden automatisch generiert. Die
-[llms.txt](https://llmstxt.org/) ist ein kuratierter Markdown-Index für
-KI-Assistenten, erzeugt aus `site.ts` + Blog-Collection — mit realistischer
-Erwartung: Die großen AI-Suchcrawler ignorieren die Datei bislang und lesen das
-HTML direkt; zuverlässig genutzt wird sie von KI-Coding-Assistenten (Claude
-Code, Cursor & Co.), denen man die Site gibt. Auf GitHub-Pages-*Projektseiten*
-(`…github.io/<repo>/`) liegen `robots.txt` und `llms.txt` nicht am Domain-Root
-und werden dort ignoriert — die Sitemap per Search Console einreichen. Mit
-Custom Domain greift alles automatisch.
+**SEO & AI note:** sitemap (`sitemap-index.xml`), `robots.txt`, `llms.txt`,
+canonical and Open Graph meta are generated automatically. The
+[llms.txt](https://llmstxt.org/) is a curated Markdown index for AI assistants,
+built from `site.ts` + the blog collection — with realistic expectations: the
+big AI search crawlers still ignore the file and read the HTML directly; it is
+reliably used by AI coding assistants (Claude Code, Cursor & co.) that you hand
+the site to. On GitHub Pages *project sites* (`…github.io/<repo>/`),
+`robots.txt` and `llms.txt` are not at the domain root and get ignored there —
+submit the sitemap via Search Console. With a custom domain everything applies
+automatically.
 
 ## 🧪 Tests
 
-`npm test` fährt die Playwright-Smoke-Suite: beide Themes × beide Zielgruppen ×
-Desktop/Mobile, Navigation von Unterseiten (base-Präfix), Mobile-Menü, No-JS-Fallbacks,
-404/RSS/Sitemap und Konsolenfehler. Im CI läuft die Suite als eigener Job **vor** dem
-Deploy — schlägt sie fehl, geht nichts live. Wichtig für eigene Automatisierung:
-Headless-Chrome braucht wegen der View Transitions zwingend
-`reducedMotion: 'reduce'` (Details in der [SKILL.md](SKILL.md), §3).
+`npm test` runs the Playwright smoke suite: both themes × both audiences ×
+desktop/mobile, navigation from subpages (base prefix), mobile menu, no-JS
+fallbacks, 404/RSS/sitemap and console errors. In CI the suite runs as its own
+job **before** the deploy — if it fails, nothing goes live. Important for your
+own automation: because of the view transitions, headless Chrome strictly needs
+`reducedMotion: 'reduce'` (details in [SKILL.md](SKILL.md), §3).
 
-## 🏷️ Versionierung & Releases
+## 🏷️ Versioning & releases
 
-GlassKit Web ist seit **v1.0.0** versioniert ([SemVer](https://semver.org),
-Format: [Keep a Changelog](https://keepachangelog.com)). Jede Template-Änderung
-wird in der [CHANGELOG.md](CHANGELOG.md) dokumentiert — sie ist der
-Update-Leitfaden für abgeleitete Projekte (SKILL.md, Recipe §7). Die
-Distribution läuft bewusst über GitHub („Use this template" bzw.
-`npm create astro -- --template JUNGHERZ/GlassKit-Web`), nicht über npm;
-nur das GlassKit-Fundament kommt als npm-Paket.
+GlassKit Web is versioned since **v1.0.0** ([SemVer](https://semver.org),
+format: [Keep a Changelog](https://keepachangelog.com)). Every template change
+is documented in [CHANGELOG.md](CHANGELOG.md) — it is the update guide for
+derived projects (SKILL.md, recipe §7). Distribution deliberately runs through
+GitHub ("Use this template" or
+`npm create astro -- --template JUNGHERZ/GlassKit-Web`), not through npm; only
+the GlassKit foundation ships as an npm package.
 
-## 📄 Lizenz
+## 📄 License
 
 MIT © Jungherz GmbH
