@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://glasskit-web.jungherz.com/demo/sitemap-index.xml

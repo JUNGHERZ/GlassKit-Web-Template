@@ -9,8 +9,10 @@ import { siteName, defaultDescription, base, languages, defaultLang } from '../d
  * bislang und lesen direkt das HTML; zuverlässig genutzt wird sie von
  * KI-Assistenten, denen man die Site gibt (Claude Code, Cursor & Co.).
  * Kostet nichts, hilft dort — mehr nicht versprechen. Wie bei robots.txt:
- * Auf GitHub-Pages-PROJEKTSEITEN (…github.io/<repo>/) liegt die Datei nicht
- * am Domain-Root, wo Tools sie suchen; voll wirksam erst mit Custom Domain.
+ * Tools suchen die Datei am Domain-Root — unter einem base-Pfad (Demo: /demo/,
+ * Projektseiten: /<repo>/) liegt sie dort nicht; im GlassKit-Web-Repo liefert
+ * site/llms.txt die Root-Version, abgeleitete Projekte brauchen die Custom
+ * Domain (base entfällt), damit sie voll wirksam ist.
  *
  * „## Optional" ist ein reservierter Sektionsname der Spec (überspringbar
  * bei knappem Kontext) — Rechtsseiten und Sprachzweige gehören dorthin.

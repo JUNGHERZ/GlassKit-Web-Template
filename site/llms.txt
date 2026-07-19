@@ -1,0 +1,28 @@
+# GlassKit Web
+
+> Production-ready Astro template in the GlassKit design language (glassmorphism):
+> one codebase for B2C and B2B audiences, bilingual (DE/EN), SEO, no-JS fallbacks
+> and a Playwright smoke suite included. Built by Jungherz GmbH, MIT-licensed.
+
+## Primary reference
+
+- [SKILL.md](https://github.com/JUNGHERZ/GlassKit-Web/blob/main/SKILL.md): machine-readable reference — section catalog, rules, recipes for deriving a new site, converting an existing one, and pulling template updates. Start here.
+- [README](https://github.com/JUNGHERZ/GlassKit-Web/blob/main/README.md): human-readable overview and quick start.
+- [CHANGELOG](https://github.com/JUNGHERZ/GlassKit-Web/blob/main/CHANGELOG.md): versioned releases — the update guide for derived projects.
+
+## Pages
+
+- [Landing page (EN)](https://glasskit-web.jungherz.com/): product overview
+- [Documentation (EN)](https://glasskit-web.jungherz.com/docs.html): curated docs with deep links into the repo
+- [Live demo](https://glasskit-web.jungherz.com/demo/): the LUMEN demo site built from the template (German; English under /demo/en/), serves its own llms.txt at /demo/llms.txt
+
+## Family
+
+- [GlassKit](https://glasskit.jungherz.com/): the CSS foundation — 24 glassmorphism components, design tokens
+- [GlassKit Elements](https://glasskit-elements.jungherz.com/): 29 web components for application UIs
+
+## Optional
+
+- [German landing page](https://glasskit-web.jungherz.com/de/)
+- [German documentation](https://glasskit-web.jungherz.com/de/docs.html)
+- [GitHub repository](https://github.com/JUNGHERZ/GlassKit-Web)

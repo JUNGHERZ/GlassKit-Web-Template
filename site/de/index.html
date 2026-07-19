@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlassKit Web – Glassmorphism-Website-Template für Astro</title>
+<meta name="description" content="GlassKit Web ist ein produktionsreifes Astro-Template in der GlassKit-Designsprache: eine Codebasis für B2C- und B2B-Zielgruppen, zweisprachig, mit SEO, No-JS-Fallbacks und Smoke-Tests.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0c1a24">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="canonical" href="https://glasskit-web.jungherz.com/de/">
+<link rel="alternate" hreflang="en" href="https://glasskit-web.jungherz.com/">
+<link rel="alternate" hreflang="de" href="https://glasskit-web.jungherz.com/de/">
+<link rel="alternate" hreflang="x-default" href="https://glasskit-web.jungherz.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GlassKit Web">
+<meta property="og:locale" content="de_DE">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:title" content="GlassKit Web – Glassmorphism-Website-Template für Astro">
+<meta property="og:description" content="Komplette Glassmorphism-Websites aus einer Codebasis: B2C- und B2B-Zielgruppen, zweisprachig, SEO und Smoke-Tests inklusive.">
+<meta property="og:url" content="https://glasskit-web.jungherz.com/de/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "GlassKit Web",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web",
+  "url": "https://glasskit-web.jungherz.com/de/",
+  "description": "GlassKit Web ist ein produktionsreifes Astro-Template in der GlassKit-Designsprache: eine Codebasis für B2C- und B2B-Zielgruppen, zweisprachig, mit SEO, No-JS-Fallbacks und Smoke-Tests.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jungherz GmbH",
+    "url": "https://www.jungherz.com"
+  }
+}
+</script>
+<link rel="stylesheet" href="../site.css">
+<script>
+  // Theme vor dem ersten Paint: gespeicherte Wahl gewinnt, Default ist dark.
+  (function () {
+    var t = localStorage.getItem('glw-site-theme');
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="header">
+  <div class="header__brand">
+    <div class="header__logo">🧊</div>
+    <span class="header__title">GlassKit Web</span>
+    <span class="header__version">v1.0.0</span>
+  </div>
+
+  <div class="header__actions">
+    <nav class="header__nav">
+      <a href="docs.html">Dokumentation</a>
+      <a href="../demo/">Live-Demo</a>
+    </nav>
+    <a href="../" class="lang-switch" title="English version">🇬🇧 EN</a>
+    <a href="https://github.com/JUNGHERZ/GlassKit-Web" target="_blank" rel="noopener" class="theme-btn" aria-label="GitHub-Repository" title="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" width="18" height="18"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+    </a>
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Theme umschalten">
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero">
+  <div class="hero__info">
+    <div class="hero__badge-row">
+      <span class="hero__badge">Astro 5</span>
+      <span class="hero__badge">20 Sektionen</span>
+      <span class="hero__badge">B2C + B2B</span>
+      <span class="hero__badge">Zweisprachig</span>
+    </div>
+
+    <h1 class="hero__headline">
+      Komplette Websites mit<br>
+      <span>Glassmorphismus</span>
+    </h1>
+
+    <p class="hero__description">
+      Das offizielle Website-Template für die GlassKit-Designsprache – gebaut von
+      der Jungherz GmbH. Eine Codebasis, die B2C- und B2B-Zielgruppen anspricht,
+      zweisprachig ab Werk, mit SEO, No-JS-Fallbacks und einer
+      Playwright-Smoke-Suite als Deploy-Gate.
+    </p>
+
+    <div class="hero__cta-row">
+      <a href="../demo/" class="btn-primary">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Live-Demo
+      </a>
+      <a href="docs.html" class="btn-ghost">
+        <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Dokumentation
+      </a>
+      <a href="https://github.com/JUNGHERZ/GlassKit-Web" target="_blank" rel="noopener" class="btn-ghost">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+
+  <!-- Live-Vorschau als echtes iframe, kein Screenshot — Glassmorphismus
+       braucht den echten Seitenhintergrund, das Theme bleibt synchron. -->
+  <div class="browser-frame">
+    <div class="browser-frame__bar" aria-hidden="true">
+      <div class="browser-frame__dots"><span></span><span></span><span></span></div>
+      <div class="browser-frame__url">glasskit-web.jungherz.com/demo/</div>
+    </div>
+    <div class="browser-frame__viewport">
+      <iframe src="../demo/" title="LUMEN – Live-Demo des GlassKit-Web-Templates" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     REFERENZEN-STRIP (LogoStrip-Muster aus dem Template selbst)
+     ============================================================ -->
+<div class="wrap refs-strip">
+  <span class="refs-strip__label">Im Einsatz</span>
+  <!-- Marken-Kombis spiegeln den Header der jeweiligen Site: Mark + Wortmarke. -->
+  <div class="refs">
+    <a class="ref-chip" href="https://www.monaoffice.de" target="_blank" rel="noopener"><img src="../assets/logos/mona.png" alt="" width="22" height="22"><span>Mona<strong>Office</strong></span></a>
+    <a class="ref-chip" href="https://www.monahilft.de" target="_blank" rel="noopener"><img src="../assets/logos/mona.png" alt="" width="22" height="22"><span>Mona<strong>Hilft</strong></span></a>
+    <a class="ref-chip" href="https://www.monacore.eu" target="_blank" rel="noopener"><img src="../assets/logos/mona.png" alt="" width="22" height="22"><span>Mona<strong>Core</strong></span></a>
+    <a class="ref-chip" href="https://www.wimmer-service.nrw" target="_blank" rel="noopener"><img src="../assets/logos/wimmer.png" alt="" width="22" height="22"><span>Wimmer <strong>Service</strong></span></a>
+    <a class="ref-chip" href="https://www.jungherz.com" target="_blank" rel="noopener"><img src="../assets/logos/jungherz.svg" alt="" width="22" height="22"><span>JUNGHERZ</span></a>
+  </div>
+</div>
+
+<!-- ============================================================
+     FEATURES
+     ============================================================ -->
+<section class="section wrap">
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-card__icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="feature-card__title">Eine Codebasis, zwei Zielgruppen</div>
+      <div class="feature-card__desc">Ein Umschalter wechselt Copy, Tonalität (Du/Sie), Preise und Testimonials zwischen Privat- und Geschäftskunden – dieselbe Designsprache, zwei Ansprachen.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+      </div>
+      <div class="feature-card__title">20 komponierbare Sektionen</div>
+      <div class="feature-card__desc">Vom Hero über Preise bis zum Kontaktformular: komponieren, was das Projekt braucht, Rest löschen. Visualisierungen werden aus DOM/SVG gebaut, nie gescreenshottet.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon">
+        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+      </div>
+      <div class="feature-card__title">SEO, i18n &amp; Tests eingebaut</div>
+      <div class="feature-card__desc">Canonical, hreflang, Sitemap, RSS, strukturierte Daten – plus eine Playwright-Smoke-Suite, die jeden kaputten Deploy blockiert.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/><line x1="9" y1="22" x2="15" y2="22"/></svg>
+      </div>
+      <div class="feature-card__title">KI-ready</div>
+      <div class="feature-card__desc">Maschinenlesbare SKILL.md plus llms.txt: Repo-URL an den KI-Assistenten geben und die neue Website nach den Rezepten ableiten lassen.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SEKTIONS-KATALOG
+     ============================================================ -->
+<section class="section wrap">
+  <span class="section__eyebrow">Sektions-Katalog</span>
+  <h2 class="section__title">Jede Sektion live in der Demo.</h2>
+  <p class="section__lead">
+    Die fiktive Marke LUMEN zeigt den kompletten Katalog im Einsatz. Jeder Chip
+    springt direkt zur Sektion in der Live-Demo – Glassmorphismus funktioniert
+    nur auf einer echten Seite, deshalb gibt es hier keine Screenshots.
+  </p>
+  <div class="catalog">
+    <a href="../demo/#top">Hero</a>
+    <a href="../demo/#features">Features</a>
+    <a href="../demo/#werkzeuge">Bento</a>
+    <a href="../demo/#prozess">Process</a>
+    <a href="../demo/#integrationen">Flow</a>
+    <a href="../demo/#showcase">Showcase</a>
+    <a href="../demo/#referenzen">Cases</a>
+    <a href="../demo/#team">Team</a>
+    <a href="../demo/#preise">Pricing</a>
+    <a href="../demo/#faq">FAQ</a>
+    <a href="../demo/#kontakt">Kontaktformular</a>
+    <a href="../demo/blog/">Blog (Opt-in)</a>
+    <span>Editorial-Hero</span>
+    <span>Logo-Strip</span>
+    <span>Stats</span>
+    <span>Quote</span>
+    <span>CTA-Banner</span>
+    <span>Rechtsseiten</span>
+  </div>
+  <p class="catalog__hint">
+    Sektionen ohne Link sind Alternativen oder Opt-ins ohne eigenen Anker –
+    der <a href="docs.html#catalog">Katalog in der Doku</a> listet alle.
+  </p>
+</section>
+
+<!-- ============================================================
+     FAMILIE
+     ============================================================ -->
+<section class="section wrap">
+  <span class="section__eyebrow">Die GlassKit-Familie</span>
+  <h2 class="section__title">Drei Schichten, eine Designsprache.</h2>
+  <div class="family">
+    <a class="family-card" href="https://glasskit.jungherz.com/de/" target="_blank" rel="noopener">
+      <span class="family-card__tag">CSS-Fundament</span>
+      <div class="family-card__name">GlassKit</div>
+      <div class="family-card__desc">Die Designsprache: 24 Pure-CSS-Glassmorphism-Komponenten, Design-Tokens, Dark &amp; Light – ohne Abhängigkeiten.</div>
+    </a>
+    <a class="family-card" href="https://glasskit-elements.jungherz.com/de/" target="_blank" rel="noopener">
+      <span class="family-card__tag">App-Schicht</span>
+      <div class="family-card__name">GlassKit Elements</div>
+      <div class="family-card__desc">29 Vanilla-Web-Components mit Shadow DOM und nativer Formular-Integration – GlassKit für Anwendungs-UIs.</div>
+    </a>
+    <div class="family-card family-card--current">
+      <span class="family-card__tag">Website-Schicht · du bist hier</span>
+      <div class="family-card__name">GlassKit Web</div>
+      <div class="family-card__desc">Das Astro-Template für komplette Marketing-Websites – Sektionen, i18n, SEO und Tests auf dem GlassKit-Fundament.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     QUICK START
+     ============================================================ -->
+<section class="section wrap">
+  <span class="section__eyebrow">Quick Start</span>
+  <h2 class="section__title">Vom Template zur ersten Seite in Minuten.</h2>
+  <pre class="code"><span class="c"># Neues Projekt aus dem Template aufsetzen</span>
+npm create astro@latest meine-site -- --template JUNGHERZ/GlassKit-Web
+cd meine-site
+npm install
+npm run dev</pre>
+  <p class="catalog__hint">
+    Oder auf <a href="https://github.com/JUNGHERZ/GlassKit-Web" target="_blank" rel="noopener">GitHub</a>
+    auf <strong>„Use this template"</strong> klicken – danach dem Rezept in der
+    <a href="https://github.com/JUNGHERZ/GlassKit-Web/blob/main/SKILL.md" target="_blank" rel="noopener">SKILL.md</a>
+    folgen, oder die Datei dem KI-Assistenten geben und das Ableiten ihm überlassen —
+    der <a href="docs.html#ai-prompt">fertige Prompt</a> steht in der Doku.
+  </p>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="footer__text">
+    Built by <a href="https://www.jungherz.com" target="_blank" rel="noopener">Jungherz</a> with 🧊 and lots of ❤️ for detail.
+  </div>
+  <div class="footer__links">
+    <a href="docs.html">Dokumentation</a>
+    <a href="../demo/">Live-Demo</a>
+    <a href="https://github.com/JUNGHERZ/GlassKit-Web" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://glasskit.jungherz.com/de/" target="_blank" rel="noopener">GlassKit</a>
+    <a href="https://glasskit-elements.jungherz.com/de/" target="_blank" rel="noopener">GlassKit Elements</a>
+  </div>
+</footer>
+
+<script>
+  function toggleTheme() {
+    var html = document.documentElement;
+    var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('glw-site-theme', next);
+    syncFrameTheme(next);
+  }
+
+  // Die Demo unterstützt data-theme auf <html> — same-origin-iframe synchron halten.
+  function syncFrameTheme(theme) {
+    var iframe = document.querySelector('.browser-frame iframe');
+    if (iframe && iframe.contentDocument) {
+      iframe.contentDocument.documentElement.setAttribute('data-theme', theme);
+    }
+  }
+
+  document.querySelector('.browser-frame iframe').addEventListener('load', function () {
+    syncFrameTheme(document.documentElement.getAttribute('data-theme'));
+  });
+</script>
+
+</body>
+</html>

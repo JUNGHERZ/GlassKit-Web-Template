@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentation – GlassKit Web</title>
+<meta name="description" content="GlassKit Web documentation: quick start, architecture rules, section catalog, branding, opt-ins and the recipes for deriving and updating projects.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0c1a24">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://glasskit-web.jungherz.com/docs.html">
+<link rel="alternate" hreflang="en" href="https://glasskit-web.jungherz.com/docs.html">
+<link rel="alternate" hreflang="de" href="https://glasskit-web.jungherz.com/de/docs.html">
+<link rel="alternate" hreflang="x-default" href="https://glasskit-web.jungherz.com/docs.html">
+<link rel="stylesheet" href="site.css">
+<script>
+  (function () {
+    var t = localStorage.getItem('glw-site-theme');
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+</head>
+<body>
+
+<header class="header">
+  <div class="header__brand">
+    <div class="header__logo">🧊</div>
+    <span class="header__title"><a href="./">GlassKit Web</a></span>
+    <span class="header__version">v1.0.0</span>
+  </div>
+  <div class="header__actions">
+    <nav class="header__nav">
+      <a href="./">Home</a>
+      <a href="demo/en/">Live Demo</a>
+    </nav>
+    <a href="de/docs.html" class="lang-switch" title="Deutsche Version">🇩🇪 DE</a>
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="docs">
+  <nav class="docs-sidebar">
+    <div class="docs-sidebar__group">Start</div>
+    <a href="#quickstart">Quick start</a>
+    <a href="#architecture">Architecture</a>
+    <div class="docs-sidebar__group">Build</div>
+    <a href="#catalog">Section catalog</a>
+    <a href="#branding">Branding</a>
+    <a href="#optins">Opt-ins</a>
+    <div class="docs-sidebar__group">Maintain</div>
+    <a href="#recipes">Recipes</a>
+    <a href="#ai">AI workflow</a>
+  </nav>
+
+  <main class="docs-content">
+    <h1>Documentation</h1>
+    <p class="lead">
+      This page is the curated overview. The single source of truth lives in the
+      repository: <a href="https://github.com/JUNGHERZ/GlassKit-Web/blob/main/SKILL.md" target="_blank" rel="noopener">SKILL.md</a>
+      (machine-readable reference with all rules and recipes) and the
+      <a href="https://github.com/JUNGHERZ/GlassKit-Web#readme" target="_blank" rel="noopener">README</a>.
+      Whenever this page and the repo disagree, the repo wins.
+    </p>
+
+    <h2 id="quickstart">Quick start</h2>
+    <pre class="code"><span class="c"># Scaffold a new project from the template</span>
+npm create astro@latest my-site -- --template JUNGHERZ/GlassKit-Web
+cd my-site &amp;&amp; npm install
+
+npm run dev      <span class="c"># develop</span>
+npm run build    <span class="c"># build to dist/</span>
+npm test         <span class="c"># Playwright smoke suite (builds + previews itself)</span></pre>
+    <p>
+      Alternatively use <strong>“Use this template”</strong> on
+      <a href="https://github.com/JUNGHERZ/GlassKit-Web" target="_blank" rel="noopener">GitHub</a>.
+      First steps in a derived project: delete <code class="inline">site/</code>
+      (this product page), set <code class="inline">base</code> in
+      <code class="inline">astro.config.mjs</code> to your repo name — or remove it
+      for a custom domain and add <code class="inline">public/CNAME</code>. Deployment
+      ships as a GitHub Actions workflow; set Pages Source to “GitHub Actions” once.
+    </p>
+
+    <h2 id="architecture">Architecture</h2>
+    <p>Two layers, two references:</p>
+    <div class="table-scroll"><table class="doc-table">
+      <tr><th>Layer</th><th>Prefix</th><th>Where</th></tr>
+      <tr><td>Design tokens + UI components</td><td><code class="inline">glass-*</code>, <code class="inline">--gl-*</code></td><td>npm <code class="inline">@jungherz-de/glasskit</code> — never edited, only version-bumped</td></tr>
+      <tr><td>Site &amp; section layer</td><td><code class="inline">glw-*</code></td><td><code class="inline">src/styles/site.css</code> in this template</td></tr>
+    </table></div>
+    <p>The files you touch when deriving a project:</p>
+    <ul>
+      <li><code class="inline">src/data/site.ts</code> — site name, titles, contact-form endpoint, languages, and the <code class="inline">href()</code> helper every link goes through.</li>
+      <li><code class="inline">src/components/*.astro</code> — one file per section; the copy lives next to its markup.</li>
+      <li><code class="inline">src/styles/brand.css</code> — the only place for client colors (token overrides, loads last).</li>
+      <li><code class="inline">src/pages/index.astro</code> — composes the one-pager from the section catalog.</li>
+    </ul>
+    <div class="doc-note">
+      The four rules that keep everything working: no <code class="inline">&lt;style&gt;</code>
+      blocks in .astro components (Astro scoping breaks the global mechanics) ·
+      GlassKit imports before site.css · colors only via
+      <code class="inline">--gl-*</code> tokens · no external requests — the built
+      site is fully self-contained. The complete ✅/❌ list is in
+      <a href="https://github.com/JUNGHERZ/GlassKit-Web/blob/main/SKILL.md#4-rules" target="_blank" rel="noopener">SKILL.md §4</a>.
+    </div>
+
+    <h2 id="catalog">Section catalog</h2>
+    <p>
+      Compose <code class="inline">src/pages/index.astro</code> from these sections and
+      delete what the project doesn’t need. Demo links jump straight into the live page.
+    </p>
+    <div class="table-scroll"><table class="doc-table">
+      <tr><th>Section</th><th>Purpose</th><th>Demo</th></tr>
+      <tr><td>SiteHeader</td><td>Fixed glass nav: brand, anchors, theme toggle, mobile menu (works without JS)</td><td><a href="demo/en/#top">view ↗</a></td></tr>
+      <tr><td>Hero</td><td>Audience switch, headline pair, CTAs, decorative device panel (optional 3D tilt)</td><td><a href="demo/en/#top">view ↗</a></td></tr>
+      <tr><td>HeroEditorial</td><td>Alternative hero: typographic, no device panel — for agencies/service providers</td><td>—</td></tr>
+      <tr><td>LogoStrip</td><td>Social proof wordmarks, text-only</td><td>—</td></tr>
+      <tr><td>Features</td><td>3-column glass card grid from a <code class="inline">features[]</code> array</td><td><a href="demo/en/#features">view ↗</a></td></tr>
+      <tr><td>Bento</td><td>Feature cards with embedded mini visualizations (built, not screenshotted)</td><td><a href="demo/en/#toolkit">view ↗</a></td></tr>
+      <tr><td>Process</td><td>Numbered how-it-works steps</td><td><a href="demo/en/#process">view ↗</a></td></tr>
+      <tr><td>Flow</td><td>Process diagram: glass nodes + animated SVG connectors, no JS</td><td><a href="demo/en/#integrations">view ↗</a></td></tr>
+      <tr><td>Showcase</td><td>3D-tilted “spatial” glass window (visionOS look)</td><td><a href="demo/en/#showcase">view ↗</a></td></tr>
+      <tr><td>Stats</td><td>4 KPI figures, typographic</td><td>—</td></tr>
+      <tr><td>Cases</td><td>Success stories with gradient metrics</td><td><a href="demo/en/#cases">view ↗</a></td></tr>
+      <tr><td>Team</td><td>People grid with initials avatars</td><td><a href="demo/en/#team">view ↗</a></td></tr>
+      <tr><td>Pricing</td><td>Two plan grids, one per audience</td><td><a href="demo/en/#pricing">view ↗</a></td></tr>
+      <tr><td>Quote</td><td>Serif testimonial, one per audience</td><td>—</td></tr>
+      <tr><td>Faq</td><td>Accordion + FAQPage JSON-LD; open answers without JS</td><td><a href="demo/en/#faq">view ↗</a></td></tr>
+      <tr><td>LanguageSwitcher</td><td>DE|EN pill (2 languages) or flag dropdown (3+); entries are links</td><td><a href="demo/en/#top">view ↗</a></td></tr>
+      <tr><td>Contact</td><td>Provider-agnostic contact form (n8n / Web3Forms / Formspree), honeypot, consent</td><td><a href="demo/en/#contact">view ↗</a></td></tr>
+      <tr><td>CtaBanner</td><td>Closing call-to-action panel</td><td>—</td></tr>
+      <tr><td>SiteFooter</td><td>Link columns, legal links</td><td>—</td></tr>
+      <tr><td>glw-page/prose</td><td>Plain text subpages (Impressum/Datenschutz pattern)</td><td><a href="demo/en/impressum/">view ↗</a></td></tr>
+    </table></div>
+    <p>
+      Full notes per section (arrays, opt-in flags, accessibility rules):
+      <a href="https://github.com/JUNGHERZ/GlassKit-Web/blob/main/SKILL.md#2-section-catalog-compose-in-srcpagesindexastro" target="_blank" rel="noopener">SKILL.md §2</a>.
+    </p>
+
+    <h2 id="branding">Branding</h2>
+    <p>
+      Client colors never touch glasskit.css or the <code class="inline">glw-</code> rules.
+      <code class="inline">src/styles/brand.css</code> is the single place for brand
+      overrides — one <code class="inline">:root</code> block of token values that loads
+      last and therefore wins against both themes:
+    </p>
+    <pre class="code">:root {
+  --gl-primary: #7c5cff;
+  --gl-primary-2: #4d34d8;
+  <span class="c">/* … more --gl-* tokens; commented example themes ship in the file */</span>
+}</pre>
+
+    <h2 id="optins">Opt-ins</h2>
+    <ul>
+      <li><strong>Blog</strong> — Markdown posts via content collection, overview page, RSS feed. Only ship it for clients who will publish; exact removal steps in <a href="https://github.com/JUNGHERZ/GlassKit-Web/blob/main/SKILL.md#3-core-mechanics" target="_blank" rel="noopener">SKILL.md §3</a>.</li>
+      <li><strong>Multilingual (DE/EN)</strong> — language branches: the default language lives at the root, each additional one under <code class="inline">/&lt;code&gt;/</code> with its own pages and components, same slugs everywhere. hreflang, sitemap alternates and the switcher derive automatically. Details in <a href="https://github.com/JUNGHERZ/GlassKit-Web/blob/main/SKILL.md#3b-i18n-opt-in--language-branches" target="_blank" rel="noopener">SKILL.md §3b</a>.</li>
+      <li><strong>Contact form providers</strong> — the same form POST works against an n8n webhook, Web3Forms or Formspree; configured in <code class="inline">site.ts</code>, empty endpoint = demo mode. Provider matrix in <a href="https://github.com/JUNGHERZ/GlassKit-Web/blob/main/SKILL.md#4b-contact-form-providers" target="_blank" rel="noopener">SKILL.md §4b</a>.</li>
+    </ul>
+
+    <h2 id="recipes">Recipes</h2>
+    <p>Three step-by-step recipes cover the whole lifecycle — summarized here, executable in SKILL.md:</p>
+    <ul>
+      <li><strong>New website from the template</strong> — base/site.ts, choose the hero variant, replace copy, pick sections, legal pages, verify with the smoke suite. <a href="https://github.com/JUNGHERZ/GlassKit-Web/blob/main/SKILL.md#5-recipe-new-website-from-this-template" target="_blank" rel="noopener">SKILL.md §5</a></li>
+      <li><strong>Convert an existing website</strong> — map old content blocks to catalog sections, migrate copy without porting old CSS. <a href="https://github.com/JUNGHERZ/GlassKit-Web/blob/main/SKILL.md#6-recipe-convert-an-existing-website-to-this-template" target="_blank" rel="noopener">SKILL.md §6</a></li>
+      <li><strong>Pull template updates into a derived project</strong> — template as second git remote, work through the CHANGELOG between releases, take mechanics files wholesale, never overwrite project copy. <a href="https://github.com/JUNGHERZ/GlassKit-Web/blob/main/SKILL.md#7-recipe-pull-template-updates-into-a-derived-project" target="_blank" rel="noopener">SKILL.md §7</a></li>
+    </ul>
+    <div class="doc-note">
+      GlassKit Web is versioned since v1.0.0 — the
+      <a href="https://github.com/JUNGHERZ/GlassKit-Web/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG</a>
+      is the update guide for derived projects.
+    </div>
+
+    <h2 id="ai">AI workflow</h2>
+    <p>
+      The template is built to be derived by AI assistants: hand the repo URL to
+      Claude Code, Cursor &amp; Co. and point them at
+      <a href="https://github.com/JUNGHERZ/GlassKit-Web/blob/main/SKILL.md" target="_blank" rel="noopener">SKILL.md</a> —
+      it contains the catalog, the rules and the recipes in machine-readable form
+      (“build the new site following this scheme”). The deployed demo additionally
+      serves <a href="demo/llms.txt">llms.txt</a>, and derived projects generate
+      their own from their content.
+    </p>
+    <h3 id="ai-prompt">The ready-made prompt</h3>
+    <p>
+      Works the same in Claude Code, Cursor, VS Code / Copilot or a plain chat —
+      copy, fill in the placeholders, done:
+    </p>
+    <pre class="code">Build a new website based on the GlassKit Web template:
+https://github.com/JUNGHERZ/GlassKit-Web
+
+First read the SKILL.md in that repo, then follow its recipe §5
+("New Website From This Template").
+
+Project:        &lt;company / product / industry&gt;
+Audiences:      &lt;B2C, B2B, or both&gt;
+Languages:      &lt;German only / German + English&gt;
+Brand colors:   &lt;hex values — or "suggest something"&gt;
+Sections:       &lt;e.g. hero, features, pricing, FAQ, contact — or "you pick"&gt;</pre>
+    <p>
+      For converting an existing site, swap the recipe reference to §6 and add the
+      old site’s URL. In an already derived project, “update this site from the
+      template — follow SKILL.md recipe §7” is all it takes.
+    </p>
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer__text">
+    Built by <a href="https://www.jungherz.com" target="_blank" rel="noopener">Jungherz</a> with 🧊 and lots of ❤️ for detail.
+  </div>
+  <div class="footer__links">
+    <a href="./">Home</a>
+    <a href="demo/en/">Live Demo</a>
+    <a href="https://github.com/JUNGHERZ/GlassKit-Web" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://glasskit.jungherz.com" target="_blank" rel="noopener">GlassKit</a>
+    <a href="https://glasskit-elements.jungherz.com" target="_blank" rel="noopener">GlassKit Elements</a>
+  </div>
+</footer>
+
+<script>
+  function toggleTheme() {
+    var html = document.documentElement;
+    var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('glw-site-theme', next);
+  }
+</script>
+
+</body>
+</html>

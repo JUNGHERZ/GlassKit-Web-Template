@@ -2,9 +2,11 @@ import type { APIRoute } from 'astro';
 
 /**
  * robots.txt aus site + base generiert – bleibt beim Forken automatisch korrekt.
- * Hinweis: Auf GitHub-Pages-PROJEKTSEITEN (jungherz.github.io/<repo>/) liegt die
- * Datei nicht am Domain-Root und wird von Crawlern ignoriert; die Sitemap dann
- * per Search Console einreichen. Mit Custom Domain (base entfällt) greift sie.
+ * Hinweis: Crawler lesen nur die Datei am Domain-Root. Liegt die Site unter
+ * einem base-Pfad (die Demo unter /demo/, Projektseiten unter /<repo>/), wird
+ * diese Datei ignoriert — im GlassKit-Web-Repo liefert site/robots.txt die
+ * Root-Version. In abgeleiteten Projekten mit Custom Domain (base entfällt)
+ * greift sie direkt.
  */
 export const GET: APIRoute = ({ site }) => {
   const base = import.meta.env.BASE_URL.replace(/\/+$/, '');

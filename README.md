@@ -1,10 +1,13 @@
-# GlassKit-Web-Template
+# GlassKit Web
 
 Astro-Template in der [GlassKit](https://github.com/JUNGHERZ/GlassKit)-Designsprache:
 Glassmorphism-Websites, die mit **einer Codebasis B2C- und B2B-Zielgruppen** ansprechen.
-Interne Referenz von JUNGHERZ für neue Webprojekte — „auf dieser Basis soll das passieren".
+Drittes Mitglied der GlassKit-Familie — neben [GlassKit](https://glasskit.jungherz.com)
+(CSS-Fundament) und [GlassKit Elements](https://glasskit-elements.jungherz.com)
+(Web Components für App-UIs) ist GlassKit Web die Website-Schicht.
 
-**Live-Demo:** https://jungherz.github.io/GlassKit-Web-Template/
+**Produktseite:** https://glasskit-web.jungherz.com
+**Live-Demo:** https://glasskit-web.jungherz.com/demo/
 
 > 🤖 **Für KI-Assistenten:** Die maschinenlesbare Referenz (Sektions-Katalog, Regeln,
 > Rezepte für neue Projekte und Umstellungen) liegt in [SKILL.md](SKILL.md).
@@ -21,7 +24,7 @@ siehe [Mehrsprachigkeit](#mehrsprachigkeit-opt-in).
 
 ```bash
 npm install
-npm run dev        # → http://localhost:4321/GlassKit-Web-Template/
+npm run dev        # → http://localhost:4321/demo/
 npm run build      # → dist/
 npm run preview    # dist/ lokal testen (inkl. base-Pfad wie auf GitHub Pages)
 npm test           # Playwright-Smoke-Tests (baut selbst und startet den Preview)
@@ -30,8 +33,11 @@ npm test           # Playwright-Smoke-Tests (baut selbst und startet den Preview
 ## Struktur
 
 ```
-astro.config.mjs              site + base (GitHub-Pages-Projektseite)
+astro.config.mjs              site + base (Demo baut nach /demo/ neben die Produktseite)
 .github/workflows/deploy.yml  Build & Deploy bei jedem Push auf main
+site/                         Produkt-Landing-Page + Doku von GlassKit Web selbst
+                              (statisch, DE/EN) — NICHT Teil des Templates,
+                              beim Ableiten eines Projekts löschen
 src/
 ├── data/site.ts              Site-Konstanten + href()-Helper für base-sichere Links
 ├── styles/site.css           Web-Layer (.glw-*): Layout, Sektionen — nur --gl-*-Tokens
@@ -185,12 +191,15 @@ Deploy — schlägt sie fehl, geht nichts live. Wichtig für eigene Automatisier
 Headless-Chrome braucht wegen der View Transitions zwingend
 `reducedMotion: 'reduce'` (Details in der [SKILL.md](SKILL.md), §3).
 
-## Roadmap
+## Versionierung & Releases
 
-Der `.glw-`-Layer reift hier im Template. Sobald er sich über mehrere echte Projekte
-stabilisiert hat, wird er als eigenständiges **GlassKit-Web**-Paket extrahiert
-(Schichtung: GlassKit = Tokens/Komponenten · GlassKit-Elements = Web Components ·
-GlassKit-Web = Site-/Marketing-Sektionen).
+GlassKit Web ist seit **v1.0.0** versioniert ([SemVer](https://semver.org),
+Format: [Keep a Changelog](https://keepachangelog.com)). Jede Template-Änderung
+wird in der [CHANGELOG.md](CHANGELOG.md) dokumentiert — sie ist der
+Update-Leitfaden für abgeleitete Projekte (SKILL.md, Recipe §7). Die
+Distribution läuft bewusst über GitHub („Use this template" bzw.
+`npm create astro -- --template JUNGHERZ/GlassKit-Web`), nicht über npm;
+nur das GlassKit-Fundament kommt als npm-Paket.
 
 ## Lizenz
 

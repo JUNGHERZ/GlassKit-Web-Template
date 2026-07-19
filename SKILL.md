@@ -1,9 +1,9 @@
 ---
-name: glasskit-web-template
-description: AI reference for the GlassKit-Web-Template — an Astro starter for glassmorphism marketing sites that address B2C and B2B audiences from one codebase. Use this whenever building a new website from this template or converting an existing site to it. For GlassKit component markup (glass-* classes), always consult the GlassKit SKILL.md as well.
+name: glasskit-web
+description: AI reference for GlassKit Web — an Astro starter for glassmorphism marketing sites that address B2C and B2B audiences from one codebase. Use this whenever building a new website from this template or converting an existing site to it. For GlassKit component markup (glass-* classes), always consult the GlassKit SKILL.md as well.
 ---
 
-# GlassKit-Web-Template – AI Reference
+# GlassKit Web – AI Reference
 
 Astro 5 starter for marketing/landing websites in the GlassKit design language
 (glassmorphism, dark/light, orange primary). One codebase serves **two audiences**
@@ -20,8 +20,14 @@ placeholder meant to be replaced per project.
 ## 1. File Responsibilities
 
 ```
-astro.config.mjs        site + base. Fork → change base to '/<repo-name>'.
-                        Custom domain → remove base, set site, add public/CNAME.
+site/                   Product landing page + docs of GlassKit Web itself
+                        (static HTML, deployed at the domain root; the demo
+                        builds to /demo/). NOT part of the template — DELETE
+                        this directory when deriving a project (§5 step 1).
+astro.config.mjs        site + base. This repo: base '/demo/' (demo lives next
+                        to the landing page). Fork → change base to
+                        '/<repo-name>'. Custom domain → remove base, set site,
+                        add public/CNAME.
 src/data/site.ts        siteName, titles, repoUrl + base/href() link helper +
                         languages[] (i18n opt-in) with pathLang()/localeHref().
 src/styles/site.css     ALL custom CSS (global). glw-* classes, --gl-* tokens only.
@@ -261,7 +267,11 @@ Server-side: always re-check the `botcheck` field (client check alone is bypassa
 
 ## 5. Recipe: New Website From This Template
 
-1. Use repo as template/fork; `npm install`.
+1. Use repo as template/fork; `npm install`. Delete `site/` (the GlassKit Web
+   product page — not part of your site) and remove the landing-assemble step
+   in `.github/workflows/deploy.yml` (marked with a `GlassKit-Web only`
+   comment). KEEP `SKILL.md` — it stays in the project as the AI maintenance
+   reference (catalog, rules, and §7 for future template updates).
 2. `astro.config.mjs`: set `base` to `'/<new-repo-name>'` (or remove for custom domain + add `public/CNAME`).
 3. `src/data/site.ts`: siteName, defaultTitle, defaultDescription, repoUrl.
 4. **Choose the hero — ask the user:** product with a UI → `Hero` (showcase
@@ -300,12 +310,16 @@ template changes do NOT flow automatically. Updates live on two layers:
 **Template layer** — use the template repo as a second remote:
 
 1. One-time setup in the project repo:
-   `git remote add template https://github.com/JUNGHERZ/GlassKit-Web-Template.git`
+   `git remote add template https://github.com/JUNGHERZ/GlassKit-Web.git`
 2. `git fetch template`, then read the CURRENT template reference before doing
    anything: `git show template/main:SKILL.md` (the project's own SKILL.md copy
    may be outdated — this recipe itself might have changed).
-3. Review what changed: `git log --oneline ..template/main` and
-   `git diff HEAD template/main -- src/styles/site.css src/scripts/site.js`.
+3. Review what changed — primary source is the template's
+   `git show template/main:CHANGELOG.md`: work through the entries between the
+   last synced release and now (the template is versioned since v1.0.0).
+   `git log --oneline ..template/main` and
+   `git diff HEAD template/main -- src/styles/site.css src/scripts/site.js`
+   remain the detail view.
 4. **Mechanics files** are designed to stay project-neutral and can be taken
    wholesale — then REVIEW the staged diff and revert any project-specific
    deviations you find (tests may reference removed sections, BaseLayout may
@@ -314,7 +328,8 @@ template changes do NOT flow automatically. Updates live on two layers:
    (add `src/layouts/BaseLayout.astro`, `tests/smoke.spec.ts`,
    `playwright.config.ts` only after diffing them — they drift more often).
 5. **NEVER overwrite:** `src/data/site.ts`, `src/styles/brand.css`,
-   `src/components/**` (copy lives there), `public/**`, legal pages.
+   `src/components/**` (copy lives there), `public/**`, legal pages. Never
+   pull `site/` (GlassKit Web's product page) into a derived project.
 6. **New opt-in sections/features** (new files under `src/components/` since
    the last sync): do NOT copy silently. List them with a one-line purpose
    each (from §2's catalog) and **ask the user per feature** whether to adopt

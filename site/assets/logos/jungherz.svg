@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- JUNGHERZ Waveform-Herz (s/w), Geometrie aus dem Original-Wordmark -->
+  <rect x="0" y="0" width="32" height="32" rx="8" fill="#121212"/>
+  <g fill="none" stroke="#ffffff" stroke-width="2.55" stroke-linecap="round">
+    <path d="M6.3 7.2v11.1"></path>
+    <path d="M11.15 4.55v18.5"></path>
+    <path d="M16 7.2v20.3"></path>
+    <path d="M20.85 4.55v18.5"></path>
+    <path d="M25.7 7.2v11.1"></path>
+  </g>
+</svg>
